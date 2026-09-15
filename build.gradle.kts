@@ -3,3 +3,8 @@
 plugins {
     alias(libs.plugins.android.screenshot) apply false
 }
+
+allprojects {
+    group = "io.github.amine2233"
+    version = (findProperty("version") as String?)?.takeIf { it.isNotBlank() } ?: "0.1.0-SNAPSHOT"
+}

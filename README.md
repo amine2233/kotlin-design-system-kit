@@ -39,16 +39,70 @@ DsTheme.windowSize.isExpanded          // ≥ 600dp → tablet layout
 
 Change the brand color in one place: `DsPalette.Teal*` / `DsLightColors.primary`.
 
-## Consuming from another app
+## Integrating the packages in your app
 
-```bash
-mise run publish        # → ~/.m2 : io.github.amine2233:designsystem-{core,atoms,molecules,organisms,templates}:0.1.0
-```
+Artifacts are published to **GitHub Packages** on every release:
+`io.github.amine2233:designsystem-{core,atoms,molecules,organisms,templates}:<version>` (the `catalog` module is demo-only — don't depend on it).
+
+### 1. Add the repository (consumer `settings.gradle.kts`)
+
 ```kotlin
-// settings.gradle.kts of the consumer: repositories { mavenLocal(); google(); mavenCentral() }
-implementation("io.github.amine2233:designsystem-templates:0.1.0")   // pulls organisms → molecules → atoms → core + Compose BOM
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/amine2233/kotlin-design-system-kit")
+            credentials {
+                username = providers.gradleProperty("gpr.user").orNull ?: System.getenv("GITHUB_ACTOR")
+                password = providers.gradleProperty("gpr.key").orNull ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
 ```
-Version lives in `gradle/libs.versions.toml` (`designsystem`). Every public composable takes a `modifier`; all public types are `Ds`-prefixed.
+
+GitHub Packages always needs a token, even for public packages: a classic PAT with `read:packages`,
+in `~/.gradle/gradle.properties` (`gpr.user=…`, `gpr.key=…`) or as `GITHUB_ACTOR` / `GITHUB_TOKEN` env vars (CI).
+
+### 2. Add the dependency
+
+```kotlin
+dependencies {
+    // One line — templates pulls organisms → molecules → atoms → core and the Compose BOM.
+    implementation("io.github.amine2233:designsystem-templates:1.0.0")
+    // Or pick a layer: designsystem-atoms, designsystem-molecules, designsystem-organisms
+}
+```
+
+The app must apply `org.jetbrains.kotlin.plugin.compose` with the same Kotlin version and use `minSdk ≥ 26`.
+
+### 3. Use it
+
+```kotlin
+setContent {
+    DsTheme {                                       // light/dark from the system
+        DsNavigationScaffold(topItems = tabs, selectedIndex = i, onSelect = { i = it }) {
+            DsScreenScaffold(topBar = { DsTopBar("Panier", onBack = ::back, badge = "5") }) { … }
+        }
+    }
+}
+```
+
+Local development against an unpublished version: `mise run publish:local` → `~/.m2`, then add `mavenLocal()` to the consumer's repositories and depend on `0.1.0-SNAPSHOT`.
+
+## CI/CD
+
+CI and releases come from [kotlin-ci-shared](https://github.com/amine2233/kotlin-ci-shared).
+All logic lives in `mise.toml`:
+
+- `mise run test` / `mise run lint` — what the `CI` workflow runs on pull requests
+  (unit tests + screenshot regression check; ktlint with the `.editorconfig` rules).
+- Merging a `feat:` / `fix:` commit into `main` runs semantic-release: it tags
+  `vX.Y.Z`, updates `CHANGELOG.md`, publishes `io.github.amine2233:designsystem-<module>` to GitHub
+  Packages and creates the GitHub release with the AARs attached.
+- `mise run release --dry-run` previews the next version locally (needs `GITHUB_TOKEN` in `.env.local`, see `.env.local.example`).
 
 ## Commands
 
@@ -56,10 +110,13 @@ Toolchain, env vars and tasks are managed by [mise](https://mise.jdx.dev) (`mise
 
 ```bash
 mise run app              # build + install + launch the sample app
-mise run snapshot:check   # screenshot regression check
-mise run snapshot:update  # re-record after an intended change
-mise run test             # unit tests
-mise run check            # build + test + snapshot:check (CI)
+mise run lint             # ktlint          (mise run format to auto-fix)
+mise run test             # unit tests + screenshot regression check
+mise run build            # assemble + tests + snapshots
+mise run check            # lint + build   (local CI equivalent)
+mise run snapshot:update  # re-record screenshots after an intended change
+mise run publish:local    # publish all modules to ~/.m2
+mise run release --dry-run
 ```
 
 Reference PNGs: `designsystem/catalog/src/screenshotTestDebug/reference/` — 22 shots: phone 375×780 + tablet 960×600, light + dark, LTR + RTL (Arabic).

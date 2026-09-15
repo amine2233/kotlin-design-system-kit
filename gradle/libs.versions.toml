@@ -1,5 +1,4 @@
 [versions]
-designsystem = "0.1.0"
 android-compileSdk = "37"
 android-minSdk = "26"
 android-targetSdk = "37"
