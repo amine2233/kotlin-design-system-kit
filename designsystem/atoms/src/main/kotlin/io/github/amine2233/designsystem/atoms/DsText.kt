@@ -34,7 +34,8 @@ fun DsText(
 
 @DsComponentPreview
 @Composable
-private fun DsTextPreview() = DsPreview {
-    DsText("Encaissez vite, gérez mieux.", style = DsTheme.typography.title)
-    DsText("Body secondary", color = DsTheme.colors.textSecondary)
-}
+private fun DsTextPreview() =
+    DsPreview {
+        DsText("Encaissez vite, gérez mieux.", style = DsTheme.typography.title)
+        DsText("Body secondary", color = DsTheme.colors.textSecondary)
+    }

@@ -24,9 +24,10 @@ fun DsAvatar(
     size: Dp = 36.dp,
 ) {
     Box(
-        modifier = modifier
-            .size(size)
-            .background(DsTheme.colors.primary, DsShapes.pill),
+        modifier =
+            modifier
+                .size(size)
+                .background(DsTheme.colors.primary, DsShapes.pill),
         contentAlignment = Alignment.Center,
     ) {
         Text(
@@ -39,6 +40,10 @@ fun DsAvatar(
 
 @DsComponentPreview
 @Composable
-private fun DsAvatarPreview() = DsPreview {
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { DsAvatar("AK"); DsAvatar("ab", size = 48.dp) }
-}
+private fun DsAvatarPreview() =
+    DsPreview {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            DsAvatar("AK")
+            DsAvatar("ab", size = 48.dp)
+        }
+    }

@@ -44,14 +44,19 @@ fun DsStepIndicator(
                         .background(if (done || active) c.primary else c.border),
                 )
             }
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(5.dp), modifier = Modifier.padding(horizontal = 8.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(5.dp),
+                modifier = Modifier.padding(horizontal = 8.dp),
+            ) {
                 Box(
-                    modifier = Modifier
-                        .size(22.dp)
-                        .then(if (active) Modifier.border(3.dp, c.primaryContainerBorder, DsShapes.pill) else Modifier)
-                        .padding(if (active) 0.dp else 0.dp)
-                        .background(if (done || active) c.primary else c.surface, DsShapes.pill)
-                        .then(if (!done && !active) Modifier.border(1.5.dp, c.borderStrong, DsShapes.pill) else Modifier),
+                    modifier =
+                        Modifier
+                            .size(22.dp)
+                            .then(if (active) Modifier.border(3.dp, c.primaryContainerBorder, DsShapes.pill) else Modifier)
+                            .padding(if (active) 0.dp else 0.dp)
+                            .background(if (done || active) c.primary else c.surface, DsShapes.pill)
+                            .then(if (!done && !active) Modifier.border(1.5.dp, c.borderStrong, DsShapes.pill) else Modifier),
                     contentAlignment = Alignment.Center,
                 ) {
                     if (done) {
@@ -77,8 +82,9 @@ fun DsStepIndicator(
 
 @DsComponentPreview
 @Composable
-private fun DsStepIndicatorPreview() = DsPreview {
-    DsStepIndicator(listOf("Panier", "Pourboire", "Paiement"), currentStep = 0)
-    DsStepIndicator(listOf("Panier", "Pourboire", "Paiement"), currentStep = 1)
-    DsStepIndicator(listOf("Panier", "Pourboire", "Paiement"), currentStep = 2)
-}
+private fun DsStepIndicatorPreview() =
+    DsPreview {
+        DsStepIndicator(listOf("Panier", "Pourboire", "Paiement"), currentStep = 0)
+        DsStepIndicator(listOf("Panier", "Pourboire", "Paiement"), currentStep = 1)
+        DsStepIndicator(listOf("Panier", "Pourboire", "Paiement"), currentStep = 2)
+    }

@@ -9,7 +9,8 @@ import androidx.compose.ui.unit.dp
 /** Phone portrait = Compact, tablet / landscape ≥ 600dp = Expanded. */
 enum class DsWindowSize {
     Compact,
-    Expanded;
+    Expanded,
+    ;
 
     val isExpanded: Boolean get() = this == Expanded
 

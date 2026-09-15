@@ -11,7 +11,10 @@ import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.core.DsTheme
 
 @Composable
-internal fun CatalogSection(title: String, content: @Composable () -> Unit) {
+internal fun CatalogSection(
+    title: String,
+    content: @Composable () -> Unit,
+) {
     Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(title, style = DsTheme.typography.titleLarge, color = DsTheme.colors.textPrimary)
         content()

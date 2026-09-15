@@ -37,11 +37,12 @@ fun DsNavigationRail(
 ) {
     val c = DsTheme.colors
     Column(
-        modifier = modifier
-            .fillMaxHeight()
-            .width(80.dp)
-            .background(c.surface)
-            .padding(vertical = 8.dp),
+        modifier =
+            modifier
+                .fillMaxHeight()
+                .width(80.dp)
+                .background(c.surface)
+                .padding(vertical = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         if (header != null) {
@@ -58,25 +59,49 @@ fun DsNavigationRail(
 }
 
 @Composable
-private fun RailItem(item: DsNavItem, selected: Boolean, onClick: () -> Unit) {
+private fun RailItem(
+    item: DsNavItem,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
     val c = DsTheme.colors
     NavigationRailItem(
         selected = selected,
         onClick = onClick,
-        icon = { BadgedBox(badge = { if (item.badge != null) Badge(containerColor = c.primary, contentColor = c.onPrimary) { Text(item.badge, style = DsTheme.typography.overline) } }) { Icon(item.icon, contentDescription = null) } },
+        icon = {
+            BadgedBox(badge = {
+                if (item.badge !=
+                    null
+                ) {
+                    Badge(containerColor = c.primary, contentColor = c.onPrimary) { Text(item.badge, style = DsTheme.typography.overline) }
+                }
+            }) { Icon(item.icon, contentDescription = null) }
+        },
         label = { Text(item.label, style = DsTheme.typography.overline, maxLines = 1) },
-        colors = NavigationRailItemDefaults.colors(
-            selectedIconColor = c.primary,
-            selectedTextColor = c.primary,
-            indicatorColor = c.primaryContainer,
-            unselectedIconColor = c.textSecondary,
-            unselectedTextColor = c.textSecondary,
-        ),
+        colors =
+            NavigationRailItemDefaults.colors(
+                selectedIconColor = c.primary,
+                selectedTextColor = c.primary,
+                indicatorColor = c.primaryContainer,
+                unselectedIconColor = c.textSecondary,
+                unselectedTextColor = c.textSecondary,
+            ),
     )
 }
 
 @Preview(name = "rail", heightDp = 480)
 @Composable
-private fun DsNavigationRailPreview() = DsTheme {
-    DsNavigationRail(listOf(DsNavItem("Vente", DsIcons.Register), DsNavItem("Commandes", DsIcons.Receipt, badge = "2"), DsNavItem("Catalogue", DsIcons.Catalogue)), 0, {}, bottomItems = listOf(DsNavItem("Réglages", DsIcons.Settings)))
-}
+private fun DsNavigationRailPreview() =
+    DsTheme {
+        DsNavigationRail(
+            listOf(
+                DsNavItem("Vente", DsIcons.Register),
+                DsNavItem("Commandes", DsIcons.Receipt, badge = "2"),
+                DsNavItem("Catalogue", DsIcons.Catalogue),
+            ),
+            0,
+            {
+            },
+            bottomItems = listOf(DsNavItem("Réglages", DsIcons.Settings)),
+        )
+    }

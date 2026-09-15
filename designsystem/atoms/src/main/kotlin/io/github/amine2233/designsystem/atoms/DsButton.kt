@@ -37,7 +37,10 @@ import io.github.amine2233.designsystem.core.DsTheme
 
 enum class DsButtonVariant { Primary, Outlined, Ghost, Danger }
 
-enum class DsButtonSize(val height: Dp, val horizontalPadding: Dp) {
+enum class DsButtonSize(
+    val height: Dp,
+    val horizontalPadding: Dp,
+) {
     Small(36.dp, 12.dp),
     Medium(44.dp, 16.dp),
     Large(52.dp, 24.dp),
@@ -59,25 +62,46 @@ fun DsButton(
     val content: Color
     val border: BorderStroke?
     when (variant) {
-        DsButtonVariant.Primary -> { container = colors.primary; content = colors.onPrimary; border = null }
-        DsButtonVariant.Outlined -> { container = Color.Transparent; content = colors.primary; border = BorderStroke(1.5.dp, colors.primary) }
-        DsButtonVariant.Ghost -> { container = Color.Transparent; content = colors.primary; border = null }
-        DsButtonVariant.Danger -> { container = Color.Transparent; content = colors.error; border = BorderStroke(1.dp, colors.error) }
+        DsButtonVariant.Primary -> {
+            container = colors.primary
+            content = colors.onPrimary
+            border = null
+        }
+
+        DsButtonVariant.Outlined -> {
+            container = Color.Transparent
+            content = colors.primary
+            border = BorderStroke(1.5.dp, colors.primary)
+        }
+
+        DsButtonVariant.Ghost -> {
+            container = Color.Transparent
+            content = colors.primary
+            border = null
+        }
+
+        DsButtonVariant.Danger -> {
+            container = Color.Transparent
+            content = colors.error
+            border = BorderStroke(1.dp, colors.error)
+        }
     }
     Button(
         onClick = { if (!loading) onClick() },
-        modifier = modifier
-            .heightIn(min = size.height)
-            .semantics { if (loading) stateDescription = "Chargement" },
+        modifier =
+            modifier
+                .heightIn(min = size.height)
+                .semantics { if (loading) stateDescription = "Chargement" },
         enabled = enabled,
         shape = DsShapes.button,
         border = border,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = container,
-            contentColor = content,
-            disabledContainerColor = if (variant == DsButtonVariant.Primary) colors.textDisabled else Color.Transparent,
-            disabledContentColor = if (variant == DsButtonVariant.Primary) colors.surface else colors.textDisabled,
-        ),
+        colors =
+            ButtonDefaults.buttonColors(
+                containerColor = container,
+                contentColor = content,
+                disabledContainerColor = if (variant == DsButtonVariant.Primary) colors.textDisabled else Color.Transparent,
+                disabledContentColor = if (variant == DsButtonVariant.Primary) colors.surface else colors.textDisabled,
+            ),
         contentPadding = PaddingValues(horizontal = size.horizontalPadding, vertical = 0.dp),
     ) {
         if (loading) {
@@ -89,7 +113,14 @@ fun DsButton(
         }
         Text(
             text = text,
-            style = if (size == DsButtonSize.Large) DsTheme.typography.title.copy(fontWeight = FontWeight.Bold) else DsTheme.typography.bodyStrong,
+            style =
+                if (size ==
+                    DsButtonSize.Large
+                ) {
+                    DsTheme.typography.title.copy(fontWeight = FontWeight.Bold)
+                } else {
+                    DsTheme.typography.bodyStrong
+                },
             maxLines = 1,
         )
     }
@@ -108,23 +139,25 @@ fun DsIconButton(
 ) {
     IconButton(
         onClick = onClick,
-        modifier = modifier
-            .size(DsTheme.spacing.minTouchTarget)
-            .then(
-                if (bordered) {
-                    Modifier
-                        .padding(4.dp)
-                        .border(1.dp, DsTheme.colors.border, DsShapes.pill)
-                } else {
-                    Modifier
-                },
-            ),
+        modifier =
+            modifier
+                .size(DsTheme.spacing.minTouchTarget)
+                .then(
+                    if (bordered) {
+                        Modifier
+                            .padding(4.dp)
+                            .border(1.dp, DsTheme.colors.border, DsShapes.pill)
+                    } else {
+                        Modifier
+                    },
+                ),
         enabled = enabled,
-        colors = IconButtonDefaults.iconButtonColors(
-            containerColor = containerColor,
-            contentColor = tint,
-            disabledContentColor = DsTheme.colors.textDisabled,
-        ),
+        colors =
+            IconButtonDefaults.iconButtonColors(
+                containerColor = containerColor,
+                contentColor = tint,
+                disabledContentColor = DsTheme.colors.textDisabled,
+            ),
     ) {
         Icon(icon, contentDescription = contentDescription, modifier = Modifier.size(22.dp))
     }
@@ -132,26 +165,28 @@ fun DsIconButton(
 
 @DsComponentPreview
 @Composable
-private fun DsButtonPreview() = DsPreview {
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        DsButton("Se connecter", onClick = {}, modifier = Modifier.fillMaxWidth())
-        DsButton("Créer un compte", onClick = {}, variant = DsButtonVariant.Outlined, modifier = Modifier.fillMaxWidth())
-        DsButton("Paiement en cours", onClick = {}, loading = true, modifier = Modifier.fillMaxWidth())
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            DsButton("Annuler", onClick = {}, variant = DsButtonVariant.Ghost, size = DsButtonSize.Small)
-            DsButton("Vider", onClick = {}, variant = DsButtonVariant.Danger, size = DsButtonSize.Small)
-            DsButton("Payer", onClick = {}, size = DsButtonSize.Medium, leadingIcon = DsIcons.Card)
-            DsButton("Off", onClick = {}, size = DsButtonSize.Small, enabled = false)
+private fun DsButtonPreview() =
+    DsPreview {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            DsButton("Se connecter", onClick = {}, modifier = Modifier.fillMaxWidth())
+            DsButton("Créer un compte", onClick = {}, variant = DsButtonVariant.Outlined, modifier = Modifier.fillMaxWidth())
+            DsButton("Paiement en cours", onClick = {}, loading = true, modifier = Modifier.fillMaxWidth())
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                DsButton("Annuler", onClick = {}, variant = DsButtonVariant.Ghost, size = DsButtonSize.Small)
+                DsButton("Vider", onClick = {}, variant = DsButtonVariant.Danger, size = DsButtonSize.Small)
+                DsButton("Payer", onClick = {}, size = DsButtonSize.Medium, leadingIcon = DsIcons.Card)
+                DsButton("Off", onClick = {}, size = DsButtonSize.Small, enabled = false)
+            }
         }
     }
-}
 
 @DsComponentPreview
 @Composable
-private fun DsIconButtonPreview() = DsPreview {
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        DsIconButton(DsIcons.Settings, contentDescription = null, onClick = {}, bordered = true)
-        DsIconButton(DsIcons.Close, contentDescription = null, onClick = {}, tint = DsTheme.colors.primary)
-        DsIconButton(DsIcons.Delete, contentDescription = null, onClick = {}, enabled = false)
+private fun DsIconButtonPreview() =
+    DsPreview {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            DsIconButton(DsIcons.Settings, contentDescription = null, onClick = {}, bordered = true)
+            DsIconButton(DsIcons.Close, contentDescription = null, onClick = {}, tint = DsTheme.colors.primary)
+            DsIconButton(DsIcons.Delete, contentDescription = null, onClick = {}, enabled = false)
+        }
     }
-}

@@ -12,13 +12,16 @@ import androidx.compose.runtime.ReadOnlyComposable
 
 object DsTheme {
     val colors: DsColorScheme
-        @Composable @ReadOnlyComposable get() = LocalDsColors.current
+        @Composable @ReadOnlyComposable
+        get() = LocalDsColors.current
     val typography: DsTypography
-        @Composable @ReadOnlyComposable get() = LocalDsTypography.current
+        @Composable @ReadOnlyComposable
+        get() = LocalDsTypography.current
     val spacing: DsSpacing get() = DsSpacing
     val shapes: DsShapes get() = DsShapes
     val windowSize: DsWindowSize
-        @Composable @ReadOnlyComposable get() = DsWindowSize.current()
+        @Composable @ReadOnlyComposable
+        get() = DsWindowSize.current()
 }
 
 @Composable
@@ -36,55 +39,57 @@ fun DsTheme(
         MaterialTheme(
             colorScheme = colors.toMaterial(darkTheme),
             typography = typography.toMaterial(),
-            shapes = Shapes(
-                extraSmall = DsShapes.xs,
-                small = DsShapes.sm,
-                medium = DsShapes.md,
-                large = DsShapes.lg,
-                extraLarge = DsShapes.xl,
-            ),
+            shapes =
+                Shapes(
+                    extraSmall = DsShapes.xs,
+                    small = DsShapes.sm,
+                    medium = DsShapes.md,
+                    large = DsShapes.lg,
+                    extraLarge = DsShapes.xl,
+                ),
             content = content,
         )
     }
 }
 
-private fun DsColorScheme.toMaterial(dark: Boolean) = (if (dark) darkColorScheme() else lightColorScheme()).copy(
-    primary = primary,
-    onPrimary = onPrimary,
-    primaryContainer = primaryContainer,
-    onPrimaryContainer = primary,
-    secondary = primary,
-    onSecondary = onPrimary,
-    secondaryContainer = primaryContainer,
-    onSecondaryContainer = primary,
-    background = background,
-    onBackground = textPrimary,
-    surface = surface,
-    onSurface = textPrimary,
-    surfaceVariant = surfaceSubtle,
-    onSurfaceVariant = textSecondary,
-    surfaceContainer = surface,
-    surfaceContainerLow = surfaceSubtle,
-    surfaceContainerHigh = surfaceMuted,
-    outline = borderStrong,
-    outlineVariant = border,
-    error = error,
-    onError = onPrimary,
-    errorContainer = errorContainer,
-    onErrorContainer = error,
-    scrim = scrim,
-)
+private fun DsColorScheme.toMaterial(dark: Boolean) =
+    (if (dark) darkColorScheme() else lightColorScheme()).copy(
+        primary = primary,
+        onPrimary = onPrimary,
+        primaryContainer = primaryContainer,
+        onPrimaryContainer = primary,
+        secondary = primary,
+        onSecondary = onPrimary,
+        secondaryContainer = primaryContainer,
+        onSecondaryContainer = primary,
+        background = background,
+        onBackground = textPrimary,
+        surface = surface,
+        onSurface = textPrimary,
+        surfaceVariant = surfaceSubtle,
+        onSurfaceVariant = textSecondary,
+        surfaceContainer = surface,
+        surfaceContainerLow = surfaceSubtle,
+        surfaceContainerHigh = surfaceMuted,
+        outline = borderStrong,
+        outlineVariant = border,
+        error = error,
+        onError = onPrimary,
+        errorContainer = errorContainer,
+        onErrorContainer = error,
+        scrim = scrim,
+    )
 
-private fun DsTypography.toMaterial() = Typography(
-    displayLarge = displayLarge,
-    displayMedium = displayMedium,
-    headlineMedium = headline,
-    titleLarge = titleLarge,
-    titleMedium = title,
-    bodyLarge = bodyLarge,
-    bodyMedium = body,
-    labelLarge = labelStrong,
-    labelMedium = label,
-    labelSmall = caption,
-)
-
+private fun DsTypography.toMaterial() =
+    Typography(
+        displayLarge = displayLarge,
+        displayMedium = displayMedium,
+        headlineMedium = headline,
+        titleLarge = titleLarge,
+        titleMedium = title,
+        bodyLarge = bodyLarge,
+        bodyMedium = body,
+        labelLarge = labelStrong,
+        labelMedium = label,
+        labelSmall = caption,
+    )

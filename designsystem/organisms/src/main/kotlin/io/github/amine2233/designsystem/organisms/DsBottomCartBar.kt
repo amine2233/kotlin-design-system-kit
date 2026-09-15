@@ -49,6 +49,7 @@ fun DsBottomCartBar(
 
 @DsComponentPreview
 @Composable
-private fun DsBottomCartBarPreview() = DsPreview {
-    DsBottomCartBar(itemCount = 3, total = "737 DA", onExpand = {}, onPay = {})
-}
+private fun DsBottomCartBarPreview() =
+    DsPreview {
+        DsBottomCartBar(itemCount = 3, total = "737 DA", onExpand = {}, onPay = {})
+    }

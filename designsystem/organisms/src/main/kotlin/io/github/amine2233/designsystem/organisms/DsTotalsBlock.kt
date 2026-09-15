@@ -17,7 +17,11 @@ import io.github.amine2233.designsystem.molecules.DsTotalsEmphasis
 import io.github.amine2233.designsystem.molecules.DsTotalsRow
 
 @Immutable
-data class DsTotalsLine(val label: String, val value: String, val emphasis: DsTotalsEmphasis = DsTotalsEmphasis.Normal)
+data class DsTotalsLine(
+    val label: String,
+    val value: String,
+    val emphasis: DsTotalsEmphasis = DsTotalsEmphasis.Normal,
+)
 
 /** HT → TVA breakdown → discount → tip → TTC. Order is the caller's responsibility (see CLAUDE.md calc order). */
 @Composable
@@ -37,9 +41,15 @@ fun DsTotalsBlock(
 
 @DsComponentPreview
 @Composable
-private fun DsTotalsBlockPreview() = DsPreview {
-    DsTotalsBlock(
-        lines = listOf(DsTotalsLine("Sous-total HT", "1 025 DA"), DsTotalsLine("TVA 10%", "98 DA"), DsTotalsLine("Remise totale", "−49 DA", DsTotalsEmphasis.Discount)),
-        total = DsTotalsLine("Total TTC", "1 080 DA"),
-    )
-}
+private fun DsTotalsBlockPreview() =
+    DsPreview {
+        DsTotalsBlock(
+            lines =
+                listOf(
+                    DsTotalsLine("Sous-total HT", "1 025 DA"),
+                    DsTotalsLine("TVA 10%", "98 DA"),
+                    DsTotalsLine("Remise totale", "−49 DA", DsTotalsEmphasis.Discount),
+                ),
+            total = DsTotalsLine("Total TTC", "1 080 DA"),
+        )
+    }

@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
+import com.android.tools.screenshot.PreviewTest
 import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.core.DsWindowSize
 import io.github.amine2233.designsystem.organisms.DsPaymentOutcome
-import com.android.tools.screenshot.PreviewTest
 
 /*
  * Reference images live in src/debug/screenshotTest/reference/.
@@ -19,7 +19,10 @@ private const val PHONE = "spec:width=375dp,height=780dp,dpi=420"
 private const val TABLET = "spec:width=960dp,height=600dp,dpi=320"
 
 @Composable
-private fun Snapshot(dark: Boolean = false, content: @Composable () -> Unit) {
+private fun Snapshot(
+    dark: Boolean = false,
+    content: @Composable () -> Unit,
+) {
     DsTheme(darkTheme = dark, content = content)
 }
 

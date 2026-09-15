@@ -29,11 +29,12 @@ fun DsAmountDisplay(
 ) {
     val c = DsTheme.colors
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(c.primaryContainer, DsShapes.lg)
-            .border(2.dp, c.primary, DsShapes.lg)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .background(c.primaryContainer, DsShapes.lg)
+                .border(2.dp, c.primary, DsShapes.lg)
+                .padding(horizontal = 16.dp, vertical = 12.dp),
         horizontalArrangement = if (label != null) Arrangement.SpaceBetween else Arrangement.End,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -48,10 +49,11 @@ fun DsAmountDisplay(
 
 @DsComponentPreview
 @Composable
-private fun DsAmountDisplayPreview() = DsPreview {
-    DsAmountDisplay("1 500,00", "DA")
-    Spacer(Modifier.height(8.dp))
-    DsAmountDisplay("10,00", "%", label = "Valeur saisie")
-    Spacer(Modifier.height(8.dp))
-    DsAmountDisplay("108,00", "DA", label = "10% de 1 080 DA", prefix = "+")
-}
+private fun DsAmountDisplayPreview() =
+    DsPreview {
+        DsAmountDisplay("1 500,00", "DA")
+        Spacer(Modifier.height(8.dp))
+        DsAmountDisplay("10,00", "%", label = "Valeur saisie")
+        Spacer(Modifier.height(8.dp))
+        DsAmountDisplay("108,00", "DA", label = "10% de 1 080 DA", prefix = "+")
+    }

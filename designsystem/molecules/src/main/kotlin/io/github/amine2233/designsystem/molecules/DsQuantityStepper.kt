@@ -32,11 +32,12 @@ fun DsQuantityStepper(
 ) {
     val c = DsTheme.colors
     Row(
-        modifier = modifier
-            .height(32.dp)
-            .clip(DsShapes.sm)
-            .background(c.surfaceSubtle)
-            .border(1.dp, c.border, DsShapes.sm),
+        modifier =
+            modifier
+                .height(32.dp)
+                .clip(DsShapes.sm)
+                .background(c.surfaceSubtle)
+                .border(1.dp, c.border, DsShapes.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         StepKey("−", enabled = quantity > min, color = c.textSecondary) { onQuantityChange(quantity - 1) }
@@ -50,12 +51,18 @@ fun DsQuantityStepper(
 }
 
 @Composable
-private fun StepKey(symbol: String, enabled: Boolean, color: androidx.compose.ui.graphics.Color, onClick: () -> Unit) {
+private fun StepKey(
+    symbol: String,
+    enabled: Boolean,
+    color: androidx.compose.ui.graphics.Color,
+    onClick: () -> Unit,
+) {
     Box(
-        modifier = Modifier
-            .width(32.dp)
-            .height(32.dp)
-            .clickable(enabled = enabled, onClick = onClick),
+        modifier =
+            Modifier
+                .width(32.dp)
+                .height(32.dp)
+                .clickable(enabled = enabled, onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
         Text(
@@ -68,8 +75,9 @@ private fun StepKey(symbol: String, enabled: Boolean, color: androidx.compose.ui
 
 @DsComponentPreview
 @Composable
-private fun DsQuantityStepperPreview() = DsPreview {
-    DsQuantityStepper(2, {})
-    Spacer(Modifier.height(8.dp))
-    DsQuantityStepper(0, {}, min = 0)
-}
+private fun DsQuantityStepperPreview() =
+    DsPreview {
+        DsQuantityStepper(2, {})
+        Spacer(Modifier.height(8.dp))
+        DsQuantityStepper(0, {}, min = 0)
+    }

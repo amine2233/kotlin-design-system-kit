@@ -17,10 +17,19 @@ import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
 
 @Immutable
-data class DsNavItem(val label: String, val icon: ImageVector, val badge: String? = null)
+data class DsNavItem(
+    val label: String,
+    val icon: ImageVector,
+    val badge: String? = null,
+)
 
 @Composable
-fun DsBottomNavBar(items: List<DsNavItem>, selectedIndex: Int, onSelect: (Int) -> Unit, modifier: Modifier = Modifier) {
+fun DsBottomNavBar(
+    items: List<DsNavItem>,
+    selectedIndex: Int,
+    onSelect: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val c = DsTheme.colors
     NavigationBar(modifier, containerColor = c.surface) {
         items.forEachIndexed { i, item ->
@@ -28,18 +37,28 @@ fun DsBottomNavBar(items: List<DsNavItem>, selectedIndex: Int, onSelect: (Int) -
                 selected = i == selectedIndex,
                 onClick = { onSelect(i) },
                 icon = {
-                    BadgedBox(badge = { if (item.badge != null) Badge(containerColor = c.primary, contentColor = c.onPrimary) { Text(item.badge, style = DsTheme.typography.overline) } }) {
+                    BadgedBox(badge = {
+                        if (item.badge !=
+                            null
+                        ) {
+                            Badge(
+                                containerColor = c.primary,
+                                contentColor = c.onPrimary,
+                            ) { Text(item.badge, style = DsTheme.typography.overline) }
+                        }
+                    }) {
                         Icon(item.icon, contentDescription = null)
                     }
                 },
                 label = { Text(item.label, style = DsTheme.typography.caption) },
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = c.primary,
-                    selectedTextColor = c.primary,
-                    indicatorColor = c.primaryContainer,
-                    unselectedIconColor = c.textSecondary,
-                    unselectedTextColor = c.textSecondary,
-                ),
+                colors =
+                    NavigationBarItemDefaults.colors(
+                        selectedIconColor = c.primary,
+                        selectedTextColor = c.primary,
+                        indicatorColor = c.primaryContainer,
+                        unselectedIconColor = c.textSecondary,
+                        unselectedTextColor = c.textSecondary,
+                    ),
             )
         }
     }
@@ -47,6 +66,17 @@ fun DsBottomNavBar(items: List<DsNavItem>, selectedIndex: Int, onSelect: (Int) -
 
 @DsComponentPreview
 @Composable
-private fun DsBottomNavBarPreview() = DsPreview {
-    DsBottomNavBar(listOf(DsNavItem("Vente", DsIcons.Register), DsNavItem("Commandes", DsIcons.Receipt, badge = "2"), DsNavItem("Catalogue", DsIcons.Catalogue), DsNavItem("Réglages", DsIcons.Settings)), 0, {})
-}
+private fun DsBottomNavBarPreview() =
+    DsPreview {
+        DsBottomNavBar(
+            listOf(
+                DsNavItem("Vente", DsIcons.Register),
+                DsNavItem("Commandes", DsIcons.Receipt, badge = "2"),
+                DsNavItem("Catalogue", DsIcons.Catalogue),
+                DsNavItem("Réglages", DsIcons.Settings),
+            ),
+            0,
+            {
+            },
+        )
+    }

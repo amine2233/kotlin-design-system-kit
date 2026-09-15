@@ -61,9 +61,10 @@ fun DsProductCard(
 
 @DsComponentPreview
 @Composable
-private fun DsProductCardPreview() = DsPreview {
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        DsProductCard("Espresso", "150 DA", onClick = {}, modifier = Modifier.weight(1f))
-        DsProductCard("Cappuccino", "200 DA", onClick = {}, inCartCount = 2, modifier = Modifier.weight(1f))
+private fun DsProductCardPreview() =
+    DsPreview {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            DsProductCard("Espresso", "150 DA", onClick = {}, modifier = Modifier.weight(1f))
+            DsProductCard("Cappuccino", "200 DA", onClick = {}, inCartCount = 2, modifier = Modifier.weight(1f))
+        }
     }
-}

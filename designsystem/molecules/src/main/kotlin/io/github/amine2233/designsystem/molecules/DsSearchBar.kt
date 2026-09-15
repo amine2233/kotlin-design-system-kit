@@ -33,12 +33,13 @@ fun DsSearchBar(
 ) {
     val c = DsTheme.colors
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(36.dp)
-            .background(c.surfaceSubtle, DsShapes.pill)
-            .border(1.dp, c.border, DsShapes.pill)
-            .padding(horizontal = 12.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .height(36.dp)
+                .background(c.surfaceSubtle, DsShapes.pill)
+                .border(1.dp, c.border, DsShapes.pill)
+                .padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(Icons.Default.Search, contentDescription = null, tint = c.textTertiary, modifier = Modifier.size(16.dp))
@@ -57,8 +58,9 @@ fun DsSearchBar(
 
 @DsComponentPreview
 @Composable
-private fun DsSearchBarPreview() = DsPreview {
-    DsSearchBar("", {})
-    Spacer(Modifier.height(8.dp))
-    DsSearchBar("Capp", {})
-}
+private fun DsSearchBarPreview() =
+    DsPreview {
+        DsSearchBar("", {})
+        Spacer(Modifier.height(8.dp))
+        DsSearchBar("Capp", {})
+    }

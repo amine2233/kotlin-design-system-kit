@@ -31,10 +31,11 @@ fun DsSwitch(
 ) {
     val c = DsTheme.colors
     Row(
-        modifier = modifier
-            .then(if (label != null) Modifier.fillMaxWidth() else Modifier)
-            .heightIn(min = DsTheme.spacing.minTouchTarget)
-            .toggleable(value = checked, enabled = enabled, role = Role.Switch, onValueChange = onCheckedChange),
+        modifier =
+            modifier
+                .then(if (label != null) Modifier.fillMaxWidth() else Modifier)
+                .heightIn(min = DsTheme.spacing.minTouchTarget)
+                .toggleable(value = checked, enabled = enabled, role = Role.Switch, onValueChange = onCheckedChange),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
@@ -43,13 +44,14 @@ fun DsSwitch(
             checked = checked,
             onCheckedChange = null,
             enabled = enabled,
-            colors = SwitchDefaults.colors(
-                checkedThumbColor = c.onPrimary,
-                checkedTrackColor = c.primary,
-                uncheckedThumbColor = c.surface,
-                uncheckedTrackColor = c.borderStrong,
-                uncheckedBorderColor = c.borderStrong,
-            ),
+            colors =
+                SwitchDefaults.colors(
+                    checkedThumbColor = c.onPrimary,
+                    checkedTrackColor = c.primary,
+                    uncheckedThumbColor = c.surface,
+                    uncheckedTrackColor = c.borderStrong,
+                    uncheckedBorderColor = c.borderStrong,
+                ),
         )
     }
 }
@@ -64,9 +66,10 @@ fun DsCheckbox(
 ) {
     val c = DsTheme.colors
     Row(
-        modifier = modifier
-            .heightIn(min = DsTheme.spacing.minTouchTarget)
-            .toggleable(value = checked, enabled = enabled, role = Role.Checkbox, onValueChange = onCheckedChange),
+        modifier =
+            modifier
+                .heightIn(min = DsTheme.spacing.minTouchTarget)
+                .toggleable(value = checked, enabled = enabled, role = Role.Checkbox, onValueChange = onCheckedChange),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
@@ -91,24 +94,37 @@ fun DsRadioButton(
 ) {
     val c = DsTheme.colors
     Row(
-        modifier = modifier
-            .heightIn(min = DsTheme.spacing.minTouchTarget)
-            .selectable(selected = selected, enabled = enabled, role = Role.RadioButton, onClick = onClick),
+        modifier =
+            modifier
+                .heightIn(min = DsTheme.spacing.minTouchTarget)
+                .selectable(selected = selected, enabled = enabled, role = Role.RadioButton, onClick = onClick),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         DsRadioIndicator(selected)
-        Text(label, style = if (selected) DsTheme.typography.bodyStrong else DsTheme.typography.body, color = if (!enabled) c.textDisabled else if (selected) c.primary else c.textPrimary)
+        Text(
+            label,
+            style = if (selected) DsTheme.typography.bodyStrong else DsTheme.typography.body,
+            color =
+                if (!enabled) {
+                    c.textDisabled
+                } else if (selected) {
+                    c.primary
+                } else {
+                    c.textPrimary
+                },
+        )
     }
 }
 
 @DsComponentPreview
 @Composable
-private fun DsSelectionControlsPreview() = DsPreview {
-    DsSwitch(true, {}, label = "Variantes activées")
-    DsSwitch(false, {}, label = "Désactivé", enabled = false)
-    DsCheckbox(true, {}, label = "Imprimer le ticket")
-    DsCheckbox(false, {}, label = "Envoyer par e-mail")
-    DsRadioButton(true, {}, "Espèces")
-    DsRadioButton(false, {}, "Carte")
-}
+private fun DsSelectionControlsPreview() =
+    DsPreview {
+        DsSwitch(true, {}, label = "Variantes activées")
+        DsSwitch(false, {}, label = "Désactivé", enabled = false)
+        DsCheckbox(true, {}, label = "Imprimer le ticket")
+        DsCheckbox(false, {}, label = "Envoyer par e-mail")
+        DsRadioButton(true, {}, "Espèces")
+        DsRadioButton(false, {}, "Carte")
+    }

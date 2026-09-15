@@ -30,25 +30,29 @@ import io.github.amine2233.designsystem.core.DsTheme
 
 /** Dashed teal "add" row ("+ Montant libre / pavé numérique", "+ Ajouter une option"). */
 @Composable
-fun DsDashedActionRow(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun DsDashedActionRow(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val c = DsTheme.colors
     val stroke = with(LocalDensity.current) { 1.5.dp.toPx() }
     val dash = with(LocalDensity.current) { 6.dp.toPx() }
     val radius = with(LocalDensity.current) { 16.dp.toPx() }
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .heightIn(min = 44.dp)
-            .clip(DsShapes.lg)
-            .drawBehind {
-                drawRoundRect(
-                    color = c.primary,
-                    cornerRadius = CornerRadius(radius),
-                    style = Stroke(width = stroke, pathEffect = PathEffect.dashPathEffect(floatArrayOf(dash, dash))),
-                )
-            }
-            .clickable(onClick = onClick)
-            .padding(horizontal = 14.dp, vertical = 9.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .heightIn(min = 44.dp)
+                .clip(DsShapes.lg)
+                .drawBehind {
+                    drawRoundRect(
+                        color = c.primary,
+                        cornerRadius = CornerRadius(radius),
+                        style = Stroke(width = stroke, pathEffect = PathEffect.dashPathEffect(floatArrayOf(dash, dash))),
+                    )
+                }.clickable(onClick = onClick)
+                .padding(horizontal = 14.dp, vertical = 9.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -61,6 +65,7 @@ fun DsDashedActionRow(text: String, onClick: () -> Unit, modifier: Modifier = Mo
 
 @DsComponentPreview
 @Composable
-private fun DsDashedActionRowPreview() = DsPreview {
-    DsDashedActionRow("Montant libre / pavé numérique", onClick = {})
-}
+private fun DsDashedActionRowPreview() =
+    DsPreview {
+        DsDashedActionRow("Montant libre / pavé numérique", onClick = {})
+    }

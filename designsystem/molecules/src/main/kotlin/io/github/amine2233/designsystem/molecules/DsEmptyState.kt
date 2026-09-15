@@ -35,7 +35,10 @@ fun DsEmptyState(
     val c = DsTheme.colors
     Column(modifier.fillMaxWidth().padding(32.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         if (icon != null) {
-            DsIconTile(icon, size = 64.dp) { Icon(icon, contentDescription = null, tint = c.textTertiary, modifier = Modifier.padding(16.dp)) }
+            DsIconTile(
+                icon,
+                size = 64.dp,
+            ) { Icon(icon, contentDescription = null, tint = c.textTertiary, modifier = Modifier.padding(16.dp)) }
             Spacer(Modifier.height(16.dp))
         }
         Text(title, style = DsTheme.typography.title, color = c.textPrimary, textAlign = TextAlign.Center)
@@ -52,6 +55,13 @@ fun DsEmptyState(
 
 @DsComponentPreview
 @Composable
-private fun DsEmptyStatePreview() = DsPreview {
-    DsEmptyState("Panier vide", description = "Touchez un produit pour l'ajouter.", icon = DsIcons.Cart, actionLabel = "Voir le catalogue", onAction = {})
-}
+private fun DsEmptyStatePreview() =
+    DsPreview {
+        DsEmptyState(
+            "Panier vide",
+            description = "Touchez un produit pour l'ajouter.",
+            icon = DsIcons.Cart,
+            actionLabel = "Voir le catalogue",
+            onAction = {},
+        )
+    }

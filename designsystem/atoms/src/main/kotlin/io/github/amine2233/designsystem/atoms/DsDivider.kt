@@ -14,19 +14,30 @@ import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
 
 @Composable
-fun DsDivider(modifier: Modifier = Modifier, thickness: Dp = 1.dp) {
+fun DsDivider(
+    modifier: Modifier = Modifier,
+    thickness: Dp = 1.dp,
+) {
     HorizontalDivider(modifier = modifier, thickness = thickness, color = DsTheme.colors.border)
 }
 
 @Composable
-fun DsVerticalDivider(modifier: Modifier = Modifier, thickness: Dp = 1.dp) {
+fun DsVerticalDivider(
+    modifier: Modifier = Modifier,
+    thickness: Dp = 1.dp,
+) {
     VerticalDivider(modifier = modifier, thickness = thickness, color = DsTheme.colors.border)
 }
 
 @DsComponentPreview
 @Composable
-private fun DsDividerPreview() = DsPreview {
-    DsText("Above")
-    DsDivider(Modifier.padding(vertical = 8.dp))
-    Row(Modifier.height(24.dp)) { DsText("Left"); DsVerticalDivider(Modifier.padding(horizontal = 8.dp)); DsText("Right") }
-}
+private fun DsDividerPreview() =
+    DsPreview {
+        DsText("Above")
+        DsDivider(Modifier.padding(vertical = 8.dp))
+        Row(Modifier.height(24.dp)) {
+            DsText("Left")
+            DsVerticalDivider(Modifier.padding(horizontal = 8.dp))
+            DsText("Right")
+        }
+    }

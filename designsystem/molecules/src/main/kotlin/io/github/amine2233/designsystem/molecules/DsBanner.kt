@@ -44,18 +44,20 @@ fun DsBanner(
     onDismiss: (() -> Unit)? = null,
 ) {
     val c = DsTheme.colors
-    val (bg, fg, icon) = when (tone) {
-        DsBannerTone.Info -> Triple(c.infoContainer, c.info, Icons.Default.Info)
-        DsBannerTone.Success -> Triple(c.successContainer, c.success, Icons.Default.CheckCircle)
-        DsBannerTone.Warning -> Triple(c.warningContainer, c.warning, Icons.Default.Warning)
-        DsBannerTone.Error -> Triple(c.errorContainer, c.error, Icons.Default.Warning)
-    }
+    val (bg, fg, icon) =
+        when (tone) {
+            DsBannerTone.Info -> Triple(c.infoContainer, c.info, Icons.Default.Info)
+            DsBannerTone.Success -> Triple(c.successContainer, c.success, Icons.Default.CheckCircle)
+            DsBannerTone.Warning -> Triple(c.warningContainer, c.warning, Icons.Default.Warning)
+            DsBannerTone.Error -> Triple(c.errorContainer, c.error, Icons.Default.Warning)
+        }
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(bg, DsShapes.md)
-            .border(1.dp, fg.copy(alpha = 0.35f), DsShapes.md)
-            .padding(start = 12.dp, end = 4.dp, top = 10.dp, bottom = 10.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .background(bg, DsShapes.md)
+                .border(1.dp, fg.copy(alpha = 0.35f), DsShapes.md)
+                .padding(start = 12.dp, end = 4.dp, top = 10.dp, bottom = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {
@@ -73,12 +75,19 @@ fun DsBanner(
 
 @DsComponentPreview
 @Composable
-private fun DsBannerPreview() = DsPreview {
-    DsBanner("Le terminal est déconnecté.", tone = DsBannerTone.Error, title = "Paiement carte indisponible", actionLabel = "Réessayer", onAction = {})
-    Spacer(Modifier.height(6.dp))
-    DsBanner("Remise appliquée.", tone = DsBannerTone.Success, onDismiss = {})
-    Spacer(Modifier.height(6.dp))
-    DsBanner("Pourboire calculé sur le TTC.", tone = DsBannerTone.Info)
-    Spacer(Modifier.height(6.dp))
-    DsBanner("Stock faible : Croissant (3)", tone = DsBannerTone.Warning)
-}
+private fun DsBannerPreview() =
+    DsPreview {
+        DsBanner(
+            "Le terminal est déconnecté.",
+            tone = DsBannerTone.Error,
+            title = "Paiement carte indisponible",
+            actionLabel = "Réessayer",
+            onAction = {},
+        )
+        Spacer(Modifier.height(6.dp))
+        DsBanner("Remise appliquée.", tone = DsBannerTone.Success, onDismiss = {})
+        Spacer(Modifier.height(6.dp))
+        DsBanner("Pourboire calculé sur le TTC.", tone = DsBannerTone.Info)
+        Spacer(Modifier.height(6.dp))
+        DsBanner("Stock faible : Croissant (3)", tone = DsBannerTone.Warning)
+    }

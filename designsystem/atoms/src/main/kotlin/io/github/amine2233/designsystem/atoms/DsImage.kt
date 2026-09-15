@@ -63,31 +63,44 @@ fun DsImageSlot(
         DsImage(painter, contentDescription, modifier, shape)
     } else {
         Box(modifier.clip(shape).background(DsTheme.colors.surfaceMuted), contentAlignment = Alignment.Center) {
-            Icon(DsIcons.Image, contentDescription = contentDescription, tint = DsTheme.colors.textDisabled, modifier = Modifier.size(24.dp))
+            Icon(
+                DsIcons.Image,
+                contentDescription = contentDescription,
+                tint = DsTheme.colors.textDisabled,
+                modifier = Modifier.size(24.dp),
+            )
         }
     }
 }
 
 /** Fixed-size illustration (empty state, error, offline). */
 @Composable
-fun DsIllustration(@DrawableRes resId: Int, modifier: Modifier = Modifier, size: Dp = 120.dp) {
+fun DsIllustration(
+    @DrawableRes resId: Int,
+    modifier: Modifier = Modifier,
+    size: Dp = 120.dp,
+) {
     Image(painterResource(resId), contentDescription = null, modifier = modifier.size(size), contentScale = ContentScale.Fit)
 }
 
 /** App logo at any size (vector). */
 @Composable
-fun DsLogo(modifier: Modifier = Modifier, size: Dp = 80.dp) {
+fun DsLogo(
+    modifier: Modifier = Modifier,
+    size: Dp = 80.dp,
+) {
     Image(painterResource(DsImages.Logo), contentDescription = "Caisse Pro", modifier = modifier.size(size))
 }
 
 @DsComponentPreview
 @Composable
-private fun DsImagePreview() = DsPreview {
-    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        DsLogo(size = 48.dp)
-        DsImage(DsImages.ProductPlaceholder, null, Modifier.size(48.dp))
-        DsImageSlot(null, null, Modifier.size(48.dp))
-        DsIllustration(DsImages.Illustrations.EmptyCart, size = 64.dp)
-        DsIllustration(DsImages.Illustrations.Error, size = 64.dp)
+private fun DsImagePreview() =
+    DsPreview {
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            DsLogo(size = 48.dp)
+            DsImage(DsImages.ProductPlaceholder, null, Modifier.size(48.dp))
+            DsImageSlot(null, null, Modifier.size(48.dp))
+            DsIllustration(DsImages.Illustrations.EmptyCart, size = 64.dp)
+            DsIllustration(DsImages.Illustrations.Error, size = 64.dp)
+        }
     }
-}

@@ -55,8 +55,17 @@ fun AtomsGallery(modifier: Modifier = Modifier) {
     Column(modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
         CatalogSection("Colors") {
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                listOf(DsPalette.Teal700, DsPalette.Teal400, DsPalette.Teal100, DsPalette.Teal50, DsPalette.Red500, DsPalette.Orange700, DsPalette.Green700, DsPalette.Grey500, DsPalette.Grey200)
-                    .forEach { Box(Modifier.size(32.dp).background(it, DsShapes.sm)) }
+                listOf(
+                    DsPalette.Teal700,
+                    DsPalette.Teal400,
+                    DsPalette.Teal100,
+                    DsPalette.Teal50,
+                    DsPalette.Red500,
+                    DsPalette.Orange700,
+                    DsPalette.Green700,
+                    DsPalette.Grey500,
+                    DsPalette.Grey200,
+                ).forEach { Box(Modifier.size(32.dp).background(it, DsShapes.sm)) }
             }
         }
         CatalogSection("Typography") {
@@ -141,7 +150,9 @@ fun AtomsGallery(modifier: Modifier = Modifier) {
         CatalogSection("Cards & progress") {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 DsCard(Modifier.weight(1f), contentPadding = 12.dp) { Text("Card", style = DsTheme.typography.body) }
-                DsCard(Modifier.weight(1f), selected = true, contentPadding = 12.dp) { Text("Selected", style = DsTheme.typography.body, color = DsTheme.colors.primary) }
+                DsCard(Modifier.weight(1f), selected = true, contentPadding = 12.dp) {
+                    Text("Selected", style = DsTheme.typography.body, color = DsTheme.colors.primary)
+                }
             }
             DsLinearProgress(0.72f)
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {

@@ -55,6 +55,14 @@ fun DsProcessingState(
 
 @DsComponentPreview
 @Composable
-private fun DsProcessingStatePreview() = DsPreview {
-    DsProcessingState(DsIcons.Card, "Présentez la carte", description = "Le client tape ou insère sa carte sur le terminal.", progress = 0.6f, amount = "800 DA", amountLabel = "Montant sur le terminal")
-}
+private fun DsProcessingStatePreview() =
+    DsPreview {
+        DsProcessingState(
+            DsIcons.Card,
+            "Présentez la carte",
+            description = "Le client tape ou insère sa carte sur le terminal.",
+            progress = 0.6f,
+            amount = "800 DA",
+            amountLabel = "Montant sur le terminal",
+        )
+    }

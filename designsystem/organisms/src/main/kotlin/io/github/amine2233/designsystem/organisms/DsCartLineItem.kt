@@ -62,18 +62,38 @@ fun DsCartLineItem(
                 Column(horizontalAlignment = Alignment.End) {
                     Text(lineTotal, style = DsTheme.typography.title, color = c.textPrimary)
                     if (originalTotal != null) {
-                        Text(originalTotal, style = DsTheme.typography.caption.copy(textDecoration = TextDecoration.LineThrough), color = c.warning)
+                        Text(
+                            originalTotal,
+                            style = DsTheme.typography.caption.copy(textDecoration = TextDecoration.LineThrough),
+                            color = c.warning,
+                        )
                     }
                 }
                 if (onRemove != null) {
-                    DsIconButton(Icons.Default.Close, contentDescription = "Supprimer", onClick = onRemove, tint = c.textDisabled, modifier = Modifier.size(28.dp))
+                    DsIconButton(
+                        Icons.Default.Close,
+                        contentDescription = "Supprimer",
+                        onClick = onRemove,
+                        tint = c.textDisabled,
+                        modifier = Modifier.size(28.dp),
+                    )
                 }
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                DsChip("$tvaLabel ▾", tone = DsChipTone.Primary, onClick = onTvaClick, contentPadding = PaddingValues(horizontal = 10.dp, vertical = 3.dp))
+                DsChip(
+                    "$tvaLabel ▾",
+                    tone = DsChipTone.Primary,
+                    onClick = onTvaClick,
+                    contentPadding = PaddingValues(horizontal = 10.dp, vertical = 3.dp),
+                )
                 Text("$unitPrice / u.", style = DsTheme.typography.caption, color = c.textTertiary)
                 Spacer(Modifier.weight(1f))
-                DsChip(discountLabel ?: "% Remise →", tone = DsChipTone.Warning, onClick = onDiscountClick, contentPadding = PaddingValues(horizontal = 10.dp, vertical = 3.dp))
+                DsChip(
+                    discountLabel ?: "% Remise →",
+                    tone = DsChipTone.Warning,
+                    onClick = onDiscountClick,
+                    contentPadding = PaddingValues(horizontal = 10.dp, vertical = 3.dp),
+                )
             }
         }
     }
@@ -81,8 +101,20 @@ fun DsCartLineItem(
 
 @DsComponentPreview
 @Composable
-private fun DsCartLineItemPreview() = DsPreview {
-    DsCartLineItem("Cappuccino", 2, {}, lineTotal = "400 DA", unitPrice = "200 DA", tvaLabel = "TVA 10%", onRemove = {})
-    Spacer(Modifier.height(6.dp))
-    DsCartLineItem("Formule Déjeuner", 1, {}, lineTotal = "441 DA", unitPrice = "490 DA", tvaLabel = "TVA 10%", note = "Sans sucre", originalTotal = "490 DA", discountLabel = "−10% ✓", onRemove = {})
-}
+private fun DsCartLineItemPreview() =
+    DsPreview {
+        DsCartLineItem("Cappuccino", 2, {}, lineTotal = "400 DA", unitPrice = "200 DA", tvaLabel = "TVA 10%", onRemove = {})
+        Spacer(Modifier.height(6.dp))
+        DsCartLineItem(
+            "Formule Déjeuner",
+            1,
+            {},
+            lineTotal = "441 DA",
+            unitPrice = "490 DA",
+            tvaLabel = "TVA 10%",
+            note = "Sans sucre",
+            originalTotal = "490 DA",
+            discountLabel = "−10% ✓",
+            onRemove = {},
+        )
+    }

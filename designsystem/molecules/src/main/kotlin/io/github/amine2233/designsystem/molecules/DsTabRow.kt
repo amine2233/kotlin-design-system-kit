@@ -14,7 +14,12 @@ import io.github.amine2233.designsystem.core.DsTheme
 
 /** Underlined tabs (Catalogue groups, orders filters). For a toggle use [DsSegmentedControl]. */
 @Composable
-fun DsTabRow(tabs: List<String>, selectedIndex: Int, onSelect: (Int) -> Unit, modifier: Modifier = Modifier) {
+fun DsTabRow(
+    tabs: List<String>,
+    selectedIndex: Int,
+    onSelect: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val c = DsTheme.colors
     TabRow(
         selectedTabIndex = selectedIndex,
@@ -32,7 +37,20 @@ fun DsTabRow(tabs: List<String>, selectedIndex: Int, onSelect: (Int) -> Unit, mo
                 onClick = { onSelect(i) },
                 selectedContentColor = c.primary,
                 unselectedContentColor = c.textSecondary,
-                text = { Text(label, style = if (i == selectedIndex) DsTheme.typography.labelStrong else DsTheme.typography.label, maxLines = 1) },
+                text = {
+                    Text(
+                        label,
+                        style =
+                            if (i ==
+                                selectedIndex
+                            ) {
+                                DsTheme.typography.labelStrong
+                            } else {
+                                DsTheme.typography.label
+                            },
+                        maxLines = 1,
+                    )
+                },
             )
         }
     }
@@ -40,6 +58,7 @@ fun DsTabRow(tabs: List<String>, selectedIndex: Int, onSelect: (Int) -> Unit, mo
 
 @DsComponentPreview
 @Composable
-private fun DsTabRowPreview() = DsPreview {
-    DsTabRow(listOf("Boissons", "Nourriture", "Extras"), 0, {})
-}
+private fun DsTabRowPreview() =
+    DsPreview {
+        DsTabRow(listOf("Boissons", "Nourriture", "Extras"), 0, {})
+    }

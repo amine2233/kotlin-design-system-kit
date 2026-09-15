@@ -51,14 +51,15 @@ fun DsDropdown(
         }
         Box {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = 40.dp)
-                    .clip(DsShapes.sm)
-                    .background(c.surfaceSubtle)
-                    .border(1.dp, if (open) c.primary else c.border, DsShapes.sm)
-                    .clickable(enabled = enabled) { open = true }
-                    .padding(horizontal = 12.dp, vertical = 8.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 40.dp)
+                        .clip(DsShapes.sm)
+                        .background(c.surfaceSubtle)
+                        .border(1.dp, if (open) c.primary else c.border, DsShapes.sm)
+                        .clickable(enabled = enabled) { open = true }
+                        .padding(horizontal = 12.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 val value = selectedIndex?.let { options.getOrNull(it) }
@@ -74,8 +75,24 @@ fun DsDropdown(
             DropdownMenu(expanded = open, onDismissRequest = { open = false }, containerColor = c.surface, shape = DsShapes.md) {
                 options.forEachIndexed { i, option ->
                     DropdownMenuItem(
-                        text = { Text(option, style = DsTheme.typography.body, color = if (i == selectedIndex) c.primary else c.textPrimary) },
-                        onClick = { open = false; onSelect(i) },
+                        text = {
+                            Text(
+                                option,
+                                style = DsTheme.typography.body,
+                                color =
+                                    if (i ==
+                                        selectedIndex
+                                    ) {
+                                        c.primary
+                                    } else {
+                                        c.textPrimary
+                                    },
+                            )
+                        },
+                        onClick = {
+                            open = false
+                            onSelect(i)
+                        },
                     )
                 }
             }
@@ -85,8 +102,9 @@ fun DsDropdown(
 
 @DsComponentPreview
 @Composable
-private fun DsDropdownPreview() = DsPreview {
-    DsDropdown(listOf("Fidélité", "Geste commercial", "Erreur de saisie"), 0, {}, label = "Motif")
-    Spacer(Modifier.height(8.dp))
-    DsDropdown(listOf("20%", "10%"), null, {}, placeholder = "Taux de TVA")
-}
+private fun DsDropdownPreview() =
+    DsPreview {
+        DsDropdown(listOf("Fidélité", "Geste commercial", "Erreur de saisie"), 0, {}, label = "Motif")
+        Spacer(Modifier.height(8.dp))
+        DsDropdown(listOf("20%", "10%"), null, {}, placeholder = "Taux de TVA")
+    }

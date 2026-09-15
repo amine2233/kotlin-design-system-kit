@@ -27,10 +27,11 @@ fun DsBadge(
     contentColor: Color = DsTheme.colors.onPrimary,
 ) {
     Box(
-        modifier = modifier
-            .defaultMinSize(minWidth = 20.dp, minHeight = 20.dp)
-            .background(containerColor, DsShapes.pill)
-            .padding(horizontal = 6.dp, vertical = 2.dp),
+        modifier =
+            modifier
+                .defaultMinSize(minWidth = 20.dp, minHeight = 20.dp)
+                .background(containerColor, DsShapes.pill)
+                .padding(horizontal = 6.dp, vertical = 2.dp),
         contentAlignment = Alignment.Center,
     ) {
         Text(
@@ -44,6 +45,11 @@ fun DsBadge(
 
 @DsComponentPreview
 @Composable
-private fun DsBadgePreview() = DsPreview {
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { DsBadge("3"); DsBadge("12", containerColor = DsTheme.colors.error); DsBadge("NEW") }
-}
+private fun DsBadgePreview() =
+    DsPreview {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            DsBadge("3")
+            DsBadge("12", containerColor = DsTheme.colors.error)
+            DsBadge("NEW")
+        }
+    }

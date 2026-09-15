@@ -63,23 +63,39 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
         CatalogSection("Cart line items") {
             var q1 by rememberSaveable { mutableIntStateOf(2) }
             DsCartLineItem("Cappuccino", q1, { q1 = it }, lineTotal = "400 DA", unitPrice = "200 DA", tvaLabel = "TVA 10%", onRemove = {})
-            DsCartLineItem("Formule Déjeuner", 1, {}, lineTotal = "441 DA", unitPrice = "490 DA", tvaLabel = "TVA 10%", note = "Sans sucre", originalTotal = "490 DA", discountLabel = "−10% ✓", onRemove = {})
+            DsCartLineItem(
+                "Formule Déjeuner",
+                1,
+                {},
+                lineTotal = "441 DA",
+                unitPrice = "490 DA",
+                tvaLabel = "TVA 10%",
+                note = "Sans sucre",
+                originalTotal = "490 DA",
+                discountLabel = "−10% ✓",
+                onRemove = {},
+            )
         }
         CatalogSection("Totals block") {
             DsTotalsBlock(
-                lines = listOf(
-                    DsTotalsLine("Sous-total HT", "1 025 DA"),
-                    DsTotalsLine("TVA 10%", "98 DA"),
-                    DsTotalsLine("TVA 5,5%", "6 DA"),
-                    DsTotalsLine("Remise totale", "−49 DA", DsTotalsEmphasis.Discount),
-                ),
+                lines =
+                    listOf(
+                        DsTotalsLine("Sous-total HT", "1 025 DA"),
+                        DsTotalsLine("TVA 10%", "98 DA"),
+                        DsTotalsLine("TVA 5,5%", "6 DA"),
+                        DsTotalsLine("Remise totale", "−49 DA", DsTotalsEmphasis.Discount),
+                    ),
                 total = DsTotalsLine("Total TTC", "1 080 DA"),
             )
         }
         CatalogSection("Numeric keypad") {
             var amount by rememberSaveable { mutableStateOf("0,00") }
             DsAmountDisplay(amount, "DA")
-            DsNumericKeypad(onKey = { amount = amount.applyKey(it) }, rowModifier = Modifier.height(52.dp), modifier = Modifier.padding(top = 8.dp))
+            DsNumericKeypad(
+                onKey = { amount = amount.applyKey(it) },
+                rowModifier = Modifier.height(52.dp),
+                modifier = Modifier.padding(top = 8.dp),
+            )
         }
         CatalogSection("Payment methods") {
             var method by rememberSaveable { mutableIntStateOf(0) }
@@ -92,7 +108,14 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
             DsSnackbar("Article supprimé", actionLabel = "Annuler", onDismiss = {})
         }
         CatalogSection("Processing state") {
-            DsProcessingState(DsIcons.Card, "Présentez la carte", description = "Le client tape ou insère sa carte sur le terminal.", progress = 0.6f, amount = "800 DA", amountLabel = "Montant sur le terminal")
+            DsProcessingState(
+                DsIcons.Card,
+                "Présentez la carte",
+                description = "Le client tape ou insère sa carte sur le terminal.",
+                progress = 0.6f,
+                amount = "800 DA",
+                amountLabel = "Montant sur le terminal",
+            )
         }
         CatalogSection("Payment animations") {
             Row(horizontalArrangement = Arrangement.spacedBy(24.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -105,8 +128,14 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
         CatalogSection("Bottom navigation") {
             var nav by rememberSaveable { mutableIntStateOf(0) }
             DsBottomNavBar(
-                listOf(DsNavItem("Vente", DsIcons.Register), DsNavItem("Commandes", DsIcons.Receipt, badge = "2"), DsNavItem("Catalogue", DsIcons.Catalogue), DsNavItem("Réglages", DsIcons.Settings)),
-                nav, { nav = it },
+                listOf(
+                    DsNavItem("Vente", DsIcons.Register),
+                    DsNavItem("Commandes", DsIcons.Receipt, badge = "2"),
+                    DsNavItem("Catalogue", DsIcons.Catalogue),
+                    DsNavItem("Réglages", DsIcons.Settings),
+                ),
+                nav,
+                { nav = it },
             )
         }
         CatalogSection("Bottom cart bar") {

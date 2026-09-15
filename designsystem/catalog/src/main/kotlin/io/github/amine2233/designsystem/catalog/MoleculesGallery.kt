@@ -60,7 +60,9 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             DsSectionLabel("Appliquer à")
             DsSegmentedControl(listOf("Panier complet", "Article spécifique"), scope, { scope = it }, Modifier.fillMaxWidth())
             var type by rememberSaveable { mutableIntStateOf(0) }
-            DsSegmentedControl(listOf("% Pourcentage", "DA Montant fixe"), type, { type = it }, Modifier.fillMaxWidth(), shape = DsTheme.shapes.sm, height = 34.dp)
+            DsSegmentedControl(listOf("% Pourcentage", "DA Montant fixe"), type, {
+                type = it
+            }, Modifier.fillMaxWidth(), shape = DsTheme.shapes.sm, height = 34.dp)
         }
         CatalogSection("Amount display") {
             DsAmountDisplay("1 500,00", "DA")
@@ -77,8 +79,12 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
         CatalogSection("Search & list items") {
             var query by rememberSaveable { mutableStateOf("") }
             DsSearchBar(query, { query = it })
-            DsListItem("Cappuccino", supporting = "×2 · 200 DA/u. · TVA 10%", leading = { DsRadioIndicator(false) }, trailing = { Text("400 DA", style = DsTheme.typography.labelStrong, color = DsTheme.colors.textSecondary) })
-            DsListItem("Espresso", supporting = "×1 · 150 DA/u. · TVA 10%", selected = true, leading = { DsRadioIndicator(true) }, trailing = { Text("150 DA", style = DsTheme.typography.labelStrong, color = DsTheme.colors.primary) })
+            DsListItem("Cappuccino", supporting = "×2 · 200 DA/u. · TVA 10%", leading = {
+                DsRadioIndicator(false)
+            }, trailing = { Text("400 DA", style = DsTheme.typography.labelStrong, color = DsTheme.colors.textSecondary) })
+            DsListItem("Espresso", supporting = "×1 · 150 DA/u. · TVA 10%", selected = true, leading = {
+                DsRadioIndicator(true)
+            }, trailing = { Text("150 DA", style = DsTheme.typography.labelStrong, color = DsTheme.colors.primary) })
         }
         CatalogSection("Dropdown, tabs, actions") {
             var reason by rememberSaveable { mutableIntStateOf(0) }
@@ -88,16 +94,30 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             DsDashedActionRow("Montant libre / pavé numérique", onClick = {})
         }
         CatalogSection("Feedback") {
-            DsBanner("Le terminal est déconnecté.", tone = DsBannerTone.Error, title = "Paiement carte indisponible", actionLabel = "Réessayer", onAction = {})
+            DsBanner(
+                "Le terminal est déconnecté.",
+                tone = DsBannerTone.Error,
+                title = "Paiement carte indisponible",
+                actionLabel = "Réessayer",
+                onAction = {},
+            )
             DsBanner("Remise appliquée sur 1 article.", tone = DsBannerTone.Success, onDismiss = {})
             DsBanner("Le pourboire est calculé sur le total TTC.", tone = DsBannerTone.Info)
             DsBanner("Stock faible : Croissant (3)", tone = DsBannerTone.Warning)
-            DsEmptyState("Panier vide", description = "Touchez un produit pour l'ajouter.", icon = DsIcons.Cart, actionLabel = "Voir le catalogue", onAction = {})
+            DsEmptyState(
+                "Panier vide",
+                description = "Touchez un produit pour l'ajouter.",
+                icon = DsIcons.Cart,
+                actionLabel = "Voir le catalogue",
+                onAction = {},
+            )
             DsAllocationBar(listOf(DsAllocation("Carte 800 DA", 0.67f), DsAllocation("Espèces 388 DA", 0.33f)))
         }
         CatalogSection("Expandable section") {
             var open by rememberSaveable { mutableStateOf(true) }
-            DsExpandableSection("Produits", expanded = open, onToggle = { open = !open }, summary = "12 produits", trailing = { DsTag("12", tone = DsTagTone.Primary) }) {
+            DsExpandableSection("Produits", expanded = open, onToggle = {
+                open = !open
+            }, summary = "12 produits", trailing = { DsTag("12", tone = DsTagTone.Primary) }) {
                 Text("Contenu de la section", style = DsTheme.typography.body)
             }
             DsExpandableSection("Catégories", expanded = false, onToggle = {}, summary = "Chauds · Froids · Snacks") {}

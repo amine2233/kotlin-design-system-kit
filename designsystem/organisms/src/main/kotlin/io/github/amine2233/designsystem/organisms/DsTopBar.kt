@@ -47,7 +47,20 @@ fun DsTopBar(
             if (onBack != null) {
                 DsIconButton(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Retour", onClick = onBack)
             }
-            Row(Modifier.weight(1f).padding(start = if (onBack == null) 8.dp else 0.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(
+                Modifier.weight(1f).padding(
+                    start =
+                        if (onBack ==
+                            null
+                        ) {
+                            8.dp
+                        } else {
+                            0.dp
+                        },
+                ),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
                 Text(title, style = DsTheme.typography.title, color = c.textPrimary, maxLines = 1)
                 if (badge != null) DsBadge(badge)
                 titleContent?.invoke(this)
@@ -60,8 +73,10 @@ fun DsTopBar(
 
 @DsComponentPreview
 @Composable
-private fun DsTopBarPreview() = DsPreview {
-    DsTopBar("Panier", onBack = {}, badge = "5", actions = { DsButton("Vider", onClick = {}, variant = DsButtonVariant.Danger, size = DsButtonSize.Small) })
-    Spacer(Modifier.height(8.dp))
-    DsTopBar("Café Central", actions = { DsAvatar("AK") })
-}
+private fun DsTopBarPreview() =
+    DsPreview {
+        DsTopBar("Panier", onBack = {
+        }, badge = "5", actions = { DsButton("Vider", onClick = {}, variant = DsButtonVariant.Danger, size = DsButtonSize.Small) })
+        Spacer(Modifier.height(8.dp))
+        DsTopBar("Café Central", actions = { DsAvatar("AK") })
+    }

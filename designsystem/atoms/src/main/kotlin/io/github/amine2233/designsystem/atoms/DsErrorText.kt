@@ -16,7 +16,10 @@ import io.github.amine2233.designsystem.core.DsTheme
 
 /** Short inline error ("Montant invalide") under a field or a keypad. Keep messages short per the content rules. */
 @Composable
-fun DsErrorText(message: String, modifier: Modifier = Modifier) {
+fun DsErrorText(
+    message: String,
+    modifier: Modifier = Modifier,
+) {
     Row(modifier, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
         Icon(DsIcons.Error, contentDescription = null, tint = DsTheme.colors.error, modifier = Modifier.size(14.dp))
         Text(message, style = DsTheme.typography.caption, color = DsTheme.colors.error)
@@ -25,6 +28,7 @@ fun DsErrorText(message: String, modifier: Modifier = Modifier) {
 
 @DsComponentPreview
 @Composable
-private fun DsErrorTextPreview() = DsPreview {
-    DsErrorText("Montant invalide")
-}
+private fun DsErrorTextPreview() =
+    DsPreview {
+        DsErrorText("Montant invalide")
+    }

@@ -49,10 +49,11 @@ fun DsTwoPaneLayout(
 
 @DsScreenPreview
 @Composable
-private fun DsTwoPaneLayoutPreview() = DsTheme {
-    DsTwoPaneLayout(
-        primary = { Text("Primary", style = DsTheme.typography.title, modifier = Modifier.padding(16.dp)) },
-        secondary = { Text("Secondary pane", style = DsTheme.typography.title, modifier = Modifier.padding(16.dp)) },
-        compactSecondary = { DsButton("Bottom slot", onClick = {}, modifier = Modifier.fillMaxWidth().padding(16.dp)) },
-    )
-}
+private fun DsTwoPaneLayoutPreview() =
+    DsTheme {
+        DsTwoPaneLayout(
+            primary = { Text("Primary", style = DsTheme.typography.title, modifier = Modifier.padding(16.dp)) },
+            secondary = { Text("Secondary pane", style = DsTheme.typography.title, modifier = Modifier.padding(16.dp)) },
+            compactSecondary = { DsButton("Bottom slot", onClick = {}, modifier = Modifier.fillMaxWidth().padding(16.dp)) },
+        )
+    }

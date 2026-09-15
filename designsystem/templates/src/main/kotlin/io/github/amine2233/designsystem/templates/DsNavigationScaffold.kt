@@ -49,11 +49,17 @@ fun DsNavigationScaffold(
 
 @DsScreenPreview
 @Composable
-private fun DsNavigationScaffoldPreview() = DsTheme {
-    DsNavigationScaffold(
-        topItems = listOf(DsNavItem("Vente", DsIcons.Register), DsNavItem("Commandes", DsIcons.Receipt, badge = "2"), DsNavItem("Catalogue", DsIcons.Catalogue)),
-        bottomItems = listOf(DsNavItem("Réglages", DsIcons.Settings)),
-        selectedIndex = 0,
-        onSelect = {},
-    ) { DsCenteredLayout { Text("Contenu", style = DsTheme.typography.headline) } }
-}
+private fun DsNavigationScaffoldPreview() =
+    DsTheme {
+        DsNavigationScaffold(
+            topItems =
+                listOf(
+                    DsNavItem("Vente", DsIcons.Register),
+                    DsNavItem("Commandes", DsIcons.Receipt, badge = "2"),
+                    DsNavItem("Catalogue", DsIcons.Catalogue),
+                ),
+            bottomItems = listOf(DsNavItem("Réglages", DsIcons.Settings)),
+            selectedIndex = 0,
+            onSelect = {},
+        ) { DsCenteredLayout { Text("Contenu", style = DsTheme.typography.headline) } }
+    }

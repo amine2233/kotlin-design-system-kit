@@ -25,15 +25,28 @@ import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
 @Immutable
-data class DsAllocation(val label: String, val fraction: Float, val color: Color? = null)
+data class DsAllocation(
+    val label: String,
+    val fraction: Float,
+    val color: Color? = null,
+)
 
 /** Split-payment proportional bar with legend ("Carte 800 DA · Espèces 388 DA"). Remainder shown as track. */
 @Composable
-fun DsAllocationBar(parts: List<DsAllocation>, modifier: Modifier = Modifier) {
+fun DsAllocationBar(
+    parts: List<DsAllocation>,
+    modifier: Modifier = Modifier,
+) {
     val c = DsTheme.colors
     val defaults = listOf(c.primary, DsPalette.Teal200, c.warning, c.info)
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Row(Modifier.fillMaxWidth().height(10.dp).clip(DsShapes.pill).background(c.border)) {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .height(10.dp)
+                .clip(DsShapes.pill)
+                .background(c.border),
+        ) {
             parts.forEachIndexed { i, p ->
                 if (p.fraction > 0f) Box(Modifier.fillMaxHeight().weight(p.fraction).background(p.color ?: defaults[i % defaults.size]))
             }
@@ -53,8 +66,9 @@ fun DsAllocationBar(parts: List<DsAllocation>, modifier: Modifier = Modifier) {
 
 @DsComponentPreview
 @Composable
-private fun DsAllocationBarPreview() = DsPreview {
-    DsAllocationBar(listOf(DsAllocation("Carte 800 DA", 0.67f), DsAllocation("Espèces 388 DA", 0.33f)))
-    Spacer(Modifier.height(12.dp))
-    DsAllocationBar(listOf(DsAllocation("Carte 800 DA", 0.67f)))
-}
+private fun DsAllocationBarPreview() =
+    DsPreview {
+        DsAllocationBar(listOf(DsAllocation("Carte 800 DA", 0.67f), DsAllocation("Espèces 388 DA", 0.33f)))
+        Spacer(Modifier.height(12.dp))
+        DsAllocationBar(listOf(DsAllocation("Carte 800 DA", 0.67f)))
+    }

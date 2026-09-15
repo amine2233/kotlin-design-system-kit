@@ -50,10 +50,19 @@ fun DsExpandableSection(
             ) {
                 Column(Modifier.weight(1f)) {
                     Text(title, style = DsTheme.typography.title, color = c.textPrimary)
-                    if (summary != null && !expanded) Text(summary, style = DsTheme.typography.caption, color = c.textSecondary, maxLines = 1)
+                    if (summary != null &&
+                        !expanded
+                    ) {
+                        Text(summary, style = DsTheme.typography.caption, color = c.textSecondary, maxLines = 1)
+                    }
                 }
                 trailing?.invoke()
-                Icon(Icons.Default.KeyboardArrowDown, contentDescription = null, tint = c.textSecondary, modifier = Modifier.rotate(if (expanded) 180f else 0f))
+                Icon(
+                    Icons.Default.KeyboardArrowDown,
+                    contentDescription = null,
+                    tint = c.textSecondary,
+                    modifier = Modifier.rotate(if (expanded) 180f else 0f),
+                )
             }
             AnimatedVisibility(visible = expanded) {
                 Column {
@@ -67,8 +76,9 @@ fun DsExpandableSection(
 
 @DsComponentPreview
 @Composable
-private fun DsExpandableSectionPreview() = DsPreview {
-    DsExpandableSection("Produits", expanded = true, onToggle = {}, summary = "12 produits") { DsCheckRow("Contenu de la section") }
-    Spacer(Modifier.height(6.dp))
-    DsExpandableSection("Catégories", expanded = false, onToggle = {}, summary = "Chauds · Froids · Snacks") {}
-}
+private fun DsExpandableSectionPreview() =
+    DsPreview {
+        DsExpandableSection("Produits", expanded = true, onToggle = {}, summary = "12 produits") { DsCheckRow("Contenu de la section") }
+        Spacer(Modifier.height(6.dp))
+        DsExpandableSection("Catégories", expanded = false, onToggle = {}, summary = "Chauds · Froids · Snacks") {}
+    }

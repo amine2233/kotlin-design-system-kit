@@ -35,20 +35,22 @@ import io.github.amine2233.designsystem.templates.DsCenteredLayout
 import io.github.amine2233.designsystem.templates.DsNavigationScaffold
 import io.github.amine2233.designsystem.templates.DsScreenScaffold
 
-private val navTop = listOf(
-    DsNavItem("Vente", DsIcons.Register),
-    DsNavItem("Commandes", DsIcons.Receipt, badge = "2"),
-    DsNavItem("Catalogue", DsIcons.Catalogue),
-    DsNavItem("Rapports", DsIcons.Store),
-)
+private val navTop =
+    listOf(
+        DsNavItem("Vente", DsIcons.Register),
+        DsNavItem("Commandes", DsIcons.Receipt, badge = "2"),
+        DsNavItem("Catalogue", DsIcons.Catalogue),
+        DsNavItem("Rapports", DsIcons.Store),
+    )
 private val navBottom = listOf(DsNavItem("Réglages", DsIcons.Settings), DsNavItem("Compte", DsIcons.Account))
 
-private val navTopAr = listOf(
-    DsNavItem("البيع", DsIcons.Register),
-    DsNavItem("الطلبات", DsIcons.Receipt, badge = "2"),
-    DsNavItem("الكتالوج", DsIcons.Catalogue),
-    DsNavItem("التقارير", DsIcons.Store),
-)
+private val navTopAr =
+    listOf(
+        DsNavItem("البيع", DsIcons.Register),
+        DsNavItem("الطلبات", DsIcons.Receipt, badge = "2"),
+        DsNavItem("الكتالوج", DsIcons.Catalogue),
+        DsNavItem("التقارير", DsIcons.Store),
+    )
 private val navBottomAr = listOf(DsNavItem("الإعدادات", DsIcons.Settings), DsNavItem("الحساب", DsIcons.Account))
 
 /** App shell: rail (tablet, start edge) or tab bar (phone) around the Main Sales screen. */
@@ -73,7 +75,9 @@ fun AppShellScreen(
             if (selected == 0) {
                 MainSalesScreen(windowSize = windowSize)
             } else {
-                DsScreenScaffold(topBar = { DsTopBar((if (arabic) navTopAr + navBottomAr else navTop + navBottom)[selected].label, actions = { DsAvatar("AK") }) }) {
+                DsScreenScaffold(topBar = {
+                    DsTopBar((if (arabic) navTopAr + navBottomAr else navTop + navBottom)[selected].label, actions = { DsAvatar("AK") })
+                }) {
                     DsCenteredLayout { Text("…", style = DsTheme.typography.headline) }
                 }
             }
@@ -83,11 +87,22 @@ fun AppShellScreen(
 
 /** Payment — NFC waiting state. */
 @Composable
-fun NfcPaymentScreen(modifier: Modifier = Modifier, animate: Boolean = true, onBack: () -> Unit = {}) {
+fun NfcPaymentScreen(
+    modifier: Modifier = Modifier,
+    animate: Boolean = true,
+    onBack: () -> Unit = {},
+) {
     DsScreenScaffold(
         modifier = modifier,
         topBar = { DsTopBar("Encaissement", onBack = onBack) },
-        bottomPanel = { DsButton("Annuler le paiement", onClick = {}, variant = DsButtonVariant.Outlined, modifier = Modifier.fillMaxWidth()) },
+        bottomPanel = {
+            DsButton(
+                "Annuler le paiement",
+                onClick = {},
+                variant = DsButtonVariant.Outlined,
+                modifier = Modifier.fillMaxWidth(),
+            )
+        },
     ) {
         DsCenteredLayout {
             DsNfcWaiting(
@@ -102,21 +117,33 @@ fun NfcPaymentScreen(modifier: Modifier = Modifier, animate: Boolean = true, onB
 
 /** Payment — result states. [progress] fixed for previews; null animates. */
 @Composable
-fun PaymentResultScreen(outcome: DsPaymentOutcome, modifier: Modifier = Modifier, progress: Float? = null) {
+fun PaymentResultScreen(
+    outcome: DsPaymentOutcome,
+    modifier: Modifier = Modifier,
+    progress: Float? = null,
+) {
     DsScreenScaffold(modifier = modifier, topBar = { DsTopBar("Encaissement") }) {
         DsCenteredLayout {
             Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
                 if (outcome == DsPaymentOutcome.Success) {
                     DsPaymentResult(
-                        outcome, title = "Paiement accepté", amount = "1 188 DA",
+                        outcome,
+                        title = "Paiement accepté",
+                        amount = "1 188 DA",
                         description = "Ticket n° 0421 · Carte bancaire",
-                        primaryAction = "Nouvelle vente", secondaryAction = "Imprimer le ticket", progress = progress,
+                        primaryAction = "Nouvelle vente",
+                        secondaryAction = "Imprimer le ticket",
+                        progress = progress,
                     )
                 } else {
                     DsPaymentResult(
-                        outcome, title = "Paiement refusé", amount = "1 188 DA",
+                        outcome,
+                        title = "Paiement refusé",
+                        amount = "1 188 DA",
                         description = "Carte refusée par la banque. Aucun montant n'a été débité.",
-                        primaryAction = "Réessayer", secondaryAction = "Autre moyen de paiement", progress = progress,
+                        primaryAction = "Réessayer",
+                        secondaryAction = "Autre moyen de paiement",
+                        progress = progress,
                     )
                 }
             }
@@ -126,12 +153,21 @@ fun PaymentResultScreen(outcome: DsPaymentOutcome, modifier: Modifier = Modifier
 
 private const val PHONE = "spec:width=375dp,height=780dp,dpi=420"
 
-@DsScreenPreview @Composable private fun AppShellScreenPreview() = DsTheme { AppShellScreen() }
+@DsScreenPreview @Composable
+private fun AppShellScreenPreview() = DsTheme { AppShellScreen() }
 
 @Preview(name = "tablet · عربي", device = "spec:width=960dp,height=600dp,dpi=320")
 @Composable
 private fun AppShellScreenRtlPreview() = DsTheme { AppShellScreen(layoutDirection = LayoutDirection.Rtl) }
 
-@Preview(device = PHONE) @Composable private fun NfcPaymentScreenPreview() = DsTheme { NfcPaymentScreen(animate = false) }
-@Preview(device = PHONE) @Composable private fun PaymentResultSuccessPreview() = DsTheme { PaymentResultScreen(DsPaymentOutcome.Success, progress = 1f) }
-@Preview(device = PHONE) @Composable private fun PaymentResultFailurePreview() = DsTheme { PaymentResultScreen(DsPaymentOutcome.Failure, progress = 1f) }
+@Preview(device = PHONE)
+@Composable
+private fun NfcPaymentScreenPreview() = DsTheme { NfcPaymentScreen(animate = false) }
+
+@Preview(device = PHONE)
+@Composable
+private fun PaymentResultSuccessPreview() = DsTheme { PaymentResultScreen(DsPaymentOutcome.Success, progress = 1f) }
+
+@Preview(device = PHONE)
+@Composable
+private fun PaymentResultFailurePreview() = DsTheme { PaymentResultScreen(DsPaymentOutcome.Failure, progress = 1f) }

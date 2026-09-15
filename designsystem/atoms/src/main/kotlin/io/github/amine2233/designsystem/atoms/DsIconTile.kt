@@ -30,21 +30,38 @@ fun DsIconTile(
 ) {
     val c = DsTheme.colors
     Box(
-        modifier = modifier
-            .size(size)
-            .background(if (selected) c.primaryContainerBorder else c.surfaceSubtle, DsShapes.md)
-            .border(1.dp, if (selected) c.primaryContainerBorder else c.surfaceMuted, DsShapes.md),
+        modifier =
+            modifier
+                .size(size)
+                .background(if (selected) c.primaryContainerBorder else c.surfaceSubtle, DsShapes.md)
+                .border(1.dp, if (selected) c.primaryContainerBorder else c.surfaceMuted, DsShapes.md),
         contentAlignment = Alignment.Center,
     ) {
         when {
-            content != null -> content()
-            icon != null -> Icon(icon, contentDescription = null, tint = if (selected) c.primary else c.textSecondary, modifier = Modifier.size(size / 2))
+            content != null -> {
+                content()
+            }
+
+            icon != null -> {
+                Icon(
+                    icon,
+                    contentDescription = null,
+                    tint = if (selected) c.primary else c.textSecondary,
+                    modifier =
+                        Modifier.size(size / 2),
+                )
+            }
         }
     }
 }
 
 @DsComponentPreview
 @Composable
-private fun DsIconTilePreview() = DsPreview {
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { DsIconTile(DsIcons.Card); DsIconTile(DsIcons.Cash, selected = true); DsIconTile(DsIcons.Coffee, size = 36.dp) }
-}
+private fun DsIconTilePreview() =
+    DsPreview {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            DsIconTile(DsIcons.Card)
+            DsIconTile(DsIcons.Cash, selected = true)
+            DsIconTile(DsIcons.Coffee, size = 36.dp)
+        }
+    }

@@ -36,18 +36,25 @@ class DsSnackbarVisuals(
 ) : SnackbarVisuals
 
 /** `hostState.showError("Échec du paiement", "Réessayer")` — the design's error snackbar with retry. */
-suspend fun SnackbarHostState.showError(message: String, actionLabel: String? = null): SnackbarResult =
-    showSnackbar(DsSnackbarVisuals(message, DsSnackbarTone.Error, actionLabel))
+suspend fun SnackbarHostState.showError(
+    message: String,
+    actionLabel: String? = null,
+): SnackbarResult = showSnackbar(DsSnackbarVisuals(message, DsSnackbarTone.Error, actionLabel))
 
 suspend fun SnackbarHostState.showSuccess(message: String): SnackbarResult =
     showSnackbar(DsSnackbarVisuals(message, DsSnackbarTone.Success))
 
-suspend fun SnackbarHostState.showMessage(message: String, actionLabel: String? = null): SnackbarResult =
-    showSnackbar(DsSnackbarVisuals(message, DsSnackbarTone.Neutral, actionLabel))
+suspend fun SnackbarHostState.showMessage(
+    message: String,
+    actionLabel: String? = null,
+): SnackbarResult = showSnackbar(DsSnackbarVisuals(message, DsSnackbarTone.Neutral, actionLabel))
 
 /** Drop into `Scaffold(snackbarHost = { DsSnackbarHost(hostState) })`. */
 @Composable
-fun DsSnackbarHost(hostState: SnackbarHostState, modifier: Modifier = Modifier) {
+fun DsSnackbarHost(
+    hostState: SnackbarHostState,
+    modifier: Modifier = Modifier,
+) {
     SnackbarHost(hostState, modifier) { data ->
         val tone = (data.visuals as? DsSnackbarVisuals)?.tone ?: DsSnackbarTone.Neutral
         DsSnackbar(
@@ -71,22 +78,25 @@ fun DsSnackbar(
     onDismiss: (() -> Unit)? = null,
 ) {
     val c = DsTheme.colors
-    val (container, content, icon) = when (tone) {
-        DsSnackbarTone.Neutral -> Triple(c.textPrimary, c.surface, null)
-        DsSnackbarTone.Success -> Triple(c.success, c.onPrimary, DsIcons.Success)
-        DsSnackbarTone.Error -> Triple(c.error, c.onPrimary, DsIcons.Error)
-    }
+    val (container, content, icon) =
+        when (tone) {
+            DsSnackbarTone.Neutral -> Triple(c.textPrimary, c.surface, null)
+            DsSnackbarTone.Success -> Triple(c.success, c.onPrimary, DsIcons.Success)
+            DsSnackbarTone.Error -> Triple(c.error, c.onPrimary, DsIcons.Error)
+        }
     Snackbar(
         modifier = modifier.padding(12.dp),
         shape = DsShapes.md,
         containerColor = container,
         contentColor = content,
-        action = actionLabel?.let {
-            { TextButton(onClick = onAction) { Text(it, style = DsTheme.typography.labelStrong, color = content) } }
-        },
-        dismissAction = onDismiss?.let {
-            { IconButton(onClick = it) { Icon(DsIcons.Close, contentDescription = "Fermer", tint = content) } }
-        },
+        action =
+            actionLabel?.let {
+                { TextButton(onClick = onAction) { Text(it, style = DsTheme.typography.labelStrong, color = content) } }
+            },
+        dismissAction =
+            onDismiss?.let {
+                { IconButton(onClick = it) { Icon(DsIcons.Close, contentDescription = "Fermer", tint = content) } }
+            },
     ) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             if (icon != null) Icon(icon, contentDescription = null, tint = content, modifier = Modifier.size(18.dp))
@@ -97,14 +107,16 @@ fun DsSnackbar(
 
 @DsComponentPreview
 @Composable
-private fun DsSnackbarPreview() = DsPreview {
-    DsSnackbar("Échec du paiement — terminal injoignable", tone = DsSnackbarTone.Error, actionLabel = "Réessayer")
-    DsSnackbar("Commande mise en attente", tone = DsSnackbarTone.Success)
-    DsSnackbar("Article supprimé", actionLabel = "Annuler", onDismiss = {})
-}
+private fun DsSnackbarPreview() =
+    DsPreview {
+        DsSnackbar("Échec du paiement — terminal injoignable", tone = DsSnackbarTone.Error, actionLabel = "Réessayer")
+        DsSnackbar("Commande mise en attente", tone = DsSnackbarTone.Success)
+        DsSnackbar("Article supprimé", actionLabel = "Annuler", onDismiss = {})
+    }
 
 @DsComponentPreview
 @Composable
-private fun DsSnackbarHostPreview() = DsPreview {
-    DsSnackbarHost(remember { SnackbarHostState() })
-}
+private fun DsSnackbarHostPreview() =
+    DsPreview {
+        DsSnackbarHost(remember { SnackbarHostState() })
+    }

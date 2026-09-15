@@ -35,7 +35,12 @@ fun DsDialog(
         title = { Text(title, style = DsTheme.typography.titleLarge) },
         text = { Text(text, style = DsTheme.typography.body) },
         confirmButton = {
-            DsButton(confirmLabel, onClick = onConfirm, size = DsButtonSize.Medium, variant = if (destructive) DsButtonVariant.Danger else DsButtonVariant.Primary)
+            DsButton(
+                confirmLabel,
+                onClick = onConfirm,
+                size = DsButtonSize.Medium,
+                variant = if (destructive) DsButtonVariant.Danger else DsButtonVariant.Primary,
+            )
         },
         dismissButton = { DsButton(dismissLabel, onClick = onDismiss, size = DsButtonSize.Medium, variant = DsButtonVariant.Ghost) },
     )
@@ -43,6 +48,8 @@ fun DsDialog(
 
 @Preview(name = "dialog")
 @Composable
-private fun DsDialogPreview() = DsTheme {
-    DsDialog("Vider le panier ?", "Les 5 articles seront supprimés.", confirmLabel = "Vider", onConfirm = {}, onDismiss = {}, destructive = true)
-}
+private fun DsDialogPreview() =
+    DsTheme {
+        DsDialog("Vider le panier ?", "Les 5 articles seront supprimés.", confirmLabel = "Vider", onConfirm = {
+        }, onDismiss = {}, destructive = true)
+    }

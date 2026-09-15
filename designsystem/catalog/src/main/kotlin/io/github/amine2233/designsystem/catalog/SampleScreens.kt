@@ -62,20 +62,36 @@ import io.github.amine2233.designsystem.templates.DsTwoPaneLayout
 
 private val cartSteps = listOf("Panier", "Pourboire", "Paiement")
 
-private data class Product(val name: String, val price: String, val inCart: Int = 0) {
+private data class Product(
+    val name: String,
+    val price: String,
+    val inCart: Int = 0,
+) {
     val lineTotal: String get() = "${price.substringBefore(" ").toInt() * inCart} DA"
 }
 
-private val products = listOf(
-    Product("Espresso", "150 DA"), Product("Cappuccino", "200 DA", 2), Product("Latte", "220 DA"),
-    Product("Americano", "170 DA"), Product("Croissant", "120 DA", 1), Product("Sandwich", "350 DA"),
-    Product("Jus Orange", "180 DA"), Product("Eau Min.", "80 DA"), Product("Thé Citron", "120 DA"),
-    Product("Pain au Choc.", "130 DA"), Product("Jus Pomme", "160 DA"), Product("Café au Lait", "180 DA"),
-)
+private val products =
+    listOf(
+        Product("Espresso", "150 DA"),
+        Product("Cappuccino", "200 DA", 2),
+        Product("Latte", "220 DA"),
+        Product("Americano", "170 DA"),
+        Product("Croissant", "120 DA", 1),
+        Product("Sandwich", "350 DA"),
+        Product("Jus Orange", "180 DA"),
+        Product("Eau Min.", "80 DA"),
+        Product("Thé Citron", "120 DA"),
+        Product("Pain au Choc.", "130 DA"),
+        Product("Jus Pomme", "160 DA"),
+        Product("Café au Lait", "180 DA"),
+    )
 
 /** Screen 01 — Main Sales: adaptive (phone: grid + cart bar · tablet: grid + pinned cart pane). */
 @Composable
-fun MainSalesScreen(modifier: Modifier = Modifier, windowSize: DsWindowSize = DsTheme.windowSize) {
+fun MainSalesScreen(
+    modifier: Modifier = Modifier,
+    windowSize: DsWindowSize = DsTheme.windowSize,
+) {
     var category by rememberSaveable { mutableIntStateOf(0) }
     var query by rememberSaveable { mutableStateOf("") }
     val expanded = windowSize.isExpanded
@@ -93,7 +109,10 @@ fun MainSalesScreen(modifier: Modifier = Modifier, windowSize: DsWindowSize = Ds
             windowSize = windowSize,
             primary = {
                 Column(Modifier.fillMaxSize()) {
-                    DsChipRow(listOf("Tous", "Boissons Chaudes", "Boissons Froides", "Nourriture", "Pâtisserie", "Extras"), category, { category = it }, Modifier.background(DsTheme.colors.surface))
+                    DsChipRow(listOf("Tous", "Boissons Chaudes", "Boissons Froides", "Nourriture", "Pâtisserie", "Extras"), category, {
+                        category =
+                            it
+                    }, Modifier.background(DsTheme.colors.surface))
                     DsDivider()
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(if (expanded) 4 else 2),
@@ -114,7 +133,10 @@ fun MainSalesScreen(modifier: Modifier = Modifier, windowSize: DsWindowSize = Ds
 @Composable
 private fun CartPane() {
     Column(Modifier.fillMaxSize()) {
-        Row(Modifier.fillMaxWidth().background(DsTheme.colors.surface).padding(horizontal = 14.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            Modifier.fillMaxWidth().background(DsTheme.colors.surface).padding(horizontal = 14.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             Text("Panier (3)", style = DsTheme.typography.title, modifier = Modifier.weight(1f))
             DsButton("Attente", onClick = {}, variant = DsButtonVariant.Ghost, size = DsButtonSize.Small)
             DsButton("Vider", onClick = {}, variant = DsButtonVariant.Danger, size = DsButtonSize.Small)
@@ -127,16 +149,23 @@ private fun CartPane() {
         }
         DsDivider()
         Column(Modifier.background(DsTheme.colors.surface).padding(14.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            DsTotalsBlock(lines = listOf(DsTotalsLine("Sous-total", "670 DA"), DsTotalsLine("TVA (10%)", "67 DA")), total = DsTotalsLine("Total", "737 DA"))
+            DsTotalsBlock(
+                lines = listOf(DsTotalsLine("Sous-total", "670 DA"), DsTotalsLine("TVA (10%)", "67 DA")),
+                total = DsTotalsLine("Total", "737 DA"),
+            )
             DsButton("Encaisser 737 DA", onClick = {}, modifier = Modifier.fillMaxWidth())
-            DsButton("Mettre en attente", onClick = {}, variant = DsButtonVariant.Outlined, size = DsButtonSize.Medium, modifier = Modifier.fillMaxWidth())
+            DsButton("Mettre en attente", onClick = {
+            }, variant = DsButtonVariant.Outlined, size = DsButtonSize.Medium, modifier = Modifier.fillMaxWidth())
         }
     }
 }
 
 /** Screen 02 — Cart (phone). */
 @Composable
-fun CartScreen(modifier: Modifier = Modifier, onBack: () -> Unit = {}) {
+fun CartScreen(
+    modifier: Modifier = Modifier,
+    onBack: () -> Unit = {},
+) {
     DsScreenScaffold(
         modifier = modifier,
         topBar = {
@@ -151,16 +180,18 @@ fun CartScreen(modifier: Modifier = Modifier, onBack: () -> Unit = {}) {
         },
         bottomPanel = {
             DsTotalsBlock(
-                lines = listOf(
-                    DsTotalsLine("Sous-total HT", "1 025 DA"),
-                    DsTotalsLine("TVA 10%", "98 DA"),
-                    DsTotalsLine("TVA 5,5%", "6 DA"),
-                    DsTotalsLine("Remise totale", "−49 DA", DsTotalsEmphasis.Discount),
-                ),
+                lines =
+                    listOf(
+                        DsTotalsLine("Sous-total HT", "1 025 DA"),
+                        DsTotalsLine("TVA 10%", "98 DA"),
+                        DsTotalsLine("TVA 5,5%", "6 DA"),
+                        DsTotalsLine("Remise totale", "−49 DA", DsTotalsEmphasis.Discount),
+                    ),
                 total = DsTotalsLine("Total TTC", "1 080 DA"),
             )
             Spacer(Modifier.height(10.dp))
-            DsButton("% Remise globale", onClick = {}, variant = DsButtonVariant.Outlined, size = DsButtonSize.Medium, modifier = Modifier.fillMaxWidth())
+            DsButton("% Remise globale", onClick = {
+            }, variant = DsButtonVariant.Outlined, size = DsButtonSize.Medium, modifier = Modifier.fillMaxWidth())
             Spacer(Modifier.height(8.dp))
             DsButton("Encaisser — 1 080 DA", onClick = {}, modifier = Modifier.fillMaxWidth())
         },
@@ -169,7 +200,20 @@ fun CartScreen(modifier: Modifier = Modifier, onBack: () -> Unit = {}) {
             item { DsCartLineItem("Cappuccino", 2, {}, lineTotal = "400 DA", unitPrice = "200 DA", tvaLabel = "TVA 10%", onRemove = {}) }
             item { DsCartLineItem("Espresso", 1, {}, lineTotal = "150 DA", unitPrice = "150 DA", tvaLabel = "TVA 10%", onRemove = {}) }
             item { DsCartLineItem("Croissant", 1, {}, lineTotal = "120 DA", unitPrice = "120 DA", tvaLabel = "TVA 5,5%", onRemove = {}) }
-            item { DsCartLineItem("Formule Déjeuner", 1, {}, lineTotal = "441 DA", unitPrice = "490 DA", tvaLabel = "TVA 10%", note = "Sans sucre", originalTotal = "490 DA", discountLabel = "−10% ✓", onRemove = {}) }
+            item {
+                DsCartLineItem(
+                    "Formule Déjeuner",
+                    1,
+                    {},
+                    lineTotal = "441 DA",
+                    unitPrice = "490 DA",
+                    tvaLabel = "TVA 10%",
+                    note = "Sans sucre",
+                    originalTotal = "490 DA",
+                    discountLabel = "−10% ✓",
+                    onRemove = {},
+                )
+            }
             item { DsCartLineItem("Thé Citron", 1, {}, lineTotal = "120 DA", unitPrice = "120 DA", tvaLabel = "TVA 10%", onRemove = {}) }
         }
     }
@@ -177,21 +221,30 @@ fun CartScreen(modifier: Modifier = Modifier, onBack: () -> Unit = {}) {
 
 /** Screen 02B — Tips (phone): quick chips + keypad + live totals. */
 @Composable
-fun TipsScreen(modifier: Modifier = Modifier, onBack: () -> Unit = {}) {
+fun TipsScreen(
+    modifier: Modifier = Modifier,
+    onBack: () -> Unit = {},
+) {
     var preset by rememberSaveable { mutableIntStateOf(1) }
     var amount by rememberSaveable { mutableStateOf("108,00") }
     DsScreenScaffold(
         modifier = modifier,
         topBar = {
             Column {
-                DsTopBar("Pourboire", onBack = onBack, actions = { DsButton("Ignorer", onClick = {}, variant = DsButtonVariant.Ghost, size = DsButtonSize.Small) })
+                DsTopBar("Pourboire", onBack = onBack, actions = {
+                    DsButton("Ignorer", onClick = {}, variant = DsButtonVariant.Ghost, size = DsButtonSize.Small)
+                })
                 DsStepIndicator(cartSteps, 1, Modifier.background(DsTheme.colors.surface).padding(horizontal = 8.dp, vertical = 9.dp))
                 DsDivider()
             }
         },
         bottomPanel = {
             DsTotalsBlock(
-                lines = listOf(DsTotalsLine("Total panier", "1 080 DA", DsTotalsEmphasis.Muted), DsTotalsLine("Pourboire (10%)", "+ 108 DA", DsTotalsEmphasis.Positive)),
+                lines =
+                    listOf(
+                        DsTotalsLine("Total panier", "1 080 DA", DsTotalsEmphasis.Muted),
+                        DsTotalsLine("Pourboire (10%)", "+ 108 DA", DsTotalsEmphasis.Positive),
+                    ),
                 total = DsTotalsLine("Nouveau total", "1 188 DA"),
             )
             Spacer(Modifier.height(12.dp))
@@ -201,12 +254,21 @@ fun TipsScreen(modifier: Modifier = Modifier, onBack: () -> Unit = {}) {
         Column(Modifier.background(DsTheme.colors.surface).padding(horizontal = 14.dp, vertical = 10.dp)) {
             DsSectionLabel("Montant rapide")
             Spacer(Modifier.height(8.dp))
-            DsChipRow(listOf("5%", "10%", "15%", "20%", "Aucun"), preset, { preset = it }, scrollable = false, modifier = Modifier.padding(0.dp))
+            DsChipRow(
+                listOf("5%", "10%", "15%", "20%", "Aucun"),
+                preset,
+                { preset = it },
+                scrollable = false,
+                modifier = Modifier.padding(0.dp),
+            )
         }
         DsDivider()
         Column(Modifier.padding(horizontal = 14.dp, vertical = 8.dp).weight(1f), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             DsAmountDisplay(amount, "DA", label = "10% de 1 080 DA", prefix = "+")
-            DsNumericKeypad(onKey = { amount = amount.applyKey(it); preset = -1 }, modifier = Modifier.weight(1f), rowModifier = Modifier.weight(1f))
+            DsNumericKeypad(onKey = {
+                amount = amount.applyKey(it)
+                preset = -1
+            }, modifier = Modifier.weight(1f), rowModifier = Modifier.weight(1f))
         }
     }
 }
@@ -220,9 +282,20 @@ fun OnboardingScreen(modifier: Modifier = Modifier) {
             Spacer(Modifier.height(18.dp))
             Text("Caisse Pro", style = DsTheme.typography.displayMedium)
             Spacer(Modifier.height(8.dp))
-            Text("Encaissez vite, gérez mieux.", style = DsTheme.typography.bodyLarge, color = DsTheme.colors.textSecondary, textAlign = TextAlign.Center)
+            Text(
+                "Encaissez vite, gérez mieux.",
+                style = DsTheme.typography.bodyLarge,
+                color = DsTheme.colors.textSecondary,
+                textAlign = TextAlign.Center,
+            )
             Spacer(Modifier.height(28.dp))
-            DsCard(Modifier.fillMaxWidth(), containerColor = DsTheme.colors.surfaceSubtle, borderColor = DsTheme.colors.surfaceSubtle, shape = DsShapes.lg, contentPadding = 16.dp) {
+            DsCard(
+                Modifier.fillMaxWidth(),
+                containerColor = DsTheme.colors.surfaceSubtle,
+                borderColor = DsTheme.colors.surfaceSubtle,
+                shape = DsShapes.lg,
+                contentPadding = 16.dp,
+            ) {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     DsCheckRow("Encaissement rapide et fiable")
                     DsCheckRow("TVA multi-taux, remises et pourboires")
@@ -258,8 +331,20 @@ fun AuthLoadingScreen(modifier: Modifier = Modifier) {
 
 private const val PHONE = "spec:width=375dp,height=780dp,dpi=420"
 
-@DsScreenPreview @Composable private fun MainSalesScreenPreview() = DsTheme { MainSalesScreen() }
-@Preview(device = PHONE) @Composable private fun CartScreenPreview() = DsTheme { CartScreen() }
-@Preview(device = PHONE) @Composable private fun TipsScreenPreview() = DsTheme { TipsScreen() }
-@DsScreenPreview @Composable private fun OnboardingScreenPreview() = DsTheme { OnboardingScreen() }
-@Preview(device = PHONE) @Composable private fun AuthLoadingScreenPreview() = DsTheme { AuthLoadingScreen() }
+@DsScreenPreview @Composable
+private fun MainSalesScreenPreview() = DsTheme { MainSalesScreen() }
+
+@Preview(device = PHONE)
+@Composable
+private fun CartScreenPreview() = DsTheme { CartScreen() }
+
+@Preview(device = PHONE)
+@Composable
+private fun TipsScreenPreview() = DsTheme { TipsScreen() }
+
+@DsScreenPreview @Composable
+private fun OnboardingScreenPreview() = DsTheme { OnboardingScreen() }
+
+@Preview(device = PHONE)
+@Composable
+private fun AuthLoadingScreenPreview() = DsTheme { AuthLoadingScreen() }

@@ -14,7 +14,11 @@ import io.github.amine2233.designsystem.core.DsTheme
 
 /** Value-prop bullet row from onboarding. */
 @Composable
-fun DsCheckRow(text: String, modifier: Modifier = Modifier, filled: Boolean = true) {
+fun DsCheckRow(
+    text: String,
+    modifier: Modifier = Modifier,
+    filled: Boolean = true,
+) {
     Row(modifier, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
         DsCheckBullet(filled = filled)
         Text(text, style = DsTheme.typography.body, color = DsTheme.colors.textPrimary)
@@ -23,7 +27,8 @@ fun DsCheckRow(text: String, modifier: Modifier = Modifier, filled: Boolean = tr
 
 @DsComponentPreview
 @Composable
-private fun DsCheckRowPreview() = DsPreview {
-    DsCheckRow("Encaissement rapide et fiable")
-    DsCheckRow("TVA multi-taux, remises et pourboires", filled = false)
-}
+private fun DsCheckRowPreview() =
+    DsPreview {
+        DsCheckRow("Encaissement rapide et fiable")
+        DsCheckRow("TVA multi-taux, remises et pourboires", filled = false)
+    }

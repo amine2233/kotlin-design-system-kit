@@ -28,6 +28,7 @@ fun DsCenteredLayout(
 
 @DsScreenPreview
 @Composable
-private fun DsCenteredLayoutPreview() = DsTheme {
-    DsCenteredLayout { DsText("Centré, largeur max 520dp", style = DsTheme.typography.headline) }
-}
+private fun DsCenteredLayoutPreview() =
+    DsTheme {
+        DsCenteredLayout { DsText("Centré, largeur max 520dp", style = DsTheme.typography.headline) }
+    }

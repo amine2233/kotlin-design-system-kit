@@ -37,10 +37,11 @@ fun DsSegmentedControl(
 ) {
     val c = DsTheme.colors
     Row(
-        modifier = modifier
-            .height(height)
-            .clip(shape)
-            .border(1.5.dp, c.primary, shape),
+        modifier =
+            modifier
+                .height(height)
+                .clip(shape)
+                .border(1.5.dp, c.primary, shape),
     ) {
         options.forEachIndexed { index, label ->
             if (index > 0) Box(Modifier.width(1.5.dp).fillMaxHeight().background(c.primary))
@@ -50,14 +51,19 @@ fun DsSegmentedControl(
 }
 
 @Composable
-private fun RowScope.Segment(label: String, selected: Boolean, onClick: () -> Unit) {
+private fun RowScope.Segment(
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
     val c = DsTheme.colors
     Box(
-        modifier = Modifier
-            .weight(1f)
-            .fillMaxHeight()
-            .background(if (selected) c.primary else c.surface)
-            .clickable(onClick = onClick),
+        modifier =
+            Modifier
+                .weight(1f)
+                .fillMaxHeight()
+                .background(if (selected) c.primary else c.surface)
+                .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
         Text(
@@ -72,8 +78,9 @@ private fun RowScope.Segment(label: String, selected: Boolean, onClick: () -> Un
 
 @DsComponentPreview
 @Composable
-private fun DsSegmentedControlPreview() = DsPreview {
-    DsSegmentedControl(listOf("Panier complet", "Article spécifique"), 0, {}, Modifier.fillMaxWidth())
-    Spacer(Modifier.height(8.dp))
-    DsSegmentedControl(listOf("% Pourcentage", "DA Montant fixe"), 1, {}, Modifier.fillMaxWidth(), shape = DsShapes.sm, height = 34.dp)
-}
+private fun DsSegmentedControlPreview() =
+    DsPreview {
+        DsSegmentedControl(listOf("Panier complet", "Article spécifique"), 0, {}, Modifier.fillMaxWidth())
+        Spacer(Modifier.height(8.dp))
+        DsSegmentedControl(listOf("% Pourcentage", "DA Montant fixe"), 1, {}, Modifier.fillMaxWidth(), shape = DsShapes.sm, height = 34.dp)
+    }

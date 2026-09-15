@@ -51,9 +51,10 @@ fun DsResultMark(
     val mark = remember { Animatable(progress ?: 0f) }
     LaunchedEffect(outcome, progress) {
         if (progress != null) return@LaunchedEffect
-        disc.snapTo(0f); mark.snapTo(0f)
-        disc.animateTo(1f, tween(DsMotion.normal, easing = DsMotion.emphasizedEasing))
-        mark.animateTo(1f, tween(DsMotion.slow, easing = DsMotion.standardEasing))
+        disc.snapTo(0f)
+        mark.snapTo(0f)
+        disc.animateTo(1f, tween(DsMotion.NORMAL, easing = DsMotion.emphasizedEasing))
+        mark.animateTo(1f, tween(DsMotion.SLOW, easing = DsMotion.standardEasing))
         onFinished()
     }
     val discValue = progress?.coerceIn(0f, 1f) ?: disc.value
@@ -77,15 +78,21 @@ fun DsResultMark(
             val k = r * 0.38f
             val first = (markValue * 2f).coerceIn(0f, 1f)
             val second = (markValue * 2f - 1f).coerceIn(0f, 1f)
-            val tl = Offset(r - k, r - k); val br = Offset(r + k, r + k)
-            val tr = Offset(r + k, r - k); val bl = Offset(r - k, r + k)
+            val tl = Offset(r - k, r - k)
+            val br = Offset(r + k, r + k)
+            val tr = Offset(r + k, r - k)
+            val bl = Offset(r - k, r + k)
             if (first > 0f) drawLine(Color.White, tl, lerp(tl, br, first), stroke.width, StrokeCap.Round)
             if (second > 0f) drawLine(Color.White, tr, lerp(tr, bl, second), stroke.width, StrokeCap.Round)
         }
     }
 }
 
-private fun lerp(a: Offset, b: Offset, t: Float) = Offset(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t)
+private fun lerp(
+    a: Offset,
+    b: Offset,
+    t: Float,
+) = Offset(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t)
 
 /** Full result panel: animated mark, amount, message and actions ("Nouvelle vente" / "Réessayer"). */
 @Composable
@@ -106,7 +113,19 @@ fun DsPaymentResult(
         DsResultMark(outcome, progress = progress)
         Spacer(Modifier.height(20.dp))
         if (amount != null) Text(amount, style = DsTheme.typography.displayMedium, color = c.textPrimary)
-        Text(title, style = DsTheme.typography.titleLarge, color = if (outcome == DsPaymentOutcome.Success) c.success else c.error, textAlign = TextAlign.Center)
+        Text(
+            title,
+            style = DsTheme.typography.titleLarge,
+            color =
+                if (outcome ==
+                    DsPaymentOutcome.Success
+                ) {
+                    c.success
+                } else {
+                    c.error
+                },
+            textAlign = TextAlign.Center,
+        )
         if (description != null) {
             Spacer(Modifier.height(6.dp))
             Text(description, style = DsTheme.typography.body, color = c.textSecondary, textAlign = TextAlign.Center)
@@ -124,22 +143,40 @@ fun DsPaymentResult(
 
 @DsComponentPreview
 @Composable
-private fun DsResultMarkPreview() = DsPreview {
-    Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-        DsResultMark(DsPaymentOutcome.Success, size = 72.dp, progress = 1f)
-        DsResultMark(DsPaymentOutcome.Failure, size = 72.dp, progress = 1f)
-        DsResultMark(DsPaymentOutcome.Success, size = 72.dp, progress = 0.6f)
+private fun DsResultMarkPreview() =
+    DsPreview {
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            DsResultMark(DsPaymentOutcome.Success, size = 72.dp, progress = 1f)
+            DsResultMark(DsPaymentOutcome.Failure, size = 72.dp, progress = 1f)
+            DsResultMark(DsPaymentOutcome.Success, size = 72.dp, progress = 0.6f)
+        }
     }
-}
 
 @DsComponentPreview
 @Composable
-private fun DsPaymentResultSuccessPreview() = DsPreview {
-    DsPaymentResult(DsPaymentOutcome.Success, "Paiement accepté", amount = "1 188 DA", description = "Ticket n° 0421", primaryAction = "Nouvelle vente", secondaryAction = "Imprimer", progress = 1f)
-}
+private fun DsPaymentResultSuccessPreview() =
+    DsPreview {
+        DsPaymentResult(
+            DsPaymentOutcome.Success,
+            "Paiement accepté",
+            amount = "1 188 DA",
+            description = "Ticket n° 0421",
+            primaryAction = "Nouvelle vente",
+            secondaryAction = "Imprimer",
+            progress = 1f,
+        )
+    }
 
 @DsComponentPreview
 @Composable
-private fun DsPaymentResultFailurePreview() = DsPreview {
-    DsPaymentResult(DsPaymentOutcome.Failure, "Paiement refusé", amount = "1 188 DA", description = "Carte refusée par la banque.", primaryAction = "Réessayer", progress = 1f)
-}
+private fun DsPaymentResultFailurePreview() =
+    DsPreview {
+        DsPaymentResult(
+            DsPaymentOutcome.Failure,
+            "Paiement refusé",
+            amount = "1 188 DA",
+            description = "Carte refusée par la banque.",
+            primaryAction = "Réessayer",
+            progress = 1f,
+        )
+    }

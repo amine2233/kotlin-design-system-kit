@@ -43,7 +43,10 @@ private val cartSteps = listOf("Panier", "Pourboire", "Paiement")
 
 /** Screen 03 — Discount, État A (whole cart, −10%). */
 @Composable
-fun DiscountScreen(modifier: Modifier = Modifier, onBack: () -> Unit = {}) {
+fun DiscountScreen(
+    modifier: Modifier = Modifier,
+    onBack: () -> Unit = {},
+) {
     var scope by rememberSaveable { mutableIntStateOf(0) }
     var type by rememberSaveable { mutableIntStateOf(0) }
     var quick by rememberSaveable { mutableIntStateOf(1) }
@@ -54,7 +57,9 @@ fun DiscountScreen(modifier: Modifier = Modifier, onBack: () -> Unit = {}) {
         modifier = modifier,
         topBar = {
             Column {
-                DsTopBar("Remise", onBack = onBack, actions = { DsButton("Annuler", onClick = {}, variant = DsButtonVariant.Ghost, size = DsButtonSize.Small) })
+                DsTopBar("Remise", onBack = onBack, actions = {
+                    DsButton("Annuler", onClick = {}, variant = DsButtonVariant.Ghost, size = DsButtonSize.Small)
+                })
                 DsStepIndicator(cartSteps, 0, Modifier.background(c.surface).padding(horizontal = 8.dp, vertical = 9.dp))
                 DsDivider()
             }
@@ -64,31 +69,45 @@ fun DiscountScreen(modifier: Modifier = Modifier, onBack: () -> Unit = {}) {
             DsTotalsRow("Remise − 10%", "− 108 DA", emphasis = DsTotalsEmphasis.Discount)
             DsTotalsRow("TVA 10% recalculée", "88 DA", emphasis = DsTotalsEmphasis.Muted)
             DsTotalsRow("TVA 5,5% recalculée", "5 DA", emphasis = DsTotalsEmphasis.Muted)
-            Spacer(Modifier.height(8.dp)); DsDivider(); Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(8.dp))
+            DsDivider()
+            Spacer(Modifier.height(8.dp))
             DsTotalsRow("Nouveau total TTC", "972 DA", emphasis = DsTotalsEmphasis.Total, valueColor = c.primary)
             Spacer(Modifier.height(10.dp))
             DsButton("Appliquer la remise — 972 DA", onClick = {}, modifier = Modifier.fillMaxWidth())
-            DsButton("Supprimer la remise existante", onClick = {}, variant = DsButtonVariant.Ghost, size = DsButtonSize.Small, modifier = Modifier.fillMaxWidth())
+            DsButton("Supprimer la remise existante", onClick = {
+            }, variant = DsButtonVariant.Ghost, size = DsButtonSize.Small, modifier = Modifier.fillMaxWidth())
         },
     ) {
-        Column(Modifier.background(c.surface).padding(horizontal = 14.dp, vertical = 10.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Column(
+            Modifier.background(c.surface).padding(horizontal = 14.dp, vertical = 10.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
             DsSectionLabel("Appliquer à")
             DsSegmentedControl(listOf("Panier complet", "Article spécifique"), scope, { scope = it }, Modifier.fillMaxWidth())
-            DsSegmentedControl(listOf("% Pourcentage", "DA Montant fixe"), type, { type = it }, Modifier.fillMaxWidth(), shape = DsTheme.shapes.sm, height = 34.dp)
+            DsSegmentedControl(listOf("% Pourcentage", "DA Montant fixe"), type, {
+                type = it
+            }, Modifier.fillMaxWidth(), shape = DsTheme.shapes.sm, height = 34.dp)
             DsChipRow(listOf("5%", "10%", "20%", "Perso."), quick, { quick = it }, scrollable = false, modifier = Modifier.padding(0.dp))
             DsDropdown(listOf("Fidélité", "Geste commercial", "Erreur de saisie"), reason, { reason = it }, label = "Motif")
         }
         DsDivider()
         Column(Modifier.padding(horizontal = 14.dp, vertical = 8.dp).weight(1f), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             DsAmountDisplay(value, if (type == 0) "%" else "DA", label = "Valeur saisie")
-            DsNumericKeypad(onKey = { value = value.applyKey(it); quick = -1 }, modifier = Modifier.weight(1f), rowModifier = Modifier.weight(1f))
+            DsNumericKeypad(onKey = {
+                value = value.applyKey(it)
+                quick = -1
+            }, modifier = Modifier.weight(1f), rowModifier = Modifier.weight(1f))
         }
     }
 }
 
 /** Screen 04 — Payment, cash state (method list · quick cash · keypad · change). */
 @Composable
-fun PaymentScreen(modifier: Modifier = Modifier, onBack: () -> Unit = {}) {
+fun PaymentScreen(
+    modifier: Modifier = Modifier,
+    onBack: () -> Unit = {},
+) {
     var method by rememberSaveable { mutableIntStateOf(1) }
     var quick by rememberSaveable { mutableIntStateOf(2) }
     var received by rememberSaveable { mutableStateOf("1 500,00") }
@@ -125,14 +144,28 @@ fun PaymentScreen(modifier: Modifier = Modifier, onBack: () -> Unit = {}) {
         }
         Column(Modifier.padding(horizontal = 14.dp, vertical = 4.dp).weight(1f), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             DsSectionLabel("Montant remis")
-            DsChipRow(listOf("Exact", "1 200", "1 500", "2 000"), quick, { quick = it }, scrollable = false, modifier = Modifier.padding(0.dp))
+            DsChipRow(
+                listOf("Exact", "1 200", "1 500", "2 000"),
+                quick,
+                { quick = it },
+                scrollable = false,
+                modifier = Modifier.padding(0.dp),
+            )
             DsAmountDisplay(received, "DA", label = "Reçu du client")
-            DsNumericKeypad(onKey = { received = received.applyKey(it); quick = -1 }, modifier = Modifier.weight(1f), rowModifier = Modifier.weight(1f))
+            DsNumericKeypad(onKey = {
+                received = received.applyKey(it)
+                quick = -1
+            }, modifier = Modifier.weight(1f), rowModifier = Modifier.weight(1f))
         }
     }
 }
 
 private const val PHONE = "spec:width=375dp,height=780dp,dpi=420"
 
-@Preview(device = PHONE) @Composable private fun DiscountScreenPreview() = DsTheme { DiscountScreen() }
-@Preview(device = PHONE) @Composable private fun PaymentScreenPreview() = DsTheme { PaymentScreen() }
+@Preview(device = PHONE)
+@Composable
+private fun DiscountScreenPreview() = DsTheme { DiscountScreen() }
+
+@Preview(device = PHONE)
+@Composable
+private fun PaymentScreenPreview() = DsTheme { PaymentScreen() }

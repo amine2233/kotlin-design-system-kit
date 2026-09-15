@@ -54,24 +54,26 @@ fun DsTextField(
             leadingIcon = leadingIcon?.let { { Icon(it, contentDescription = null, tint = c.textTertiary) } },
             trailingIcon = trailingContent,
             supportingText = supportingText?.let { { Text(it, style = DsTheme.typography.caption) } },
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = c.surface,
-                unfocusedContainerColor = c.surfaceSubtle,
-                focusedBorderColor = c.primary,
-                unfocusedBorderColor = c.border,
-                errorBorderColor = c.error,
-                cursorColor = c.primary,
-                focusedTextColor = c.textPrimary,
-                unfocusedTextColor = c.textPrimary,
-            ),
+            colors =
+                OutlinedTextFieldDefaults.colors(
+                    focusedContainerColor = c.surface,
+                    unfocusedContainerColor = c.surfaceSubtle,
+                    focusedBorderColor = c.primary,
+                    unfocusedBorderColor = c.border,
+                    errorBorderColor = c.error,
+                    cursorColor = c.primary,
+                    focusedTextColor = c.textPrimary,
+                    unfocusedTextColor = c.textPrimary,
+                ),
         )
     }
 }
 
 @DsComponentPreview
 @Composable
-private fun DsTextFieldPreview() = DsPreview {
-    DsTextField("", {}, label = "Libellé (optionnel)", placeholder = "Misc service")
-    Spacer(Modifier.height(8.dp))
-    DsTextField("nom@exemple", {}, leadingIcon = DsIcons.Account, isError = true, supportingText = "Email invalide")
-}
+private fun DsTextFieldPreview() =
+    DsPreview {
+        DsTextField("", {}, label = "Libellé (optionnel)", placeholder = "Misc service")
+        Spacer(Modifier.height(8.dp))
+        DsTextField("nom@exemple", {}, leadingIcon = DsIcons.Account, isError = true, supportingText = "Email invalide")
+    }

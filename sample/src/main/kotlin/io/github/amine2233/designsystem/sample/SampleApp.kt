@@ -4,13 +4,13 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -23,8 +23,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.atoms.DsIconButton
 import io.github.amine2233.designsystem.catalog.AppShellScreen
 import io.github.amine2233.designsystem.catalog.AtomsGallery
 import io.github.amine2233.designsystem.catalog.AuthLoadingScreen
@@ -39,16 +40,18 @@ import io.github.amine2233.designsystem.catalog.OrganismsGallery
 import io.github.amine2233.designsystem.catalog.PaymentResultScreen
 import io.github.amine2233.designsystem.catalog.PaymentScreen
 import io.github.amine2233.designsystem.catalog.TipsScreen
-import io.github.amine2233.designsystem.atoms.DsIconButton
 import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsTheme
-import io.github.amine2233.designsystem.organisms.DsPaymentOutcome
 import io.github.amine2233.designsystem.molecules.DsListItem
 import io.github.amine2233.designsystem.molecules.DsSectionLabel
+import io.github.amine2233.designsystem.organisms.DsPaymentOutcome
 import io.github.amine2233.designsystem.organisms.DsTopBar
 import io.github.amine2233.designsystem.templates.DsScreenScaffold
 
-private enum class Page(val title: String, val group: String) {
+private enum class Page(
+    val title: String,
+    val group: String,
+) {
     Foundations("Icons & images", "Design system"),
     Atoms("Atoms", "Design system"),
     Molecules("Molecules", "Design system"),
@@ -118,7 +121,11 @@ private fun Home(onOpen: (Page) -> Unit) {
 }
 
 @Composable
-private fun WithReturnBar(title: String, onBack: () -> Unit, content: @Composable () -> Unit) {
+private fun WithReturnBar(
+    title: String,
+    onBack: () -> Unit,
+    content: @Composable () -> Unit,
+) {
     // Edge-to-edge: the bar (and the status bar behind it) is teal-tinted; insets are consumed here
     // so the nested screen Scaffolds don't pad for the status bar a second time.
     Column(Modifier.fillMaxSize().background(DsTheme.colors.primaryContainer).statusBarsPadding()) {

@@ -37,21 +37,23 @@ fun DsChip(
     contentPadding: PaddingValues = PaddingValues(horizontal = 14.dp, vertical = 6.dp),
 ) {
     val c = DsTheme.colors
-    val (bg, fg, border) = when {
-        selected -> Triple(c.primary, c.onPrimary, Color.Transparent)
-        tone == DsChipTone.Primary -> Triple(c.primaryContainer, c.primary, c.primaryContainerBorder)
-        tone == DsChipTone.Warning -> Triple(c.warningContainer, c.warning, c.warningBorder)
-        tone == DsChipTone.Error -> Triple(c.errorContainer, c.error, c.errorBorder)
-        else -> Triple(c.surfaceSubtle, c.textSecondary, c.border)
-    }
+    val (bg, fg, border) =
+        when {
+            selected -> Triple(c.primary, c.onPrimary, Color.Transparent)
+            tone == DsChipTone.Primary -> Triple(c.primaryContainer, c.primary, c.primaryContainerBorder)
+            tone == DsChipTone.Warning -> Triple(c.warningContainer, c.warning, c.warningBorder)
+            tone == DsChipTone.Error -> Triple(c.errorContainer, c.error, c.errorBorder)
+            else -> Triple(c.surfaceSubtle, c.textSecondary, c.border)
+        }
     Box(
-        modifier = modifier
-            .heightIn(min = 32.dp)
-            .clip(shape)
-            .background(bg)
-            .border(1.dp, border, shape)
-            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
-            .padding(contentPadding),
+        modifier =
+            modifier
+                .heightIn(min = 32.dp)
+                .clip(shape)
+                .background(bg)
+                .border(1.dp, border, shape)
+                .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
+                .padding(contentPadding),
         contentAlignment = Alignment.Center,
     ) {
         Text(
@@ -66,12 +68,13 @@ fun DsChip(
 
 @DsComponentPreview
 @Composable
-private fun DsChipPreview() = DsPreview {
-    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-        DsChip("Tous", selected = true)
-        DsChip("Chauds", onClick = {})
-        DsChip("TVA 10% ▾", tone = DsChipTone.Primary)
-        DsChip("% Remise →", tone = DsChipTone.Warning)
-        DsChip("Erreur", tone = DsChipTone.Error)
+private fun DsChipPreview() =
+    DsPreview {
+        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            DsChip("Tous", selected = true)
+            DsChip("Chauds", onClick = {})
+            DsChip("TVA 10% ▾", tone = DsChipTone.Primary)
+            DsChip("% Remise →", tone = DsChipTone.Warning)
+            DsChip("Erreur", tone = DsChipTone.Error)
+        }
     }
-}

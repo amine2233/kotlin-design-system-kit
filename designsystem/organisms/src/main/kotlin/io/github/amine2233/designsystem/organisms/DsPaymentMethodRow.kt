@@ -50,8 +50,9 @@ fun DsPaymentMethodRow(
 
 @DsComponentPreview
 @Composable
-private fun DsPaymentMethodRowPreview() = DsPreview {
-    DsPaymentMethodRow(DsIcons.Card, "Carte bancaire", "Terminal connecté", selected = true, onClick = {})
-    Spacer(Modifier.height(6.dp))
-    DsPaymentMethodRow(DsIcons.Cash, "Espèces", "Calcul de la monnaie", selected = false, onClick = {})
-}
+private fun DsPaymentMethodRowPreview() =
+    DsPreview {
+        DsPaymentMethodRow(DsIcons.Card, "Carte bancaire", "Terminal connecté", selected = true, onClick = {})
+        Spacer(Modifier.height(6.dp))
+        DsPaymentMethodRow(DsIcons.Cash, "Espèces", "Calcul de la monnaie", selected = false, onClick = {})
+    }

@@ -31,18 +31,20 @@ fun DsKeypadKey(
     tone: DsKeyTone = DsKeyTone.Default,
 ) {
     val c = DsTheme.colors
-    val (bg, fg, border) = when (tone) {
-        DsKeyTone.Default -> Triple(c.surface, c.textPrimary, c.border)
-        DsKeyTone.Secondary -> Triple(c.surface, c.textSecondary, c.border)
-        DsKeyTone.Destructive -> Triple(c.errorContainer, c.error, c.errorBorder)
-    }
+    val (bg, fg, border) =
+        when (tone) {
+            DsKeyTone.Default -> Triple(c.surface, c.textPrimary, c.border)
+            DsKeyTone.Secondary -> Triple(c.surface, c.textSecondary, c.border)
+            DsKeyTone.Destructive -> Triple(c.errorContainer, c.error, c.errorBorder)
+        }
     Box(
-        modifier = modifier
-            .heightIn(min = DsTheme.spacing.minTouchTarget)
-            .clip(DsShapes.key)
-            .background(bg)
-            .border(1.dp, border, DsShapes.key)
-            .clickable(onClick = onClick),
+        modifier =
+            modifier
+                .heightIn(min = DsTheme.spacing.minTouchTarget)
+                .clip(DsShapes.key)
+                .background(bg)
+                .border(1.dp, border, DsShapes.key)
+                .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
         Text(label, fontSize = 22.sp, fontWeight = FontWeight.Medium, color = fg)
@@ -51,10 +53,11 @@ fun DsKeypadKey(
 
 @DsComponentPreview
 @Composable
-private fun DsKeypadKeyPreview() = DsPreview {
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        DsKeypadKey("7", {}, Modifier.weight(1f).height(48.dp))
-        DsKeypadKey(",", {}, Modifier.weight(1f).height(48.dp), tone = DsKeyTone.Secondary)
-        DsKeypadKey("⌫", {}, Modifier.weight(1f).height(48.dp), tone = DsKeyTone.Destructive)
+private fun DsKeypadKeyPreview() =
+    DsPreview {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            DsKeypadKey("7", {}, Modifier.weight(1f).height(48.dp))
+            DsKeypadKey(",", {}, Modifier.weight(1f).height(48.dp), tone = DsKeyTone.Secondary)
+            DsKeypadKey("⌫", {}, Modifier.weight(1f).height(48.dp), tone = DsKeyTone.Destructive)
+        }
     }
-}

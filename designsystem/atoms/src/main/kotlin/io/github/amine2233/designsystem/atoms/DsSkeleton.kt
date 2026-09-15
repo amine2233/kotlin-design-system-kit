@@ -25,7 +25,11 @@ import io.github.amine2233.designsystem.core.DsTheme
 
 /** Pulsing placeholder block; size it with the modifier (e.g. `Modifier.fillMaxWidth().height(12.dp)`). */
 @Composable
-fun DsSkeleton(modifier: Modifier = Modifier, shape: Shape = DsShapes.sm, animate: Boolean = true) {
+fun DsSkeleton(
+    modifier: Modifier = Modifier,
+    shape: Shape = DsShapes.sm,
+    animate: Boolean = true,
+) {
     val alpha by rememberInfiniteTransition(label = "skeleton").animateFloat(
         initialValue = 1f,
         targetValue = 0.45f,
@@ -37,8 +41,9 @@ fun DsSkeleton(modifier: Modifier = Modifier, shape: Shape = DsShapes.sm, animat
 
 @DsComponentPreview
 @Composable
-private fun DsSkeletonPreview() = DsPreview {
-    DsSkeleton(Modifier.fillMaxWidth().height(14.dp), animate = false)
-    Spacer(Modifier.height(8.dp))
-    DsSkeleton(Modifier.size(64.dp), shape = DsShapes.pill, animate = false)
-}
+private fun DsSkeletonPreview() =
+    DsPreview {
+        DsSkeleton(Modifier.fillMaxWidth().height(14.dp), animate = false)
+        Spacer(Modifier.height(8.dp))
+        DsSkeleton(Modifier.size(64.dp), shape = DsShapes.pill, animate = false)
+    }

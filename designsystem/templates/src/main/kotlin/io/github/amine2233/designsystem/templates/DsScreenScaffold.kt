@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,9 +45,10 @@ fun DsScreenScaffold(
 
 @DsScreenPreview
 @Composable
-private fun DsScreenScaffoldPreview() = DsTheme {
-    DsScreenScaffold(
-        topBar = { DsTopBar("Écran", onBack = {}) },
-        bottomPanel = { DsButton("Continuer", onClick = {}, modifier = Modifier.fillMaxWidth()) },
-    ) { Text("Contenu", style = DsTheme.typography.body, modifier = Modifier.padding(16.dp)) }
-}
+private fun DsScreenScaffoldPreview() =
+    DsTheme {
+        DsScreenScaffold(
+            topBar = { DsTopBar("Écran", onBack = {}) },
+            bottomPanel = { DsButton("Continuer", onClick = {}, modifier = Modifier.fillMaxWidth()) },
+        ) { Text("Contenu", style = DsTheme.typography.body, modifier = Modifier.padding(16.dp)) }
+    }

@@ -24,13 +24,14 @@ fun DsTotalsRow(
 ) {
     val c = DsTheme.colors
     val t = DsTheme.typography
-    val (labelStyle, valueStyle, color) = when (emphasis) {
-        DsTotalsEmphasis.Muted -> Triple(t.caption, t.caption, c.textTertiary)
-        DsTotalsEmphasis.Normal -> Triple(t.label, t.labelStrong, c.textSecondary)
-        DsTotalsEmphasis.Discount -> Triple(t.label, t.labelStrong, c.warning)
-        DsTotalsEmphasis.Positive -> Triple(t.labelStrong, t.labelStrong, c.primary)
-        DsTotalsEmphasis.Total -> Triple(t.title, t.headline, c.textPrimary)
-    }
+    val (labelStyle, valueStyle, color) =
+        when (emphasis) {
+            DsTotalsEmphasis.Muted -> Triple(t.caption, t.caption, c.textTertiary)
+            DsTotalsEmphasis.Normal -> Triple(t.label, t.labelStrong, c.textSecondary)
+            DsTotalsEmphasis.Discount -> Triple(t.label, t.labelStrong, c.warning)
+            DsTotalsEmphasis.Positive -> Triple(t.labelStrong, t.labelStrong, c.primary)
+            DsTotalsEmphasis.Total -> Triple(t.title, t.headline, c.textPrimary)
+        }
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -43,10 +44,11 @@ fun DsTotalsRow(
 
 @DsComponentPreview
 @Composable
-private fun DsTotalsRowPreview() = DsPreview {
-    DsTotalsRow("Sous-total HT", "1 025 DA")
-    DsTotalsRow("TVA 5,5% recalculée", "5 DA", emphasis = DsTotalsEmphasis.Muted)
-    DsTotalsRow("Remise totale", "−49 DA", emphasis = DsTotalsEmphasis.Discount)
-    DsTotalsRow("Pourboire (10%)", "+ 108 DA", emphasis = DsTotalsEmphasis.Positive)
-    DsTotalsRow("Total TTC", "1 080 DA", emphasis = DsTotalsEmphasis.Total)
-}
+private fun DsTotalsRowPreview() =
+    DsPreview {
+        DsTotalsRow("Sous-total HT", "1 025 DA")
+        DsTotalsRow("TVA 5,5% recalculée", "5 DA", emphasis = DsTotalsEmphasis.Muted)
+        DsTotalsRow("Remise totale", "−49 DA", emphasis = DsTotalsEmphasis.Discount)
+        DsTotalsRow("Pourboire (10%)", "+ 108 DA", emphasis = DsTotalsEmphasis.Positive)
+        DsTotalsRow("Total TTC", "1 080 DA", emphasis = DsTotalsEmphasis.Total)
+    }

@@ -22,13 +22,29 @@ import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsImages
 import io.github.amine2233.designsystem.core.DsTheme
 
-private val iconSet = listOf(
-    "Back" to DsIcons.Back, "Close" to DsIcons.Close, "Search" to DsIcons.Search, "Settings" to DsIcons.Settings,
-    "Add" to DsIcons.Add, "Remove" to DsIcons.Remove, "Delete" to DsIcons.Delete, "Check" to DsIcons.Check,
-    "Cart" to DsIcons.Cart, "Card" to DsIcons.Card, "Cash" to DsIcons.Cash, "Contactless" to DsIcons.Contactless,
-    "Split" to DsIcons.Split, "Discount" to DsIcons.Discount, "Tip" to DsIcons.Tip, "Receipt" to DsIcons.Receipt,
-    "Catalogue" to DsIcons.Catalogue, "Hold" to DsIcons.Hold, "Print" to DsIcons.Print, "Offline" to DsIcons.Offline,
-)
+private val iconSet =
+    listOf(
+        "Back" to DsIcons.Back,
+        "Close" to DsIcons.Close,
+        "Search" to DsIcons.Search,
+        "Settings" to DsIcons.Settings,
+        "Add" to DsIcons.Add,
+        "Remove" to DsIcons.Remove,
+        "Delete" to DsIcons.Delete,
+        "Check" to DsIcons.Check,
+        "Cart" to DsIcons.Cart,
+        "Card" to DsIcons.Card,
+        "Cash" to DsIcons.Cash,
+        "Contactless" to DsIcons.Contactless,
+        "Split" to DsIcons.Split,
+        "Discount" to DsIcons.Discount,
+        "Tip" to DsIcons.Tip,
+        "Receipt" to DsIcons.Receipt,
+        "Catalogue" to DsIcons.Catalogue,
+        "Hold" to DsIcons.Hold,
+        "Print" to DsIcons.Print,
+        "Offline" to DsIcons.Offline,
+    )
 
 /** Icons + images hosted by the DS. */
 @Composable

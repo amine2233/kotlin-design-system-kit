@@ -25,10 +25,11 @@ fun DsChipRow(
     scrollable: Boolean = true,
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .then(if (scrollable) Modifier.horizontalScroll(rememberScrollState()) else Modifier)
-            .padding(horizontal = 12.dp, vertical = 8.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .then(if (scrollable) Modifier.horizontalScroll(rememberScrollState()) else Modifier)
+                .padding(horizontal = 12.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         options.forEachIndexed { i, label ->
@@ -37,7 +38,15 @@ fun DsChipRow(
                 selected = i == selectedIndex,
                 onClick = { onSelect(i) },
                 modifier = if (scrollable) Modifier else Modifier.weight(1f),
-                contentPadding = if (scrollable) PaddingValues(horizontal = 14.dp, vertical = 6.dp) else PaddingValues(horizontal = 4.dp, vertical = 8.dp),
+                contentPadding =
+                    if (scrollable) {
+                        PaddingValues(
+                            horizontal = 14.dp,
+                            vertical = 6.dp,
+                        )
+                    } else {
+                        PaddingValues(horizontal = 4.dp, vertical = 8.dp)
+                    },
             )
         }
     }
@@ -45,7 +54,8 @@ fun DsChipRow(
 
 @DsComponentPreview
 @Composable
-private fun DsChipRowPreview() = DsPreview {
-    DsChipRow(listOf("Tous", "Chauds", "Froids", "Snacks", "Pâtisserie", "Extras"), 0, {})
-    DsChipRow(listOf("20%", "10%", "5,5%", "0%"), 1, {}, scrollable = false)
-}
+private fun DsChipRowPreview() =
+    DsPreview {
+        DsChipRow(listOf("Tous", "Chauds", "Froids", "Snacks", "Pâtisserie", "Extras"), 0, {})
+        DsChipRow(listOf("20%", "10%", "5,5%", "0%"), 1, {}, scrollable = false)
+    }

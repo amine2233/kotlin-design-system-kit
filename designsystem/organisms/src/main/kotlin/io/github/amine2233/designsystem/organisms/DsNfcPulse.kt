@@ -41,25 +41,31 @@ private const val PERIOD_MS = 1800
  * [animate] false freezes rings at staggered radii (deterministic for screenshot tests).
  */
 @Composable
-fun DsNfcPulse(modifier: Modifier = Modifier, size: Dp = 180.dp, animate: Boolean = true) {
+fun DsNfcPulse(
+    modifier: Modifier = Modifier,
+    size: Dp = 180.dp,
+    animate: Boolean = true,
+) {
     val c = DsTheme.colors
     val transition = rememberInfiniteTransition(label = "nfc")
-    val phases: List<State<Float>> = List(RING_COUNT) { i ->
-        if (animate) {
-            transition.animateFloat(
-                initialValue = 0f,
-                targetValue = 1f,
-                animationSpec = infiniteRepeatable(
-                    tween(PERIOD_MS, easing = LinearEasing),
-                    RepeatMode.Restart,
-                    initialStartOffset = StartOffset(i * PERIOD_MS / RING_COUNT),
-                ),
-                label = "ring$i",
-            )
-        } else {
-            mutableFloatStateOf((i + 1f) / (RING_COUNT + 1f))
+    val phases: List<State<Float>> =
+        List(RING_COUNT) { i ->
+            if (animate) {
+                transition.animateFloat(
+                    initialValue = 0f,
+                    targetValue = 1f,
+                    animationSpec =
+                        infiniteRepeatable(
+                            tween(PERIOD_MS, easing = LinearEasing),
+                            RepeatMode.Restart,
+                            initialStartOffset = StartOffset(i * PERIOD_MS / RING_COUNT),
+                        ),
+                    label = "ring$i",
+                )
+            } else {
+                mutableFloatStateOf((i + 1f) / (RING_COUNT + 1f))
+            }
         }
-    }
     Box(modifier.size(size), contentAlignment = Alignment.Center) {
         Canvas(Modifier.size(size)) {
             val maxR = this.size.minDimension / 2f
@@ -106,12 +112,19 @@ fun DsNfcWaiting(
 
 @DsComponentPreview
 @Composable
-private fun DsNfcPulsePreview() = DsPreview {
-    DsNfcPulse(animate = false)
-}
+private fun DsNfcPulsePreview() =
+    DsPreview {
+        DsNfcPulse(animate = false)
+    }
 
 @DsComponentPreview
 @Composable
-private fun DsNfcWaitingPreview() = DsPreview {
-    DsNfcWaiting("Approchez le téléphone", description = "Le client valide avec Apple Pay ou Google Pay.", amount = "1 188 DA", animate = false)
-}
+private fun DsNfcWaitingPreview() =
+    DsPreview {
+        DsNfcWaiting(
+            "Approchez le téléphone",
+            description = "Le client valide avec Apple Pay ou Google Pay.",
+            amount = "1 188 DA",
+            animate = false,
+        )
+    }

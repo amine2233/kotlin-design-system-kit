@@ -55,15 +55,17 @@ fun DsSheetHandle(modifier: Modifier = Modifier) {
 
 @DsComponentPreview
 @Composable
-private fun DsSheetHandlePreview() = DsPreview {
-    DsSheetHandle()
-}
+private fun DsSheetHandlePreview() =
+    DsPreview {
+        DsSheetHandle()
+    }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(name = "sheet", device = "spec:width=375dp,height=780dp,dpi=420")
 @Composable
-private fun DsBottomSheetPreview() = DsTheme {
-    DsBottomSheet(onDismiss = {}, sheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Expanded)) {
-        Text("Contenu du feuillet", style = DsTheme.typography.title, modifier = Modifier.padding(16.dp))
+private fun DsBottomSheetPreview() =
+    DsTheme {
+        DsBottomSheet(onDismiss = {}, sheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Expanded)) {
+            Text("Contenu du feuillet", style = DsTheme.typography.title, modifier = Modifier.padding(16.dp))
+        }
     }
-}

@@ -60,8 +60,14 @@ fun DsListItem(
 
 @DsComponentPreview
 @Composable
-private fun DsListItemPreview() = DsPreview {
-    DsListItem("Cappuccino", supporting = "×2 · 200 DA/u.", leading = { DsRadioIndicator(false) }, trailing = { Text("400 DA", style = DsTheme.typography.labelStrong) })
-    Spacer(Modifier.height(6.dp))
-    DsListItem("Espresso", supporting = "×1 · 150 DA/u.", selected = true, onClick = {}, leading = { DsRadioIndicator(true) }, trailing = { Text("150 DA", style = DsTheme.typography.labelStrong, color = DsTheme.colors.primary) })
-}
+private fun DsListItemPreview() =
+    DsPreview {
+        DsListItem("Cappuccino", supporting = "×2 · 200 DA/u.", leading = {
+            DsRadioIndicator(false)
+        }, trailing = { Text("400 DA", style = DsTheme.typography.labelStrong) })
+        Spacer(Modifier.height(6.dp))
+        DsListItem("Espresso", supporting = "×1 · 150 DA/u.", selected = true, onClick = {
+        }, leading = {
+            DsRadioIndicator(true)
+        }, trailing = { Text("150 DA", style = DsTheme.typography.labelStrong, color = DsTheme.colors.primary) })
+    }

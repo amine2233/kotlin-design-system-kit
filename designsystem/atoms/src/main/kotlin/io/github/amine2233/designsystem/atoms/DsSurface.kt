@@ -58,10 +58,11 @@ fun DsCard(
 
 @DsComponentPreview
 @Composable
-private fun DsCardPreview() = DsPreview {
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        DsCard(Modifier.weight(1f), contentPadding = 12.dp) { DsText("Card") }
-        DsCard(Modifier.weight(1f), selected = true, contentPadding = 12.dp) { DsText("Selected", color = DsTheme.colors.primary) }
-        DsCard(Modifier.weight(1f), onClick = {}, elevation = DsElevation.card, contentPadding = 12.dp) { DsText("Clickable") }
+private fun DsCardPreview() =
+    DsPreview {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            DsCard(Modifier.weight(1f), contentPadding = 12.dp) { DsText("Card") }
+            DsCard(Modifier.weight(1f), selected = true, contentPadding = 12.dp) { DsText("Selected", color = DsTheme.colors.primary) }
+            DsCard(Modifier.weight(1f), onClick = {}, elevation = DsElevation.card, contentPadding = 12.dp) { DsText("Clickable") }
+        }
     }
-}
