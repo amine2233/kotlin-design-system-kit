@@ -3,9 +3,9 @@
 # and a .releaserc.json (see templates/.releaserc.json).
 name: Release
 
+# Manual releases only: run this workflow from the Actions tab (Run workflow → main).
+# semantic-release then analyses the commits since the last tag and cuts the version.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 jobs:

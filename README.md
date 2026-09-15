@@ -99,9 +99,9 @@ All logic lives in `mise.toml`:
 
 - `mise run test` / `mise run lint` — what the `CI` workflow runs on pull requests
   (unit tests + screenshot regression check; ktlint with the `.editorconfig` rules).
-- Merging a `feat:` / `fix:` commit into `main` runs semantic-release: it tags
-  `vX.Y.Z`, updates `CHANGELOG.md`, publishes `io.github.amine2233:designsystem-<module>` to GitHub
-  Packages and creates the GitHub release with the AARs attached.
+- Releases are **manual**: *Actions → Release → Run workflow* on `main`. semantic-release analyses the
+  `feat:` / `fix:` commits since the last tag, tags `vX.Y.Z`, updates `CHANGELOG.md`, publishes
+  `io.github.amine2233:designsystem-<module>` to GitHub Packages and creates the GitHub release with the AARs attached.
 - `mise run release --dry-run` previews the next version locally (needs `GITHUB_TOKEN` in `.env.local`, see `.env.local.example`).
 
 ## Commands

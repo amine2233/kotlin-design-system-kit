@@ -71,12 +71,14 @@ if [[ "${usage_dry_run:-}" == "true" ]]; then
     dry_run_opt="--dry-run"
 fi
 
+# conventionalcommits preset pinned to 9: @semantic-release/release-notes-generator@14 bundles
+# conventional-changelog-writer@8, which cannot render preset 10 ("Missing helper" at generateNotes).
 npx --yes \
     -p semantic-release \
     -p @semantic-release/changelog \
     -p @semantic-release/exec \
     -p @semantic-release/git \
-    -p "conventional-changelog-conventionalcommits@>=8" \
+    -p conventional-changelog-conventionalcommits@9 \
     semantic-release $dry_run_opt
 '''
 
