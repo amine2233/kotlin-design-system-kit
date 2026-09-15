@@ -76,7 +76,7 @@ dependencies {
 }
 ```
 
-The app must apply `org.jetbrains.kotlin.plugin.compose` with the same Kotlin version and use `minSdk ≥ 26`.
+The app must apply `org.jetbrains.kotlin.plugin.compose` with the same Kotlin version and use `minSdk ≥ 33` (Android 13+).
 
 ### 3. Use it
 
