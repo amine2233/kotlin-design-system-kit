@@ -30,6 +30,7 @@ import io.github.amine2233.designsystem.core.DsComponentPreview
 import io.github.amine2233.designsystem.core.DsMotion
 import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
+import io.github.amine2233.designsystem.core.animationsEnabled
 
 enum class DsPaymentOutcome { Success, Failure }
 
@@ -42,7 +43,7 @@ fun DsResultMark(
     outcome: DsPaymentOutcome,
     modifier: Modifier = Modifier,
     size: Dp = 120.dp,
-    progress: Float? = null,
+    progress: Float? = if (DsTheme.animationsEnabled) null else 1f,
     onFinished: () -> Unit = {},
 ) {
     val c = DsTheme.colors
@@ -106,7 +107,7 @@ fun DsPaymentResult(
     onPrimary: () -> Unit = {},
     secondaryAction: String? = null,
     onSecondary: () -> Unit = {},
-    progress: Float? = null,
+    progress: Float? = if (DsTheme.animationsEnabled) null else 1f,
 ) {
     val c = DsTheme.colors
     Column(modifier.fillMaxWidth().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {

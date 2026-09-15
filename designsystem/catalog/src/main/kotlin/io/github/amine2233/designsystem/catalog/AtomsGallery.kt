@@ -96,6 +96,7 @@ fun AtomsGallery(modifier: Modifier = Modifier) {
             Row {
                 DsIconButton(Icons.Default.Settings, contentDescription = "Réglages", onClick = {}, bordered = true)
                 DsIconButton(Icons.Default.Email, contentDescription = null, onClick = {}, tint = DsTheme.colors.primary)
+                DsIconButton(DsIcons.Print, contentDescription = "Impression", onClick = {}, loading = true, bordered = true)
             }
         }
         CatalogSection("Chips & badges") {

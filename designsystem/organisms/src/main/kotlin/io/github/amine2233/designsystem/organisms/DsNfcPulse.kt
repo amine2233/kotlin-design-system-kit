@@ -32,6 +32,7 @@ import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
+import io.github.amine2233.designsystem.core.animationsEnabled
 
 private const val RING_COUNT = 3
 private const val PERIOD_MS = 1800
@@ -44,7 +45,7 @@ private const val PERIOD_MS = 1800
 fun DsNfcPulse(
     modifier: Modifier = Modifier,
     size: Dp = 180.dp,
-    animate: Boolean = true,
+    animate: Boolean = DsTheme.animationsEnabled,
 ) {
     val c = DsTheme.colors
     val transition = rememberInfiniteTransition(label = "nfc")
@@ -92,7 +93,7 @@ fun DsNfcWaiting(
     modifier: Modifier = Modifier,
     description: String? = null,
     amount: String? = null,
-    animate: Boolean = true,
+    animate: Boolean = DsTheme.animationsEnabled,
 ) {
     val c = DsTheme.colors
     Column(modifier.fillMaxWidth().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {

@@ -23,7 +23,7 @@ private fun Snapshot(
     dark: Boolean = false,
     content: @Composable () -> Unit,
 ) {
-    DsTheme(darkTheme = dark, content = content)
+    DsTheme(darkTheme = dark, animationsEnabled = false, content = content)
 }
 
 // ── Galleries (phone, light + dark) ─────────────────────────────
@@ -113,17 +113,17 @@ fun ShellTabletRtl() = Snapshot { AppShellScreen(windowSize = DsWindowSize.Expan
 @PreviewTest
 @Preview(name = "nfc_phone", device = PHONE)
 @Composable
-fun NfcPhone() = Snapshot { NfcPaymentScreen(animate = false) }
+fun NfcPhone() = Snapshot { NfcPaymentScreen() }
 
 @PreviewTest
 @Preview(name = "payment_success_phone", device = PHONE)
 @Composable
-fun PaymentSuccessPhone() = Snapshot { PaymentResultScreen(DsPaymentOutcome.Success, progress = 1f) }
+fun PaymentSuccessPhone() = Snapshot { PaymentResultScreen(DsPaymentOutcome.Success) }
 
 @PreviewTest
 @Preview(name = "payment_failure_phone", device = PHONE)
 @Composable
-fun PaymentFailurePhone() = Snapshot { PaymentResultScreen(DsPaymentOutcome.Failure, progress = 1f) }
+fun PaymentFailurePhone() = Snapshot { PaymentResultScreen(DsPaymentOutcome.Failure) }
 
 @PreviewTest
 @Preview(name = "onboarding_phone", device = PHONE)

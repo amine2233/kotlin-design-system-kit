@@ -29,11 +29,13 @@ fun DsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     colors: DsColorScheme = if (darkTheme) DsDarkColors else DsLightColors,
     typography: DsTypography = DsDefaultTypography,
+    animationsEnabled: Boolean = true,
     content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(
         LocalDsColors provides colors,
         LocalDsTypography provides typography,
+        LocalDsAnimationsEnabled provides animationsEnabled,
     ) {
         // Material3 bridge so M3 primitives (sheets, dialogs, ripples) follow the DS palette.
         MaterialTheme(

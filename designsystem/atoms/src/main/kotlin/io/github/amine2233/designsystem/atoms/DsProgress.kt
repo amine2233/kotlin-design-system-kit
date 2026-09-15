@@ -16,6 +16,10 @@ import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.core.DsComponentPreview
 import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
+import io.github.amine2233.designsystem.core.animationsEnabled
+
+// Frame shown for indeterminate indicators in previews / screenshot tests.
+private const val INSPECTION_PROGRESS = 0.75f
 
 /** [progress] null = indeterminate. */
 @Composable
@@ -25,7 +29,7 @@ fun DsLinearProgress(
     thickness: Dp = 4.dp,
 ) {
     val m = modifier.fillMaxWidth().height(thickness)
-    if (progress == null) {
+    if (progress == null && DsTheme.animationsEnabled) {
         LinearProgressIndicator(
             modifier = m,
             color = DsTheme.colors.primary,
@@ -34,7 +38,7 @@ fun DsLinearProgress(
         )
     } else {
         LinearProgressIndicator(
-            progress = { progress.coerceIn(0f, 1f) },
+            progress = { (progress ?: INSPECTION_PROGRESS).coerceIn(0f, 1f) },
             modifier = m,
             color = DsTheme.colors.primary,
             trackColor = DsTheme.colors.border,
@@ -52,7 +56,7 @@ fun DsCircularProgress(
     strokeWidth: Dp = 4.dp,
 ) {
     val m = modifier.size(size)
-    if (progress == null) {
+    if (progress == null && DsTheme.animationsEnabled) {
         CircularProgressIndicator(
             modifier = m,
             color = DsTheme.colors.primary,
@@ -60,9 +64,13 @@ fun DsCircularProgress(
             strokeWidth = strokeWidth,
         )
     } else {
-        CircularProgressIndicator(progress = {
-            progress.coerceIn(0f, 1f)
-        }, modifier = m, color = DsTheme.colors.primary, trackColor = DsTheme.colors.primaryContainerBorder, strokeWidth = strokeWidth)
+        CircularProgressIndicator(
+            progress = { (progress ?: INSPECTION_PROGRESS).coerceIn(0f, 1f) },
+            modifier = m,
+            color = DsTheme.colors.primary,
+            trackColor = DsTheme.colors.primaryContainerBorder,
+            strokeWidth = strokeWidth,
+        )
     }
 }
 

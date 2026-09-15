@@ -22,13 +22,14 @@ import io.github.amine2233.designsystem.core.DsComponentPreview
 import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
+import io.github.amine2233.designsystem.core.animationsEnabled
 
 /** Pulsing placeholder block; size it with the modifier (e.g. `Modifier.fillMaxWidth().height(12.dp)`). */
 @Composable
 fun DsSkeleton(
     modifier: Modifier = Modifier,
     shape: Shape = DsShapes.sm,
-    animate: Boolean = true,
+    animate: Boolean = DsTheme.animationsEnabled,
 ) {
     val alpha by rememberInfiniteTransition(label = "skeleton").animateFloat(
         initialValue = 1f,

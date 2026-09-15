@@ -34,6 +34,7 @@ import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
+import io.github.amine2233.designsystem.core.animationsEnabled
 
 enum class DsButtonVariant { Primary, Outlined, Ghost, Danger }
 
@@ -105,7 +106,16 @@ fun DsButton(
         contentPadding = PaddingValues(horizontal = size.horizontalPadding, vertical = 0.dp),
     ) {
         if (loading) {
-            CircularProgressIndicator(modifier = Modifier.size(18.dp), color = LocalContentColor.current, strokeWidth = 2.dp)
+            if (DsTheme.animationsEnabled) {
+                CircularProgressIndicator(modifier = Modifier.size(18.dp), color = LocalContentColor.current, strokeWidth = 2.dp)
+            } else {
+                CircularProgressIndicator(
+                    progress = { 0.75f },
+                    modifier = Modifier.size(18.dp),
+                    color = LocalContentColor.current,
+                    strokeWidth = 2.dp,
+                )
+            }
             Spacer(Modifier.width(8.dp))
         } else if (leadingIcon != null) {
             Icon(leadingIcon, contentDescription = null, modifier = Modifier.size(18.dp))
@@ -136,9 +146,10 @@ fun DsIconButton(
     containerColor: Color = Color.Transparent,
     bordered: Boolean = false,
     enabled: Boolean = true,
+    loading: Boolean = false,
 ) {
     IconButton(
-        onClick = onClick,
+        onClick = { if (!loading) onClick() },
         modifier =
             modifier
                 .size(DsTheme.spacing.minTouchTarget)
@@ -159,7 +170,24 @@ fun DsIconButton(
                 disabledContentColor = DsTheme.colors.textDisabled,
             ),
     ) {
-        Icon(icon, contentDescription = contentDescription, modifier = Modifier.size(22.dp))
+        when {
+            loading && DsTheme.animationsEnabled -> {
+                CircularProgressIndicator(modifier = Modifier.size(20.dp), color = LocalContentColor.current, strokeWidth = 2.dp)
+            }
+
+            loading -> {
+                CircularProgressIndicator(
+                    progress = { 0.75f },
+                    modifier = Modifier.size(20.dp),
+                    color = LocalContentColor.current,
+                    strokeWidth = 2.dp,
+                )
+            }
+
+            else -> {
+                Icon(icon, contentDescription = contentDescription, modifier = Modifier.size(22.dp))
+            }
+        }
     }
 }
 
@@ -188,5 +216,6 @@ private fun DsIconButtonPreview() =
             DsIconButton(DsIcons.Settings, contentDescription = null, onClick = {}, bordered = true)
             DsIconButton(DsIcons.Close, contentDescription = null, onClick = {}, tint = DsTheme.colors.primary)
             DsIconButton(DsIcons.Delete, contentDescription = null, onClick = {}, enabled = false)
+            DsIconButton(DsIcons.Print, contentDescription = "Impression", onClick = {}, loading = true, bordered = true)
         }
     }
