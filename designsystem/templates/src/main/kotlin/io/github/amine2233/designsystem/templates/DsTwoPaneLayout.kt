@@ -6,12 +6,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.atoms.DsButton
 import io.github.amine2233.designsystem.atoms.DsVerticalDivider
+import io.github.amine2233.designsystem.core.DsScreenPreview
 import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.core.DsWindowSize
 
@@ -40,4 +45,14 @@ fun DsTwoPaneLayout(
             compactSecondary()
         }
     }
+}
+
+@DsScreenPreview
+@Composable
+private fun DsTwoPaneLayoutPreview() = DsTheme {
+    DsTwoPaneLayout(
+        primary = { Text("Primary", style = DsTheme.typography.title, modifier = Modifier.padding(16.dp)) },
+        secondary = { Text("Secondary pane", style = DsTheme.typography.title, modifier = Modifier.padding(16.dp)) },
+        compactSecondary = { DsButton("Bottom slot", onClick = {}, modifier = Modifier.fillMaxWidth().padding(16.dp)) },
+    )
 }

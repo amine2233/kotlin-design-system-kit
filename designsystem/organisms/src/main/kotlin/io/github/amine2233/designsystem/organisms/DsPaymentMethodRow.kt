@@ -2,6 +2,8 @@ package io.github.amine2233.designsystem.organisms
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -10,6 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsCheckBullet
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsIcons
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.molecules.DsListItem
@@ -41,4 +46,12 @@ fun DsPaymentMethodRow(
         },
         trailing = { if (selected) DsCheckBullet(size = 22.dp) },
     )
+}
+
+@DsComponentPreview
+@Composable
+private fun DsPaymentMethodRowPreview() = DsPreview {
+    DsPaymentMethodRow(DsIcons.Card, "Carte bancaire", "Terminal connecté", selected = true, onClick = {})
+    Spacer(Modifier.height(6.dp))
+    DsPaymentMethodRow(DsIcons.Cash, "Espèces", "Calcul de la monnaie", selected = false, onClick = {})
 }

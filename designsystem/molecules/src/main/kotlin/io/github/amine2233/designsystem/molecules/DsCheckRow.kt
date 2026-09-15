@@ -8,6 +8,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsCheckBullet
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
 
 /** Value-prop bullet row from onboarding. */
@@ -17,4 +19,11 @@ fun DsCheckRow(text: String, modifier: Modifier = Modifier, filled: Boolean = tr
         DsCheckBullet(filled = filled)
         Text(text, style = DsTheme.typography.body, color = DsTheme.colors.textPrimary)
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsCheckRowPreview() = DsPreview {
+    DsCheckRow("Encaissement rapide et fiable")
+    DsCheckRow("TVA multi-taux, remises et pourboires", filled = false)
 }

@@ -7,6 +7,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
 
 @Composable
@@ -28,4 +30,11 @@ fun DsText(
         maxLines = maxLines,
         overflow = overflow,
     )
+}
+
+@DsComponentPreview
+@Composable
+private fun DsTextPreview() = DsPreview {
+    DsText("Encaissez vite, gérez mieux.", style = DsTheme.typography.title)
+    DsText("Body secondary", color = DsTheme.colors.textSecondary)
 }

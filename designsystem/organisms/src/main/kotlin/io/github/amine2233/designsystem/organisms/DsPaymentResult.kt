@@ -3,7 +3,9 @@ package io.github.amine2233.designsystem.organisms
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,7 +26,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsButton
 import io.github.amine2233.designsystem.atoms.DsButtonVariant
+import io.github.amine2233.designsystem.core.DsComponentPreview
 import io.github.amine2233.designsystem.core.DsMotion
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
 
 enum class DsPaymentOutcome { Success, Failure }
@@ -116,4 +120,26 @@ fun DsPaymentResult(
             DsButton(secondaryAction, onClick = onSecondary, variant = DsButtonVariant.Ghost, modifier = Modifier.fillMaxWidth())
         }
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsResultMarkPreview() = DsPreview {
+    Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+        DsResultMark(DsPaymentOutcome.Success, size = 72.dp, progress = 1f)
+        DsResultMark(DsPaymentOutcome.Failure, size = 72.dp, progress = 1f)
+        DsResultMark(DsPaymentOutcome.Success, size = 72.dp, progress = 0.6f)
+    }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsPaymentResultSuccessPreview() = DsPreview {
+    DsPaymentResult(DsPaymentOutcome.Success, "Paiement accepté", amount = "1 188 DA", description = "Ticket n° 0421", primaryAction = "Nouvelle vente", secondaryAction = "Imprimer", progress = 1f)
+}
+
+@DsComponentPreview
+@Composable
+private fun DsPaymentResultFailurePreview() = DsPreview {
+    DsPaymentResult(DsPaymentOutcome.Failure, "Paiement refusé", amount = "1 188 DA", description = "Carte refusée par la banque.", primaryAction = "Réessayer", progress = 1f)
 }

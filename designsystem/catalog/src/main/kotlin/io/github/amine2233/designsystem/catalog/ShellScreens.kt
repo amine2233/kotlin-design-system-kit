@@ -15,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsAvatar
@@ -22,6 +23,7 @@ import io.github.amine2233.designsystem.atoms.DsButton
 import io.github.amine2233.designsystem.atoms.DsButtonVariant
 import io.github.amine2233.designsystem.atoms.DsLogo
 import io.github.amine2233.designsystem.core.DsIcons
+import io.github.amine2233.designsystem.core.DsScreenPreview
 import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.core.DsWindowSize
 import io.github.amine2233.designsystem.organisms.DsNavItem
@@ -81,10 +83,10 @@ fun AppShellScreen(
 
 /** Payment — NFC waiting state. */
 @Composable
-fun NfcPaymentScreen(modifier: Modifier = Modifier, animate: Boolean = true) {
+fun NfcPaymentScreen(modifier: Modifier = Modifier, animate: Boolean = true, onBack: () -> Unit = {}) {
     DsScreenScaffold(
         modifier = modifier,
-        topBar = { DsTopBar("Encaissement", onBack = {}) },
+        topBar = { DsTopBar("Encaissement", onBack = onBack) },
         bottomPanel = { DsButton("Annuler le paiement", onClick = {}, variant = DsButtonVariant.Outlined, modifier = Modifier.fillMaxWidth()) },
     ) {
         DsCenteredLayout {
@@ -121,3 +123,15 @@ fun PaymentResultScreen(outcome: DsPaymentOutcome, modifier: Modifier = Modifier
         }
     }
 }
+
+private const val PHONE = "spec:width=375dp,height=780dp,dpi=420"
+
+@DsScreenPreview @Composable private fun AppShellScreenPreview() = DsTheme { AppShellScreen() }
+
+@Preview(name = "tablet · عربي", device = "spec:width=960dp,height=600dp,dpi=320")
+@Composable
+private fun AppShellScreenRtlPreview() = DsTheme { AppShellScreen(layoutDirection = LayoutDirection.Rtl) }
+
+@Preview(device = PHONE) @Composable private fun NfcPaymentScreenPreview() = DsTheme { NfcPaymentScreen(animate = false) }
+@Preview(device = PHONE) @Composable private fun PaymentResultSuccessPreview() = DsTheme { PaymentResultScreen(DsPaymentOutcome.Success, progress = 1f) }
+@Preview(device = PHONE) @Composable private fun PaymentResultFailurePreview() = DsTheme { PaymentResultScreen(DsPaymentOutcome.Failure, progress = 1f) }

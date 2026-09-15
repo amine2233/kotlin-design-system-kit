@@ -2,7 +2,9 @@ package io.github.amine2233.designsystem.atoms
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -12,6 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
@@ -49,4 +53,10 @@ fun DsCheckBullet(modifier: Modifier = Modifier, size: Dp = 20.dp, filled: Boole
             modifier = Modifier.size(size * 0.6f),
         )
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsSelectionIndicatorPreview() = DsPreview {
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { DsRadioIndicator(true); DsRadioIndicator(false); DsCheckBullet(); DsCheckBullet(filled = false) }
 }

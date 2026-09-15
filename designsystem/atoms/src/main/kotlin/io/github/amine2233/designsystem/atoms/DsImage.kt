@@ -3,7 +3,9 @@ package io.github.amine2233.designsystem.atoms
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -16,8 +18,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.core.DsComponentPreview
 import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsImages
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
@@ -74,4 +78,16 @@ fun DsIllustration(@DrawableRes resId: Int, modifier: Modifier = Modifier, size:
 @Composable
 fun DsLogo(modifier: Modifier = Modifier, size: Dp = 80.dp) {
     Image(painterResource(DsImages.Logo), contentDescription = "Caisse Pro", modifier = modifier.size(size))
+}
+
+@DsComponentPreview
+@Composable
+private fun DsImagePreview() = DsPreview {
+    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        DsLogo(size = 48.dp)
+        DsImage(DsImages.ProductPlaceholder, null, Modifier.size(48.dp))
+        DsImageSlot(null, null, Modifier.size(48.dp))
+        DsIllustration(DsImages.Illustrations.EmptyCart, size = 64.dp)
+        DsIllustration(DsImages.Illustrations.Error, size = 64.dp)
+    }
 }

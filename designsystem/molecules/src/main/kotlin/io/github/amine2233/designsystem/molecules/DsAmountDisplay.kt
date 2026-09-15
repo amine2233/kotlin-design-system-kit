@@ -4,13 +4,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
@@ -40,4 +44,14 @@ fun DsAmountDisplay(
             Text(unit, style = DsTheme.typography.title, color = c.primary, modifier = Modifier.padding(bottom = 4.dp))
         }
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsAmountDisplayPreview() = DsPreview {
+    DsAmountDisplay("1 500,00", "DA")
+    Spacer(Modifier.height(8.dp))
+    DsAmountDisplay("10,00", "%", label = "Valeur saisie")
+    Spacer(Modifier.height(8.dp))
+    DsAmountDisplay("108,00", "DA", label = "10% de 1 080 DA", prefix = "+")
 }

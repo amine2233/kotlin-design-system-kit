@@ -5,7 +5,9 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -23,6 +25,8 @@ import io.github.amine2233.designsystem.atoms.DsButton
 import io.github.amine2233.designsystem.atoms.DsButtonSize
 import io.github.amine2233.designsystem.atoms.DsButtonVariant
 import io.github.amine2233.designsystem.atoms.DsIconButton
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
@@ -65,4 +69,16 @@ fun DsBanner(
         }
         if (onDismiss != null) DsIconButton(Icons.Default.Close, contentDescription = "Fermer", onClick = onDismiss, tint = c.textSecondary)
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsBannerPreview() = DsPreview {
+    DsBanner("Le terminal est déconnecté.", tone = DsBannerTone.Error, title = "Paiement carte indisponible", actionLabel = "Réessayer", onAction = {})
+    Spacer(Modifier.height(6.dp))
+    DsBanner("Remise appliquée.", tone = DsBannerTone.Success, onDismiss = {})
+    Spacer(Modifier.height(6.dp))
+    DsBanner("Pourboire calculé sur le TTC.", tone = DsBannerTone.Info)
+    Spacer(Modifier.height(6.dp))
+    DsBanner("Stock faible : Croissant (3)", tone = DsBannerTone.Warning)
 }

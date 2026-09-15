@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsButton
 import io.github.amine2233.designsystem.atoms.DsButtonSize
@@ -42,7 +43,7 @@ private val cartSteps = listOf("Panier", "Pourboire", "Paiement")
 
 /** Screen 03 — Discount, État A (whole cart, −10%). */
 @Composable
-fun DiscountScreen(modifier: Modifier = Modifier) {
+fun DiscountScreen(modifier: Modifier = Modifier, onBack: () -> Unit = {}) {
     var scope by rememberSaveable { mutableIntStateOf(0) }
     var type by rememberSaveable { mutableIntStateOf(0) }
     var quick by rememberSaveable { mutableIntStateOf(1) }
@@ -53,7 +54,7 @@ fun DiscountScreen(modifier: Modifier = Modifier) {
         modifier = modifier,
         topBar = {
             Column {
-                DsTopBar("Remise", onBack = {}, actions = { DsButton("Annuler", onClick = {}, variant = DsButtonVariant.Ghost, size = DsButtonSize.Small) })
+                DsTopBar("Remise", onBack = onBack, actions = { DsButton("Annuler", onClick = {}, variant = DsButtonVariant.Ghost, size = DsButtonSize.Small) })
                 DsStepIndicator(cartSteps, 0, Modifier.background(c.surface).padding(horizontal = 8.dp, vertical = 9.dp))
                 DsDivider()
             }
@@ -87,7 +88,7 @@ fun DiscountScreen(modifier: Modifier = Modifier) {
 
 /** Screen 04 — Payment, cash state (method list · quick cash · keypad · change). */
 @Composable
-fun PaymentScreen(modifier: Modifier = Modifier) {
+fun PaymentScreen(modifier: Modifier = Modifier, onBack: () -> Unit = {}) {
     var method by rememberSaveable { mutableIntStateOf(1) }
     var quick by rememberSaveable { mutableIntStateOf(2) }
     var received by rememberSaveable { mutableStateOf("1 500,00") }
@@ -96,7 +97,7 @@ fun PaymentScreen(modifier: Modifier = Modifier) {
         modifier = modifier,
         topBar = {
             Column {
-                DsTopBar("Encaissement", onBack = {})
+                DsTopBar("Encaissement", onBack = onBack)
                 DsStepIndicator(cartSteps, 2, Modifier.background(c.surface).padding(horizontal = 8.dp, vertical = 9.dp))
                 DsDivider()
             }
@@ -131,3 +132,7 @@ fun PaymentScreen(modifier: Modifier = Modifier) {
     }
 }
 
+private const val PHONE = "spec:width=375dp,height=780dp,dpi=420"
+
+@Preview(device = PHONE) @Composable private fun DiscountScreenPreview() = DsTheme { DiscountScreen() }
+@Preview(device = PHONE) @Composable private fun PaymentScreenPreview() = DsTheme { PaymentScreen() }

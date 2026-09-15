@@ -17,12 +17,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
@@ -55,4 +57,10 @@ fun DsDashedActionRow(text: String, onClick: () -> Unit, modifier: Modifier = Mo
         }
         Text(text, style = DsTheme.typography.bodyStrong, color = c.primary)
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsDashedActionRowPreview() = DsPreview {
+    DsDashedActionRow("Montant libre / pavé numérique", onClick = {})
 }

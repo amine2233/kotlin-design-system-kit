@@ -9,6 +9,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.atoms.DsText
+import io.github.amine2233.designsystem.core.DsPreview
+import io.github.amine2233.designsystem.core.DsScreenPreview
+import io.github.amine2233.designsystem.core.DsTheme
 
 /** Onboarding / loading: content capped at [maxWidth] and centered — same composable on phone and tablet. */
 @Composable
@@ -20,4 +24,10 @@ fun DsCenteredLayout(
     Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Box(Modifier.widthIn(max = maxWidth), content = content)
     }
+}
+
+@DsScreenPreview
+@Composable
+private fun DsCenteredLayoutPreview() = DsTheme {
+    DsCenteredLayout { DsText("Centré, largeur max 520dp", style = DsTheme.typography.headline) }
 }

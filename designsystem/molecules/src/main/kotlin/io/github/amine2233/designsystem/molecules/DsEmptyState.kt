@@ -17,6 +17,9 @@ import io.github.amine2233.designsystem.atoms.DsButton
 import io.github.amine2233.designsystem.atoms.DsButtonSize
 import io.github.amine2233.designsystem.atoms.DsButtonVariant
 import io.github.amine2233.designsystem.atoms.DsIconTile
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsIcons
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
 
 /** Empty cart / no results / error placeholder with optional CTA. */
@@ -45,4 +48,10 @@ fun DsEmptyState(
             DsButton(actionLabel, onClick = onAction, variant = DsButtonVariant.Outlined, size = DsButtonSize.Medium)
         }
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsEmptyStatePreview() = DsPreview {
+    DsEmptyState("Panier vide", description = "Touchez un produit pour l'ajouter.", icon = DsIcons.Cart, actionLabel = "Voir le catalogue", onAction = {})
 }

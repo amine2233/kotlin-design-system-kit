@@ -11,6 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsIcons
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
 
 @Immutable
@@ -40,4 +43,10 @@ fun DsBottomNavBar(items: List<DsNavItem>, selectedIndex: Int, onSelect: (Int) -
             )
         }
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsBottomNavBarPreview() = DsPreview {
+    DsBottomNavBar(listOf(DsNavItem("Vente", DsIcons.Register), DsNavItem("Commandes", DsIcons.Receipt, badge = "2"), DsNavItem("Catalogue", DsIcons.Catalogue), DsNavItem("Réglages", DsIcons.Settings)), 0, {})
 }

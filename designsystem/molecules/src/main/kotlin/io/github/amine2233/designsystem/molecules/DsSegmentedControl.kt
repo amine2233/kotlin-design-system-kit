@@ -6,7 +6,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
@@ -18,6 +20,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
@@ -64,4 +68,12 @@ private fun RowScope.Segment(label: String, selected: Boolean, onClick: () -> Un
             maxLines = 1,
         )
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsSegmentedControlPreview() = DsPreview {
+    DsSegmentedControl(listOf("Panier complet", "Article spécifique"), 0, {}, Modifier.fillMaxWidth())
+    Spacer(Modifier.height(8.dp))
+    DsSegmentedControl(listOf("% Pourcentage", "DA Montant fixe"), 1, {}, Modifier.fillMaxWidth(), shape = DsShapes.sm, height = 34.dp)
 }

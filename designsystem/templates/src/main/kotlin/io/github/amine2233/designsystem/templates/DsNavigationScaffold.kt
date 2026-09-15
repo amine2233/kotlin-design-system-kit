@@ -4,9 +4,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import io.github.amine2233.designsystem.atoms.DsVerticalDivider
+import io.github.amine2233.designsystem.core.DsIcons
+import io.github.amine2233.designsystem.core.DsScreenPreview
 import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.core.DsWindowSize
 import io.github.amine2233.designsystem.organisms.DsBottomNavBar
@@ -42,4 +45,15 @@ fun DsNavigationScaffold(
             DsBottomNavBar(topItems, selectedIndex.coerceIn(0, topItems.lastIndex), onSelect)
         }
     }
+}
+
+@DsScreenPreview
+@Composable
+private fun DsNavigationScaffoldPreview() = DsTheme {
+    DsNavigationScaffold(
+        topItems = listOf(DsNavItem("Vente", DsIcons.Register), DsNavItem("Commandes", DsIcons.Receipt, badge = "2"), DsNavItem("Catalogue", DsIcons.Catalogue)),
+        bottomItems = listOf(DsNavItem("Réglages", DsIcons.Settings)),
+        selectedIndex = 0,
+        onSelect = {},
+    ) { DsCenteredLayout { Text("Contenu", style = DsTheme.typography.headline) } }
 }

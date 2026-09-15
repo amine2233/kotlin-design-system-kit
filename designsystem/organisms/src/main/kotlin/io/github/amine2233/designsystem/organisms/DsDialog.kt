@@ -4,9 +4,11 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import io.github.amine2233.designsystem.atoms.DsButton
 import io.github.amine2233.designsystem.atoms.DsButtonSize
 import io.github.amine2233.designsystem.atoms.DsButtonVariant
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
@@ -37,4 +39,10 @@ fun DsDialog(
         },
         dismissButton = { DsButton(dismissLabel, onClick = onDismiss, size = DsButtonSize.Medium, variant = DsButtonVariant.Ghost) },
     )
+}
+
+@Preview(name = "dialog")
+@Composable
+private fun DsDialogPreview() = DsTheme {
+    DsDialog("Vider le panier ?", "Les 5 articles seront supprimés.", confirmLabel = "Vider", onConfirm = {}, onDismiss = {}, destructive = true)
 }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -15,9 +16,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.atoms.DsAvatar
 import io.github.amine2233.designsystem.atoms.DsBadge
+import io.github.amine2233.designsystem.atoms.DsButton
+import io.github.amine2233.designsystem.atoms.DsButtonSize
+import io.github.amine2233.designsystem.atoms.DsButtonVariant
 import io.github.amine2233.designsystem.atoms.DsDivider
 import io.github.amine2233.designsystem.atoms.DsIconButton
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
 
 /** 52dp white top bar with bottom hairline. Slots: back, title (+ optional count badge), actions. */
@@ -49,4 +56,12 @@ fun DsTopBar(
         }
         DsDivider()
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsTopBarPreview() = DsPreview {
+    DsTopBar("Panier", onBack = {}, badge = "5", actions = { DsButton("Vider", onClick = {}, variant = DsButtonVariant.Danger, size = DsButtonSize.Small) })
+    Spacer(Modifier.height(8.dp))
+    DsTopBar("Café Central", actions = { DsAvatar("AK") })
 }

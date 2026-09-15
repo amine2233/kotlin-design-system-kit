@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -14,11 +13,15 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SnackbarVisuals
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.core.DsComponentPreview
 import io.github.amine2233.designsystem.core.DsIcons
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
@@ -90,4 +93,18 @@ fun DsSnackbar(
             Text(message, style = DsTheme.typography.bodyStrong, color = content)
         }
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsSnackbarPreview() = DsPreview {
+    DsSnackbar("Échec du paiement — terminal injoignable", tone = DsSnackbarTone.Error, actionLabel = "Réessayer")
+    DsSnackbar("Commande mise en attente", tone = DsSnackbarTone.Success)
+    DsSnackbar("Article supprimé", actionLabel = "Annuler", onDismiss = {})
+}
+
+@DsComponentPreview
+@Composable
+private fun DsSnackbarHostPreview() = DsPreview {
+    DsSnackbarHost(remember { SnackbarHostState() })
 }

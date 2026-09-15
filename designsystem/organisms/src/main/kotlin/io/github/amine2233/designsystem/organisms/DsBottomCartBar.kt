@@ -16,6 +16,8 @@ import io.github.amine2233.designsystem.atoms.DsBadge
 import io.github.amine2233.designsystem.atoms.DsButton
 import io.github.amine2233.designsystem.atoms.DsButtonSize
 import io.github.amine2233.designsystem.atoms.DsDivider
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
 
 /** Collapsed phone cart bar: count badge · "Panier ▲ / n articles" · Payer CTA. */
@@ -43,4 +45,10 @@ fun DsBottomCartBar(
             DsButton(text = "Payer $total", onClick = onPay, size = DsButtonSize.Medium)
         }
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsBottomCartBarPreview() = DsPreview {
+    DsBottomCartBar(itemCount = 3, total = "737 DA", onExpand = {}, onPay = {})
 }

@@ -16,6 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
 
 /** Full-width labelled switch (Catalogue "Variantes", "Requis"). */
@@ -100,3 +102,13 @@ fun DsRadioButton(
     }
 }
 
+@DsComponentPreview
+@Composable
+private fun DsSelectionControlsPreview() = DsPreview {
+    DsSwitch(true, {}, label = "Variantes activées")
+    DsSwitch(false, {}, label = "Désactivé", enabled = false)
+    DsCheckbox(true, {}, label = "Imprimer le ticket")
+    DsCheckbox(false, {}, label = "Envoyer par e-mail")
+    DsRadioButton(true, {}, "Espèces")
+    DsRadioButton(false, {}, "Carte")
+}

@@ -15,22 +15,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsRadioIndicator
 import io.github.amine2233.designsystem.atoms.DsTag
 import io.github.amine2233.designsystem.atoms.DsTagTone
 import io.github.amine2233.designsystem.core.DsIcons
+import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.molecules.DsAllocation
 import io.github.amine2233.designsystem.molecules.DsAllocationBar
 import io.github.amine2233.designsystem.molecules.DsAmountDisplay
 import io.github.amine2233.designsystem.molecules.DsBanner
 import io.github.amine2233.designsystem.molecules.DsBannerTone
+import io.github.amine2233.designsystem.molecules.DsCheckRow
 import io.github.amine2233.designsystem.molecules.DsDashedActionRow
 import io.github.amine2233.designsystem.molecules.DsDropdown
 import io.github.amine2233.designsystem.molecules.DsEmptyState
 import io.github.amine2233.designsystem.molecules.DsExpandableSection
-import io.github.amine2233.designsystem.molecules.DsTabRow
-import io.github.amine2233.designsystem.molecules.DsCheckRow
 import io.github.amine2233.designsystem.molecules.DsKeyTone
 import io.github.amine2233.designsystem.molecules.DsKeypadKey
 import io.github.amine2233.designsystem.molecules.DsListItem
@@ -40,9 +41,9 @@ import io.github.amine2233.designsystem.molecules.DsSearchBar
 import io.github.amine2233.designsystem.molecules.DsSectionLabel
 import io.github.amine2233.designsystem.molecules.DsSegmentedControl
 import io.github.amine2233.designsystem.molecules.DsStepIndicator
+import io.github.amine2233.designsystem.molecules.DsTabRow
 import io.github.amine2233.designsystem.molecules.DsTotalsEmphasis
 import io.github.amine2233.designsystem.molecules.DsTotalsRow
-import io.github.amine2233.designsystem.core.DsTheme
 
 @Composable
 fun MoleculesGallery(modifier: Modifier = Modifier) {
@@ -116,3 +117,7 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
         }
     }
 }
+
+@Preview(name = "molecules", device = "spec:width=375dp,height=780dp,dpi=420", showBackground = true)
+@Composable
+private fun MoleculesGalleryPreview() = DsTheme { MoleculesGallery() }

@@ -39,6 +39,17 @@ DsTheme.windowSize.isExpanded          // ≥ 600dp → tablet layout
 
 Change the brand color in one place: `DsPalette.Teal*` / `DsLightColors.primary`.
 
+## Consuming from another app
+
+```bash
+mise run publish        # → ~/.m2 : io.github.amine2233:designsystem-{core,atoms,molecules,organisms,templates}:0.1.0
+```
+```kotlin
+// settings.gradle.kts of the consumer: repositories { mavenLocal(); google(); mavenCentral() }
+implementation("io.github.amine2233:designsystem-templates:0.1.0")   // pulls organisms → molecules → atoms → core + Compose BOM
+```
+Version lives in `gradle/libs.versions.toml` (`designsystem`). Every public composable takes a `modifier`; all public types are `Ds`-prefixed.
+
 ## Commands
 
 Toolchain, env vars and tasks are managed by [mise](https://mise.jdx.dev) (`mise.toml`): `mise install` once, then

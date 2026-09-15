@@ -26,8 +26,12 @@ description = "Re-record screenshot references after an intended UI change"
 run = "./gradlew :designsystem:catalog:updateDebugScreenshotTest"
 
 [tasks.check]
-description = "Everything CI runs"
-depends = ["build", "test", "snapshot:check"]
+description = "Everything CI runs (single Gradle invocation — mise `depends` would run builds concurrently and race)"
+run = "./gradlew assembleDebug test :designsystem:catalog:validateDebugScreenshotTest"
+
+[tasks.publish]
+description = "Publish every designsystem module to ~/.m2 (io.github.amine2233:designsystem-<layer>)"
+run = "./gradlew publishToMavenLocal"
 
 [tasks.clean]
 run = "./gradlew clean"

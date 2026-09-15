@@ -5,7 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -19,6 +21,8 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsCard
 import io.github.amine2233.designsystem.atoms.DsDivider
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
 
 /** Catalogue phone layout: collapsible card section with title, optional summary and trailing slot. */
@@ -59,4 +63,12 @@ fun DsExpandableSection(
             }
         }
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsExpandableSectionPreview() = DsPreview {
+    DsExpandableSection("Produits", expanded = true, onToggle = {}, summary = "12 produits") { DsCheckRow("Contenu de la section") }
+    Spacer(Modifier.height(6.dp))
+    DsExpandableSection("Catégories", expanded = false, onToggle = {}, summary = "Chauds · Froids · Snacks") {}
 }

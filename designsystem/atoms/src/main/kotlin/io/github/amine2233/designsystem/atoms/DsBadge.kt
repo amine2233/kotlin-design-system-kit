@@ -1,7 +1,9 @@
 package io.github.amine2233.designsystem.atoms
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -11,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
@@ -36,4 +40,10 @@ fun DsBadge(
             maxLines = 1,
         )
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsBadgePreview() = DsPreview {
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { DsBadge("3"); DsBadge("12", containerColor = DsTheme.colors.error); DsBadge("NEW") }
 }

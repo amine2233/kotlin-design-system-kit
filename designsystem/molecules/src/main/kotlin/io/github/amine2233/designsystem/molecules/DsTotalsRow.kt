@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
 
 enum class DsTotalsEmphasis { Muted, Normal, Discount, Positive, Total }
@@ -37,4 +39,14 @@ fun DsTotalsRow(
         Text(label, style = labelStyle, color = color)
         Text(value, style = valueStyle, color = valueColor ?: color)
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsTotalsRowPreview() = DsPreview {
+    DsTotalsRow("Sous-total HT", "1 025 DA")
+    DsTotalsRow("TVA 5,5% recalculée", "5 DA", emphasis = DsTotalsEmphasis.Muted)
+    DsTotalsRow("Remise totale", "−49 DA", emphasis = DsTotalsEmphasis.Discount)
+    DsTotalsRow("Pourboire (10%)", "+ 108 DA", emphasis = DsTotalsEmphasis.Positive)
+    DsTotalsRow("Total TTC", "1 080 DA", emphasis = DsTotalsEmphasis.Total)
 }

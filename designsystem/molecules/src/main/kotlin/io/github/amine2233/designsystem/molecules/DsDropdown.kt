@@ -26,6 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
@@ -79,4 +81,12 @@ fun DsDropdown(
             }
         }
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsDropdownPreview() = DsPreview {
+    DsDropdown(listOf("Fidélité", "Geste commercial", "Erreur de saisie"), 0, {}, label = "Motif")
+    Spacer(Modifier.height(8.dp))
+    DsDropdown(listOf("20%", "10%"), null, {}, placeholder = "Taux de TVA")
 }

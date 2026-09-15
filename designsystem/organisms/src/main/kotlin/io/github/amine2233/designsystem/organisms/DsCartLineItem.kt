@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -20,7 +21,9 @@ import io.github.amine2233.designsystem.atoms.DsCard
 import io.github.amine2233.designsystem.atoms.DsChip
 import io.github.amine2233.designsystem.atoms.DsChipTone
 import io.github.amine2233.designsystem.atoms.DsIconButton
+import io.github.amine2233.designsystem.core.DsComponentPreview
 import io.github.amine2233.designsystem.core.DsElevation
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.molecules.DsQuantityStepper
 
@@ -74,4 +77,12 @@ fun DsCartLineItem(
             }
         }
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsCartLineItemPreview() = DsPreview {
+    DsCartLineItem("Cappuccino", 2, {}, lineTotal = "400 DA", unitPrice = "200 DA", tvaLabel = "TVA 10%", onRemove = {})
+    Spacer(Modifier.height(6.dp))
+    DsCartLineItem("Formule Déjeuner", 1, {}, lineTotal = "441 DA", unitPrice = "490 DA", tvaLabel = "TVA 10%", note = "Sans sucre", originalTotal = "490 DA", discountLabel = "−10% ✓", onRemove = {})
 }

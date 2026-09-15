@@ -13,6 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsIcons
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
@@ -63,4 +66,12 @@ fun DsTextField(
             ),
         )
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsTextFieldPreview() = DsPreview {
+    DsTextField("", {}, label = "Libellé (optionnel)", placeholder = "Misc service")
+    Spacer(Modifier.height(8.dp))
+    DsTextField("nom@exemple", {}, leadingIcon = DsIcons.Account, isError = true, supportingText = "Email invalide")
 }

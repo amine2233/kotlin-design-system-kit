@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
@@ -15,6 +16,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsVerticalDivider
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
@@ -61,4 +64,12 @@ private fun StepKey(symbol: String, enabled: Boolean, color: androidx.compose.ui
             color = if (enabled) color else DsTheme.colors.textDisabled,
         )
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsQuantityStepperPreview() = DsPreview {
+    DsQuantityStepper(2, {})
+    Spacer(Modifier.height(8.dp))
+    DsQuantityStepper(0, {}, min = 0)
 }

@@ -5,9 +5,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
+import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.molecules.DsKeyTone
 import io.github.amine2233.designsystem.molecules.DsKeypadKey
 
@@ -58,4 +62,10 @@ fun String.applyKey(key: DsKey): String {
     val cents = next.padStart(3, '0')
     val intPart = cents.dropLast(2).reversed().chunked(3).joinToString(" ").reversed()
     return "$intPart,${cents.takeLast(2)}"
+}
+
+@DsComponentPreview
+@Composable
+private fun DsNumericKeypadPreview() = DsPreview {
+    DsNumericKeypad(onKey = {}, rowModifier = Modifier.height(52.dp))
 }

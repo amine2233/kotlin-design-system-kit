@@ -27,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsAvatar
 import io.github.amine2233.designsystem.atoms.DsButton
@@ -36,6 +37,7 @@ import io.github.amine2233.designsystem.atoms.DsCard
 import io.github.amine2233.designsystem.atoms.DsCircularProgress
 import io.github.amine2233.designsystem.atoms.DsDivider
 import io.github.amine2233.designsystem.atoms.DsLogo
+import io.github.amine2233.designsystem.core.DsScreenPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.core.DsWindowSize
@@ -134,12 +136,12 @@ private fun CartPane() {
 
 /** Screen 02 — Cart (phone). */
 @Composable
-fun CartScreen(modifier: Modifier = Modifier) {
+fun CartScreen(modifier: Modifier = Modifier, onBack: () -> Unit = {}) {
     DsScreenScaffold(
         modifier = modifier,
         topBar = {
             Column {
-                DsTopBar("Panier", onBack = {}, badge = "5", actions = {
+                DsTopBar("Panier", onBack = onBack, badge = "5", actions = {
                     DsButton("Attente", onClick = {}, variant = DsButtonVariant.Ghost, size = DsButtonSize.Small)
                     DsButton("Vider", onClick = {}, variant = DsButtonVariant.Danger, size = DsButtonSize.Small)
                 })
@@ -175,14 +177,14 @@ fun CartScreen(modifier: Modifier = Modifier) {
 
 /** Screen 02B — Tips (phone): quick chips + keypad + live totals. */
 @Composable
-fun TipsScreen(modifier: Modifier = Modifier) {
+fun TipsScreen(modifier: Modifier = Modifier, onBack: () -> Unit = {}) {
     var preset by rememberSaveable { mutableIntStateOf(1) }
     var amount by rememberSaveable { mutableStateOf("108,00") }
     DsScreenScaffold(
         modifier = modifier,
         topBar = {
             Column {
-                DsTopBar("Pourboire", onBack = {}, actions = { DsButton("Ignorer", onClick = {}, variant = DsButtonVariant.Ghost, size = DsButtonSize.Small) })
+                DsTopBar("Pourboire", onBack = onBack, actions = { DsButton("Ignorer", onClick = {}, variant = DsButtonVariant.Ghost, size = DsButtonSize.Small) })
                 DsStepIndicator(cartSteps, 1, Modifier.background(DsTheme.colors.surface).padding(horizontal = 8.dp, vertical = 9.dp))
                 DsDivider()
             }
@@ -253,3 +255,11 @@ fun AuthLoadingScreen(modifier: Modifier = Modifier) {
         }
     }
 }
+
+private const val PHONE = "spec:width=375dp,height=780dp,dpi=420"
+
+@DsScreenPreview @Composable private fun MainSalesScreenPreview() = DsTheme { MainSalesScreen() }
+@Preview(device = PHONE) @Composable private fun CartScreenPreview() = DsTheme { CartScreen() }
+@Preview(device = PHONE) @Composable private fun TipsScreenPreview() = DsTheme { TipsScreen() }
+@DsScreenPreview @Composable private fun OnboardingScreenPreview() = DsTheme { OnboardingScreen() }
+@Preview(device = PHONE) @Composable private fun AuthLoadingScreenPreview() = DsTheme { AuthLoadingScreen() }

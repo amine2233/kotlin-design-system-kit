@@ -1,7 +1,9 @@
 package io.github.amine2233.designsystem.atoms
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -10,7 +12,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.core.DsComponentPreview
 import io.github.amine2233.designsystem.core.DsElevation
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
@@ -49,5 +53,15 @@ fun DsCard(
             shadowElevation = elevation,
             content = inner,
         )
+    }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsCardPreview() = DsPreview {
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        DsCard(Modifier.weight(1f), contentPadding = 12.dp) { DsText("Card") }
+        DsCard(Modifier.weight(1f), selected = true, contentPadding = 12.dp) { DsText("Selected", color = DsTheme.colors.primary) }
+        DsCard(Modifier.weight(1f), onClick = {}, elevation = DsElevation.card, contentPadding = 12.dp) { DsText("Clickable") }
     }
 }

@@ -18,6 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
@@ -71,4 +73,12 @@ fun DsStepIndicator(
             }
         }
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsStepIndicatorPreview() = DsPreview {
+    DsStepIndicator(listOf("Panier", "Pourboire", "Paiement"), currentStep = 0)
+    DsStepIndicator(listOf("Panier", "Pourboire", "Paiement"), currentStep = 1)
+    DsStepIndicator(listOf("Panier", "Pourboire", "Paiement"), currentStep = 2)
 }

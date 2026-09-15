@@ -1,11 +1,15 @@
 package io.github.amine2233.designsystem.atoms
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
@@ -30,4 +34,13 @@ fun DsTag(text: String, modifier: Modifier = Modifier, tone: DsTagTone = DsTagTo
         color = fg,
         maxLines = 1,
     )
+}
+
+@DsComponentPreview
+@Composable
+private fun DsTagPreview() = DsPreview {
+    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+        DsTag("Neutre"); DsTag("Terminal", tone = DsTagTone.Primary); DsTag("Payé", tone = DsTagTone.Success)
+        DsTag("En attente", tone = DsTagTone.Warning); DsTag("Échec", tone = DsTagTone.Error); DsTag("Info", tone = DsTagTone.Info)
+    }
 }

@@ -27,7 +27,9 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.core.DsComponentPreview
 import io.github.amine2233.designsystem.core.DsIcons
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
@@ -100,4 +102,16 @@ fun DsNfcWaiting(
             Text(description, style = DsTheme.typography.body, color = c.textSecondary, textAlign = TextAlign.Center)
         }
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsNfcPulsePreview() = DsPreview {
+    DsNfcPulse(animate = false)
+}
+
+@DsComponentPreview
+@Composable
+private fun DsNfcWaitingPreview() = DsPreview {
+    DsNfcWaiting("Approchez le téléphone", description = "Le client valide avec Apple Pay ou Google Pay.", amount = "1 188 DA", animate = false)
 }

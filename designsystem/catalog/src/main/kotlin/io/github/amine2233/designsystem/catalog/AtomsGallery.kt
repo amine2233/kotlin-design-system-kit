@@ -21,30 +21,31 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsAvatar
-import io.github.amine2233.designsystem.atoms.DsCheckbox
-import io.github.amine2233.designsystem.atoms.DsErrorText
-import io.github.amine2233.designsystem.atoms.DsIconTile
-import io.github.amine2233.designsystem.atoms.DsRadioButton
-import io.github.amine2233.designsystem.atoms.DsSkeleton
-import io.github.amine2233.designsystem.atoms.DsSwitch
-import io.github.amine2233.designsystem.atoms.DsTag
-import io.github.amine2233.designsystem.atoms.DsTagTone
-import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.atoms.DsBadge
 import io.github.amine2233.designsystem.atoms.DsButton
 import io.github.amine2233.designsystem.atoms.DsButtonSize
 import io.github.amine2233.designsystem.atoms.DsButtonVariant
 import io.github.amine2233.designsystem.atoms.DsCard
 import io.github.amine2233.designsystem.atoms.DsCheckBullet
+import io.github.amine2233.designsystem.atoms.DsCheckbox
 import io.github.amine2233.designsystem.atoms.DsChip
 import io.github.amine2233.designsystem.atoms.DsChipTone
 import io.github.amine2233.designsystem.atoms.DsCircularProgress
+import io.github.amine2233.designsystem.atoms.DsErrorText
 import io.github.amine2233.designsystem.atoms.DsIconButton
+import io.github.amine2233.designsystem.atoms.DsIconTile
 import io.github.amine2233.designsystem.atoms.DsLinearProgress
+import io.github.amine2233.designsystem.atoms.DsRadioButton
 import io.github.amine2233.designsystem.atoms.DsRadioIndicator
+import io.github.amine2233.designsystem.atoms.DsSkeleton
+import io.github.amine2233.designsystem.atoms.DsSwitch
+import io.github.amine2233.designsystem.atoms.DsTag
+import io.github.amine2233.designsystem.atoms.DsTagTone
 import io.github.amine2233.designsystem.atoms.DsTextField
+import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsPalette
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
@@ -150,3 +151,7 @@ fun AtomsGallery(modifier: Modifier = Modifier) {
         }
     }
 }
+
+@Preview(name = "atoms", device = "spec:width=375dp,height=780dp,dpi=420", showBackground = true)
+@Composable
+private fun AtomsGalleryPreview() = DsTheme { AtomsGallery() }

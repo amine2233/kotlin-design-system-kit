@@ -2,8 +2,12 @@ package io.github.amine2233.designsystem.atoms
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -11,10 +15,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -25,6 +29,9 @@ import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsIcons
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
@@ -123,3 +130,28 @@ fun DsIconButton(
     }
 }
 
+@DsComponentPreview
+@Composable
+private fun DsButtonPreview() = DsPreview {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        DsButton("Se connecter", onClick = {}, modifier = Modifier.fillMaxWidth())
+        DsButton("Créer un compte", onClick = {}, variant = DsButtonVariant.Outlined, modifier = Modifier.fillMaxWidth())
+        DsButton("Paiement en cours", onClick = {}, loading = true, modifier = Modifier.fillMaxWidth())
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            DsButton("Annuler", onClick = {}, variant = DsButtonVariant.Ghost, size = DsButtonSize.Small)
+            DsButton("Vider", onClick = {}, variant = DsButtonVariant.Danger, size = DsButtonSize.Small)
+            DsButton("Payer", onClick = {}, size = DsButtonSize.Medium, leadingIcon = DsIcons.Card)
+            DsButton("Off", onClick = {}, size = DsButtonSize.Small, enabled = false)
+        }
+    }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsIconButtonPreview() = DsPreview {
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        DsIconButton(DsIcons.Settings, contentDescription = null, onClick = {}, bordered = true)
+        DsIconButton(DsIcons.Close, contentDescription = null, onClick = {}, tint = DsTheme.colors.primary)
+        DsIconButton(DsIcons.Delete, contentDescription = null, onClick = {}, enabled = false)
+    }
+}

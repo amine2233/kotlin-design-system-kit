@@ -11,6 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsChip
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
+import io.github.amine2233.designsystem.core.DsTheme
 
 /** Horizontally scrolling single-select chips (categories, TVA rates, quick tips). */
 @Composable
@@ -38,4 +41,11 @@ fun DsChipRow(
             )
         }
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsChipRowPreview() = DsPreview {
+    DsChipRow(listOf("Tous", "Chauds", "Froids", "Snacks", "Pâtisserie", "Extras"), 0, {})
+    DsChipRow(listOf("20%", "10%", "5,5%", "0%"), 1, {}, scrollable = false)
 }

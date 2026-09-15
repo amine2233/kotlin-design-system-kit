@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.plugin.compose")
+    id("maven-publish")
 }
 
 val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
@@ -13,6 +14,24 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures.compose = true
+    publishing {
+        singleVariant("release") { withSourcesJar() }
+    }
+}
+
+// Consumable from another project: io.github.amine2233:designsystem-<layer>:<version>
+group = "io.github.amine2233"
+version = libs.findVersion("designsystem").get().requiredVersion
+
+afterEvaluate {
+    publishing {
+        publications {
+            register<MavenPublication>("release") {
+                from(components["release"])
+                artifactId = "designsystem-${project.name}"
+            }
+        }
+    }
 }
 
 dependencies {

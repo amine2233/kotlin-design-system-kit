@@ -16,27 +16,29 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsAvatar
 import io.github.amine2233.designsystem.atoms.DsButton
 import io.github.amine2233.designsystem.atoms.DsButtonSize
 import io.github.amine2233.designsystem.atoms.DsButtonVariant
+import io.github.amine2233.designsystem.core.DsIcons
+import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.molecules.DsAmountDisplay
 import io.github.amine2233.designsystem.molecules.DsTotalsEmphasis
-import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.organisms.DsBottomCartBar
 import io.github.amine2233.designsystem.organisms.DsBottomNavBar
-import io.github.amine2233.designsystem.organisms.DsNavItem
-import io.github.amine2233.designsystem.organisms.DsNfcPulse
-import io.github.amine2233.designsystem.organisms.DsPaymentOutcome
-import io.github.amine2233.designsystem.organisms.DsResultMark
-import io.github.amine2233.designsystem.organisms.DsProcessingState
-import io.github.amine2233.designsystem.organisms.DsSnackbar
-import io.github.amine2233.designsystem.organisms.DsSnackbarTone
 import io.github.amine2233.designsystem.organisms.DsCartLineItem
 import io.github.amine2233.designsystem.organisms.DsChipRow
+import io.github.amine2233.designsystem.organisms.DsNavItem
+import io.github.amine2233.designsystem.organisms.DsNfcPulse
 import io.github.amine2233.designsystem.organisms.DsNumericKeypad
 import io.github.amine2233.designsystem.organisms.DsPaymentMethodRow
+import io.github.amine2233.designsystem.organisms.DsPaymentOutcome
+import io.github.amine2233.designsystem.organisms.DsProcessingState
+import io.github.amine2233.designsystem.organisms.DsResultMark
+import io.github.amine2233.designsystem.organisms.DsSnackbar
+import io.github.amine2233.designsystem.organisms.DsSnackbarTone
 import io.github.amine2233.designsystem.organisms.DsTopBar
 import io.github.amine2233.designsystem.organisms.DsTotalsBlock
 import io.github.amine2233.designsystem.organisms.DsTotalsLine
@@ -112,3 +114,7 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
         }
     }
 }
+
+@Preview(name = "organisms", device = "spec:width=375dp,height=780dp,dpi=420", showBackground = true)
+@Composable
+private fun OrganismsGalleryPreview() = DsTheme { OrganismsGallery() }

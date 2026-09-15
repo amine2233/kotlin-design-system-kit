@@ -16,6 +16,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsCircularProgress
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsIcons
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
 
 /** Terminal / NFC waiting state: icon inside a progress ring, headline + hint ("Présentez la carte"). */
@@ -48,4 +51,10 @@ fun DsProcessingState(
             Text(description, style = DsTheme.typography.body, color = c.textSecondary, textAlign = TextAlign.Center)
         }
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsProcessingStatePreview() = DsPreview {
+    DsProcessingState(DsIcons.Card, "Présentez la carte", description = "Le client tape ou insère sa carte sur le terminal.", progress = 0.6f, amount = "800 DA", amountLabel = "Montant sur le terminal")
 }

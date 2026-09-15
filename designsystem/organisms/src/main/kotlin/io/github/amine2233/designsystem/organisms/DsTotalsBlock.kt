@@ -10,6 +10,9 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsDivider
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
+import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.molecules.DsTotalsEmphasis
 import io.github.amine2233.designsystem.molecules.DsTotalsRow
 
@@ -30,4 +33,13 @@ fun DsTotalsBlock(
         Spacer(Modifier.height(4.dp))
         DsTotalsRow(total.label, total.value, emphasis = DsTotalsEmphasis.Total, valueColor = null)
     }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsTotalsBlockPreview() = DsPreview {
+    DsTotalsBlock(
+        lines = listOf(DsTotalsLine("Sous-total HT", "1 025 DA"), DsTotalsLine("TVA 10%", "98 DA"), DsTotalsLine("Remise totale", "−49 DA", DsTotalsEmphasis.Discount)),
+        total = DsTotalsLine("Total TTC", "1 080 DA"),
+    )
 }

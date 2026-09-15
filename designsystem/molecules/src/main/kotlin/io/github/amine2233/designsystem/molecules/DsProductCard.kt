@@ -1,8 +1,10 @@
 package io.github.amine2233.designsystem.molecules
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -13,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsBadge
 import io.github.amine2233.designsystem.atoms.DsCard
+import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
 
 /** Grid product tile; [inCartCount] > 0 shows teal border + badge. */
@@ -52,5 +56,14 @@ fun DsProductCard(
                 DsBadge(inCartCount.toString(), Modifier.align(Alignment.TopEnd).padding(6.dp))
             }
         }
+    }
+}
+
+@DsComponentPreview
+@Composable
+private fun DsProductCardPreview() = DsPreview {
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        DsProductCard("Espresso", "150 DA", onClick = {}, modifier = Modifier.weight(1f))
+        DsProductCard("Cappuccino", "200 DA", onClick = {}, inCartCount = 2, modifier = Modifier.weight(1f))
     }
 }

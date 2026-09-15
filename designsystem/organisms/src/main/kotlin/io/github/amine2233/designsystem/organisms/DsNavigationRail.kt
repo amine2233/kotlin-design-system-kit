@@ -15,7 +15,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.core.DsIcons
+import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
 
 /**
@@ -70,4 +73,10 @@ private fun RailItem(item: DsNavItem, selected: Boolean, onClick: () -> Unit) {
             unselectedTextColor = c.textSecondary,
         ),
     )
+}
+
+@Preview(name = "rail", heightDp = 480)
+@Composable
+private fun DsNavigationRailPreview() = DsTheme {
+    DsNavigationRail(listOf(DsNavItem("Vente", DsIcons.Register), DsNavItem("Commandes", DsIcons.Receipt, badge = "2"), DsNavItem("Catalogue", DsIcons.Catalogue)), 0, {}, bottomItems = listOf(DsNavItem("Réglages", DsIcons.Settings)))
 }
