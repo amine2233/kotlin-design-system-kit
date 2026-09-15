@@ -1,0 +1,33 @@
+[tools]
+java = "temurin-17.0.20+101"
+
+[env]
+ANDROID_HOME = "{{ env.HOME }}/Library/Android/sdk"
+GRADLE_OPTS = "-Dorg.gradle.console=plain"
+
+[tasks.build]
+description = "Compile every module"
+run = "./gradlew assembleDebug"
+
+[tasks.app]
+description = "Build + install the sample app on the connected device"
+run = "./gradlew :sample:installDebug && adb shell am start -n io.github.amine2233.designsystem.sample/.MainActivity"
+
+[tasks.test]
+description = "Unit tests"
+run = "./gradlew test"
+
+[tasks."snapshot:check"]
+description = "Screenshot regression check (fails on visual diff)"
+run = "./gradlew :designsystem:catalog:validateDebugScreenshotTest"
+
+[tasks."snapshot:update"]
+description = "Re-record screenshot references after an intended UI change"
+run = "./gradlew :designsystem:catalog:updateDebugScreenshotTest"
+
+[tasks.check]
+description = "Everything CI runs"
+depends = ["build", "test", "snapshot:check"]
+
+[tasks.clean]
+run = "./gradlew clean"
