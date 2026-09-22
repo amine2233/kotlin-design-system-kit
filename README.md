@@ -11,13 +11,13 @@ designsystem/
               DsIcons (curated icon set), DsImages (logo, product placeholder, illustrations — vector drawables in res/)
   atoms       DsText, DsFormField (label/supporting/error frame), DsButton (loading state) / DsIconButton, DsChip, DsTag, DsBadge, DsAvatar, DsIconTile, DsCard, DsDivider,
               DsTextField / DsPasswordField / DsTextArea, DsPickerField, DsErrorText, DsSwitch / DsCheckbox / DsRadioButton, DsSlider, DsProgress, DsSkeleton, DsImage / DsImageSlot / DsIllustration / DsLogo
-  molecules   DsQuantityStepper, DsSegmentedControl, DsTabRow, DsDatePickerField / DsTimePickerField, DsDropdown, DsMenu / DsOverflowMenu, DsAmountDisplay, DsTotalsRow, DsSearchBar, DsListItem, DsProductCard,
+  molecules   DsQuantityStepper, DsSegmentedControl, DsTabRow, DsDatePickerField / DsTimePickerField, DsColorPickerField / DsColorGrid, DsDropdown, DsMenu / DsOverflowMenu, DsAmountDisplay, DsTotalsRow, DsSearchBar, DsListItem, DsProductCard,
               DsStepIndicator, DsSectionLabel, DsCheckRow, DsKeypadKey, DsDashedActionRow, DsBanner, DsEmptyState, DsExpandableSection, DsAllocationBar
   organisms   DsTopBar, DsNumericKeypad (+ String.applyKey), DsTotalsBlock, DsCartLineItem, DsBottomCartBar, DsChipRow, DsPaymentMethodRow,
               DsBottomSheet, DsDialog, DsSnackbar (+ showError/showSuccess), DsBottomNavBar, DsNavigationRail, DsProcessingState,
               DsNfcPulse / DsNfcWaiting (contactless animation), DsResultMark / DsPaymentResult (success / failure animation)
   templates   DsScreenScaffold, DsTwoPaneLayout, DsCenteredLayout, DsNavigationScaffold (rail on tablet at the start edge — left LTR / right RTL — tab bar on phone)
-  catalog     galleries (atoms, molecules, organisms, forms) + reference screens (Shell LTR/RTL, Main Sales, Cart, Tips, Discount, Payment, NFC, Result, Onboarding) and the screenshot tests
+  catalog     galleries (atoms, molecules, organisms, forms, pickers) + reference screens (Shell LTR/RTL, Main Sales, Cart, Tips, Discount, Payment, NFC, Result, Onboarding) and the screenshot tests
 sample/       app: browse galleries and screens, rotate / use a tablet to see the Expanded layout
 ```
 

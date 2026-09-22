@@ -21,14 +21,9 @@ import io.github.amine2233.designsystem.atoms.DsTextArea
 import io.github.amine2233.designsystem.atoms.DsTextField
 import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsTheme
-import io.github.amine2233.designsystem.molecules.DsDatePickerField
 import io.github.amine2233.designsystem.molecules.DsDropdown
-import io.github.amine2233.designsystem.molecules.DsListItem
-import io.github.amine2233.designsystem.molecules.DsMenuItem
-import io.github.amine2233.designsystem.molecules.DsOverflowMenu
-import io.github.amine2233.designsystem.molecules.DsTimePickerField
 
-/** Every form building block on one page — the reference for assembling a form screen. */
+/** Text entry, selection and toggles — the fields a form is built from. Pickers live in [PickersGallery]. */
 @Composable
 fun FormsGallery(modifier: Modifier = Modifier) {
     Column(modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
@@ -69,27 +64,6 @@ fun FormsGallery(modifier: Modifier = Modifier) {
             var tip by rememberSaveable { mutableFloatStateOf(0.15f) }
             DsSlider(tip, { tip = it }, label = "Pourboire", valueText = "${(tip * 100).toInt()} %")
             DsSlider(3f, {}, valueRange = 1f..5f, steps = 3, label = "Intensité d'impression", valueText = "3 / 5")
-        }
-        CatalogSection("Date") {
-            var day by rememberSaveable { mutableStateOf<Long?>(1_772_236_800_000L) }
-            DsDatePickerField(day, { day = it }, label = "Date de clôture", required = true)
-            DsDatePickerField(null, {}, label = "Date de livraison", supportingText = "Facultatif")
-        }
-        CatalogSection("Time") {
-            var opening by rememberSaveable { mutableStateOf<Int?>(8 * 60 + 30) }
-            DsTimePickerField(opening, { opening = it }, label = "Ouverture")
-            DsTimePickerField(null, {}, label = "Fermeture", isError = true, supportingText = "Obligatoire")
-        }
-        CatalogSection("Menu") {
-            val actions =
-                listOf(
-                    DsMenuItem("Modifier", DsIcons.Edit) {},
-                    DsMenuItem("Imprimer le ticket", DsIcons.Print) {},
-                    DsMenuItem("Supprimer la ligne", DsIcons.Delete, destructive = true) {},
-                )
-            // The open menu is a popup — it renders in its own window and never lands in a snapshot,
-            // so only the trigger is captured here.
-            DsListItem("Ligne de panier", supporting = "Cappuccino ×2", trailing = { DsOverflowMenu(actions) })
         }
         CatalogSection("Toggles") {
             var receipt by rememberSaveable { mutableStateOf(true) }

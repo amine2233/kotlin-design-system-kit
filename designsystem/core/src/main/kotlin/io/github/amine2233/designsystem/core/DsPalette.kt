@@ -43,4 +43,8 @@ object DsPalette {
 
     val Amber500 = Color(0xFFFF920A)
     val Amber50 = Color(0xFFFFFAEC)
+
+    /** Swatches offered by the color picker — one per hue family, dark enough for white text. */
+    val swatches: List<Color> =
+        listOf(Teal700, Teal400, Blue500, Green700, Amber500, Orange700, Red500, Grey700, Grey500, Grey300)
 }
