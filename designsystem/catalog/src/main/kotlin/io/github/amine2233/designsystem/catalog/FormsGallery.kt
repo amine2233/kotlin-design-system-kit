@@ -26,6 +26,7 @@ import io.github.amine2233.designsystem.molecules.DsDropdown
 import io.github.amine2233.designsystem.molecules.DsListItem
 import io.github.amine2233.designsystem.molecules.DsMenuItem
 import io.github.amine2233.designsystem.molecules.DsOverflowMenu
+import io.github.amine2233.designsystem.molecules.DsTimePickerField
 
 /** Every form building block on one page — the reference for assembling a form screen. */
 @Composable
@@ -73,6 +74,11 @@ fun FormsGallery(modifier: Modifier = Modifier) {
             var day by rememberSaveable { mutableStateOf<Long?>(1_772_236_800_000L) }
             DsDatePickerField(day, { day = it }, label = "Date de clôture", required = true)
             DsDatePickerField(null, {}, label = "Date de livraison", supportingText = "Facultatif")
+        }
+        CatalogSection("Time") {
+            var opening by rememberSaveable { mutableStateOf<Int?>(8 * 60 + 30) }
+            DsTimePickerField(opening, { opening = it }, label = "Ouverture")
+            DsTimePickerField(null, {}, label = "Fermeture", isError = true, supportingText = "Obligatoire")
         }
         CatalogSection("Menu") {
             val actions =
