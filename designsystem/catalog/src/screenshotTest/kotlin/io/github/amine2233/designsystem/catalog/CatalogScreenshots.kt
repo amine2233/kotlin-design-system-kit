@@ -159,6 +159,21 @@ fun OnboardingPhone() = Snapshot { OnboardingScreen() }
 fun OnboardingTablet() = Snapshot { OnboardingScreen() }
 
 @PreviewTest
+@Preview(name = "login_phone", device = PHONE)
+@Composable
+fun LoginPhone() = Snapshot { LoginScreen() }
+
+@PreviewTest
+@Preview(name = "login_tablet", device = TABLET)
+@Composable
+fun LoginTablet() = Snapshot { LoginScreen() }
+
+@PreviewTest
+@Preview(name = "login_loading_phone", device = PHONE)
+@Composable
+fun LoginLoadingPhone() = Snapshot { LoginScreen(loadingProvider = "google") }
+
+@PreviewTest
 @Preview(name = "auth_loading_phone", device = PHONE)
 @Composable
 fun AuthLoadingPhone() = Snapshot { AuthLoadingScreen() }

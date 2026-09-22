@@ -17,7 +17,7 @@ designsystem/
               DsBottomSheet, DsDialog, DsSnackbar (+ showError/showSuccess), DsBottomNavBar, DsNavigationRail, DsProcessingState,
               DsNfcPulse / DsNfcWaiting (contactless animation), DsResultMark / DsPaymentResult (success / failure animation)
   templates   DsScreenScaffold, DsTwoPaneLayout, DsCenteredLayout, DsNavigationScaffold (rail on tablet at the start edge — left LTR / right RTL — tab bar on phone)
-  catalog     galleries (atoms, molecules, organisms, forms, pickers) + reference screens (Shell LTR/RTL, Main Sales, Cart, Tips, Discount, Payment, NFC, Result, Onboarding) and the screenshot tests
+  catalog     galleries (atoms, molecules, organisms, forms, pickers) + reference screens (Shell LTR/RTL, Main Sales, Cart, Tips, Discount, Payment, NFC, Result, Onboarding, Login OAuth) and the screenshot tests
 sample/       app: browse galleries and screens, rotate / use a tablet to see the Expanded layout
 ```
 

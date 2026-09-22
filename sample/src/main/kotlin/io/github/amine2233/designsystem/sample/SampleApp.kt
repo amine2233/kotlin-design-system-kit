@@ -33,6 +33,7 @@ import io.github.amine2233.designsystem.catalog.CartScreen
 import io.github.amine2233.designsystem.catalog.DiscountScreen
 import io.github.amine2233.designsystem.catalog.FormsGallery
 import io.github.amine2233.designsystem.catalog.FoundationsGallery
+import io.github.amine2233.designsystem.catalog.LoginScreen
 import io.github.amine2233.designsystem.catalog.MainSalesScreen
 import io.github.amine2233.designsystem.catalog.MoleculesGallery
 import io.github.amine2233.designsystem.catalog.NfcPaymentScreen
@@ -71,6 +72,7 @@ private enum class Page(
     Success("04 · Paiement accepté", "Screens"),
     Failure("04 · Paiement refusé", "Screens"),
     Onboarding("Onboarding", "Screens"),
+    Login("Connexion (OAuth)", "Screens"),
     AuthLoading("Authentification", "Screens"),
 }
 
@@ -104,6 +106,7 @@ fun SampleApp() {
                 Page.Success -> PaymentResultScreen(DsPaymentOutcome.Success)
                 Page.Failure -> PaymentResultScreen(DsPaymentOutcome.Failure)
                 Page.Onboarding -> OnboardingScreen()
+                Page.Login -> LoginScreen()
                 Page.AuthLoading -> AuthLoadingScreen()
             }
         }
