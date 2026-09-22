@@ -1,13 +1,17 @@
 package io.github.amine2233.designsystem.atoms
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.core.DsComponentPreview
 import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
@@ -24,6 +28,7 @@ fun DsFormField(
     modifier: Modifier = Modifier,
     label: String? = null,
     supportingText: String? = null,
+    trailingSupportingText: String? = null,
     isError: Boolean = false,
     required: Boolean = false,
     enabled: Boolean = true,
@@ -39,12 +44,17 @@ fun DsFormField(
             Spacer(Modifier.height(DsTheme.spacing.xs))
         }
         content()
-        if (supportingText != null) {
+        if (supportingText != null || trailingSupportingText != null) {
             Spacer(Modifier.height(DsTheme.spacing.xs))
-            if (isError) {
-                DsErrorText(supportingText)
-            } else {
-                Text(supportingText, style = DsTheme.typography.caption, color = c.textTertiary)
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                when {
+                    supportingText == null -> Spacer(Modifier.width(0.dp))
+                    isError -> DsErrorText(supportingText)
+                    else -> Text(supportingText, style = DsTheme.typography.caption, color = c.textTertiary)
+                }
+                if (trailingSupportingText != null) {
+                    Text(trailingSupportingText, style = DsTheme.typography.caption, color = c.textTertiary)
+                }
             }
         }
     }

@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import io.github.amine2233.designsystem.atoms.DsCheckbox
 import io.github.amine2233.designsystem.atoms.DsPasswordField
 import io.github.amine2233.designsystem.atoms.DsSwitch
+import io.github.amine2233.designsystem.atoms.DsTextArea
 import io.github.amine2233.designsystem.atoms.DsTextField
 import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsTheme
@@ -35,6 +36,10 @@ fun FormsGallery(modifier: Modifier = Modifier) {
                 isError = true,
                 supportingText = "Adresse invalide",
             )
+        }
+        CatalogSection("Text area") {
+            var note by rememberSaveable { mutableStateOf("Sans oignons, servir le café après le plat.") }
+            DsTextArea(note, { note = it }, label = "Note de commande", maxLength = 140)
         }
         CatalogSection("Password") {
             var password by rememberSaveable { mutableStateOf("motdepasse") }
