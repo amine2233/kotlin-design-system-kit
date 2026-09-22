@@ -26,6 +26,7 @@ import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.molecules.DsDropdown
 import io.github.amine2233.designsystem.molecules.DsMultiSelectField
 import io.github.amine2233.designsystem.molecules.DsOtpField
+import io.github.amine2233.designsystem.molecules.DsSearchableDropdown
 
 /** Text entry, selection and toggles — the fields a form is built from. Pickers live in [PickersGallery]. */
 @Composable
@@ -76,6 +77,13 @@ fun FormsGallery(modifier: Modifier = Modifier) {
                 label = "Allergènes",
             )
             DsMultiSelectField(listOf("Cuisine", "Bar", "Comptoir"), setOf(0, 1, 2), {}, label = "Imprimantes du ticket")
+            var article by rememberSaveable { mutableStateOf<Int?>(1) }
+            DsSearchableDropdown(
+                listOf("Crème brûlée", "Cappuccino", "Espresso", "Thé vert"),
+                article,
+                { article = it },
+                label = "Article (recherche)",
+            )
         }
         CatalogSection("Slider") {
             var tip by rememberSaveable { mutableFloatStateOf(0.15f) }

@@ -11,7 +11,7 @@ designsystem/
               DsIcons (curated icon set), DsImages (logo, product placeholder, illustrations — vector drawables in res/)
   atoms       DsText, DsFormField (label/supporting/error frame), DsButton (loading state) / DsIconButton / DsOAuthButton, DsChip, DsTag, DsBadge, DsAvatar, DsIconTile, DsCard, DsDivider,
               DsTextField / DsPasswordField / DsTextArea, DsPickerField, DsErrorText, DsSwitch / DsCheckbox / DsRadioButton, DsSlider, DsProgress, DsSkeleton, DsImage / DsImageSlot / DsIllustration / DsLogo
-  molecules   DsQuantityStepper, DsSegmentedControl, DsTabRow, DsDatePickerField / DsTimePickerField, DsColorPickerField / DsColorGrid, DsImagePickerField (+ rememberDsImagePicker), DsDropdown / DsMultiSelectField, DsOtpField, DsMenu / DsOverflowMenu, DsAmountDisplay, DsTotalsRow, DsSearchBar, DsListItem, DsProductCard,
+  molecules   DsQuantityStepper, DsSegmentedControl, DsTabRow, DsDatePickerField / DsTimePickerField, DsColorPickerField / DsColorGrid, DsImagePickerField (+ rememberDsImagePicker), DsDropdown / DsMultiSelectField / DsSearchableDropdown, DsOtpField, DsMenu / DsOverflowMenu, DsAmountDisplay, DsTotalsRow, DsSearchBar, DsListItem, DsProductCard,
               DsStepIndicator, DsSectionLabel, DsCheckRow, DsKeypadKey, DsDashedActionRow, DsBanner, DsEmptyState, DsExpandableSection, DsAllocationBar
   organisms   DsTopBar, DsNumericKeypad (+ String.applyKey), DsTotalsBlock, DsCartLineItem, DsBottomCartBar, DsChipRow, DsPaymentMethodRow,
               DsBottomSheet, DsDialog, DsSnackbar (+ showError/showSuccess), DsBottomNavBar, DsNavigationRail, DsProcessingState,
@@ -50,7 +50,7 @@ treatment come from one place, so a new field only has to draw its control.
 | Long text | `DsTextArea` (`maxLength` shows a counter and refuses longer input) |
 | Password, cash-register code | `DsPasswordField` (`revealable = false` to forbid showing it) |
 | One-time / PIN code | `DsOtpField` (`onFilled` fires on the last digit) |
-| Choice in a list | `DsDropdown` |
+| Choice in a list | `DsDropdown`, `DsSearchableDropdown` past a dozen options |
 | Several choices at once | `DsMultiSelectField` (menu stays open while ticking) |
 | Yes/no, multi-choice | `DsSwitch`, `DsCheckbox`, `DsRadioButton`, `DsSegmentedControl` |
 | Value in a range | `DsSlider` |
