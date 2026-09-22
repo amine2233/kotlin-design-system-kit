@@ -13,6 +13,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import io.github.amine2233.designsystem.atoms.DsButton
+import io.github.amine2233.designsystem.atoms.DsButtonSize
+import io.github.amine2233.designsystem.atoms.DsButtonVariant
 import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsImages
 import io.github.amine2233.designsystem.core.DsPalette
@@ -24,6 +27,7 @@ import io.github.amine2233.designsystem.molecules.DsDateRangeField
 import io.github.amine2233.designsystem.molecules.DsFilePickerField
 import io.github.amine2233.designsystem.molecules.DsImagePickerField
 import io.github.amine2233.designsystem.molecules.DsListItem
+import io.github.amine2233.designsystem.molecules.DsMenu
 import io.github.amine2233.designsystem.molecules.DsMenuItem
 import io.github.amine2233.designsystem.molecules.DsOverflowMenu
 import io.github.amine2233.designsystem.molecules.DsTimePickerField
@@ -91,6 +95,11 @@ fun PickersGallery(modifier: Modifier = Modifier) {
             // An open menu is a popup: it renders in its own window and never lands in a snapshot,
             // so only the trigger is captured here.
             DsListItem("Ligne de panier", supporting = "Cappuccino ×2", trailing = { DsOverflowMenu(actions) })
+            // DsMenu is the stateless form: the caller owns `expanded` and gives any anchor.
+            var open by remember { mutableStateOf(false) }
+            DsMenu(actions, expanded = open, onDismissRequest = { open = false }) {
+                DsButton("Actions sur la ligne", onClick = { open = true }, variant = DsButtonVariant.Outlined, size = DsButtonSize.Medium)
+            }
         }
     }
 }

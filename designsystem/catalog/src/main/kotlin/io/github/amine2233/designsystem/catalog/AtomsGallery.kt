@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -34,6 +35,7 @@ import io.github.amine2233.designsystem.atoms.DsCheckbox
 import io.github.amine2233.designsystem.atoms.DsChip
 import io.github.amine2233.designsystem.atoms.DsChipTone
 import io.github.amine2233.designsystem.atoms.DsCircularProgress
+import io.github.amine2233.designsystem.atoms.DsDivider
 import io.github.amine2233.designsystem.atoms.DsErrorText
 import io.github.amine2233.designsystem.atoms.DsIconButton
 import io.github.amine2233.designsystem.atoms.DsIconTile
@@ -45,6 +47,7 @@ import io.github.amine2233.designsystem.atoms.DsSwitch
 import io.github.amine2233.designsystem.atoms.DsTag
 import io.github.amine2233.designsystem.atoms.DsTagTone
 import io.github.amine2233.designsystem.atoms.DsTextField
+import io.github.amine2233.designsystem.atoms.DsVerticalDivider
 import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsPalette
 import io.github.amine2233.designsystem.core.DsShapes
@@ -147,6 +150,14 @@ fun AtomsGallery(modifier: Modifier = Modifier) {
                 DsSkeleton(Modifier.size(120.dp, 14.dp), animate = false)
             }
             DsErrorText("Montant invalide")
+        }
+        CatalogSection("Dividers") {
+            DsDivider()
+            Row(Modifier.height(24.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text("Sous-total", style = DsTheme.typography.body)
+                DsVerticalDivider(Modifier.padding(horizontal = 8.dp))
+                Text("1 080 DA", style = DsTheme.typography.body)
+            }
         }
         CatalogSection("Cards & progress") {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

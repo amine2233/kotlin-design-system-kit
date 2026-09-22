@@ -30,6 +30,7 @@ import io.github.amine2233.designsystem.catalog.AppShellScreen
 import io.github.amine2233.designsystem.catalog.AtomsGallery
 import io.github.amine2233.designsystem.catalog.AuthLoadingScreen
 import io.github.amine2233.designsystem.catalog.CartScreen
+import io.github.amine2233.designsystem.catalog.ChoicesGallery
 import io.github.amine2233.designsystem.catalog.DiscountScreen
 import io.github.amine2233.designsystem.catalog.FormsGallery
 import io.github.amine2233.designsystem.catalog.FoundationsGallery
@@ -39,6 +40,7 @@ import io.github.amine2233.designsystem.catalog.MoleculesGallery
 import io.github.amine2233.designsystem.catalog.NfcPaymentScreen
 import io.github.amine2233.designsystem.catalog.OnboardingScreen
 import io.github.amine2233.designsystem.catalog.OrganismsGallery
+import io.github.amine2233.designsystem.catalog.OverlaysGallery
 import io.github.amine2233.designsystem.catalog.PaymentResultScreen
 import io.github.amine2233.designsystem.catalog.PaymentScreen
 import io.github.amine2233.designsystem.catalog.PickersGallery
@@ -60,7 +62,9 @@ private enum class Page(
     Molecules("Molecules", "Design system"),
     Organisms("Organisms", "Design system"),
     Forms("Forms", "Design system"),
+    Choices("Selects, toggles & sign-in", "Design system"),
     Pickers("Pickers & menus", "Design system"),
+    Overlays("Overlays & rail", "Design system"),
     Shell("App shell — rail / tab bar", "Screens"),
     ShellArabic("App shell — عربي (RTL)", "Screens"),
     MainSales("01 · Main Sales (adaptive)", "Screens"),
@@ -94,7 +98,9 @@ fun SampleApp() {
                 Page.Molecules -> MoleculesGallery()
                 Page.Organisms -> OrganismsGallery()
                 Page.Forms -> FormsGallery()
+                Page.Choices -> ChoicesGallery()
                 Page.Pickers -> PickersGallery()
+                Page.Overlays -> OverlaysGallery()
                 Page.Shell -> AppShellScreen()
                 Page.ShellArabic -> AppShellScreen(layoutDirection = LayoutDirection.Rtl)
                 Page.MainSales -> MainSalesScreen()

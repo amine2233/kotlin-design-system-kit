@@ -72,6 +72,16 @@ fun FormsGalleryPhone() = Snapshot { FormsGallery() }
 fun FormsGalleryPhoneDark() = Snapshot(dark = true) { FormsGallery() }
 
 @PreviewTest
+@Preview(name = "choices", device = FORM_PAGE, showBackground = true)
+@Composable
+fun ChoicesGalleryPhone() = Snapshot { ChoicesGallery() }
+
+@PreviewTest
+@Preview(name = "choices_dark", device = FORM_PAGE, showBackground = true)
+@Composable
+fun ChoicesGalleryPhoneDark() = Snapshot(dark = true) { ChoicesGallery() }
+
+@PreviewTest
 @Preview(name = "pickers", device = FORM_PAGE, showBackground = true)
 @Composable
 fun PickersGalleryPhone() = Snapshot { PickersGallery() }
@@ -80,6 +90,16 @@ fun PickersGalleryPhone() = Snapshot { PickersGallery() }
 @Preview(name = "pickers_dark", device = FORM_PAGE, showBackground = true)
 @Composable
 fun PickersGalleryPhoneDark() = Snapshot(dark = true) { PickersGallery() }
+
+@PreviewTest
+@Preview(name = "overlays", device = FORM_PAGE, showBackground = true)
+@Composable
+fun OverlaysGalleryPhone() = Snapshot { OverlaysGallery() }
+
+@PreviewTest
+@Preview(name = "overlays_dark", device = FORM_PAGE, showBackground = true)
+@Composable
+fun OverlaysGalleryPhoneDark() = Snapshot(dark = true) { OverlaysGallery() }
 
 @PreviewTest
 @Preview(name = "foundations", device = PHONE, showBackground = true)

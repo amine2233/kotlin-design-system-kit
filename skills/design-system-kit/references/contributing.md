@@ -16,7 +16,8 @@ reusing `DsSearchBar` (a molecule).
    something else instead.
 2. A `@DsComponentPreview` (light + dark) — `@DsScreenPreview` for anything screen-sized. Wrap in `DsPreview { }`.
 3. An entry in a catalog gallery — that gallery is what the screenshot tests render:
-   `AtomsGallery`, `MoleculesGallery`, `OrganismsGallery`, `FoundationsGallery`, `FormsGallery`, `PickersGallery`.
+   `AtomsGallery`, `MoleculesGallery`, `OrganismsGallery`, `FoundationsGallery`, `FormsGallery`, `ChoicesGallery`,
+   `PickersGallery`, `OverlaysGallery`.
 4. A recorded reference screenshot (below), reviewed before committing.
 5. A page in the sample app if it is a new gallery or reference screen (`sample/…/SampleApp.kt`).
 6. A unit test for any pure rule it introduces (`dsFormatPhone`, `otpDigits`, `dsMatchesQuery`, `applyKey`…).
