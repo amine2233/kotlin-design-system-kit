@@ -20,6 +20,7 @@ import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.molecules.DsColorGrid
 import io.github.amine2233.designsystem.molecules.DsColorPickerField
 import io.github.amine2233.designsystem.molecules.DsDatePickerField
+import io.github.amine2233.designsystem.molecules.DsDateRangeField
 import io.github.amine2233.designsystem.molecules.DsFilePickerField
 import io.github.amine2233.designsystem.molecules.DsImagePickerField
 import io.github.amine2233.designsystem.molecules.DsListItem
@@ -37,6 +38,14 @@ fun PickersGallery(modifier: Modifier = Modifier) {
             var day by rememberSaveable { mutableStateOf<Long?>(1_772_236_800_000L) }
             DsDatePickerField(day, { day = it }, label = "Date de clôture", required = true)
             DsDatePickerField(null, {}, label = "Date de livraison", supportingText = "Facultatif")
+            var period by remember { mutableStateOf(1_772_236_800_000L to 1_772_755_200_000L) }
+            DsDateRangeField(
+                period.first,
+                period.second,
+                { start, end -> if (start != null && end != null) period = start to end },
+                label = "Période du rapport",
+            )
+            DsDateRangeField(null, null, { _, _ -> }, label = "Période comparée", supportingText = "Facultatif")
         }
         CatalogSection("Time") {
             var opening by rememberSaveable { mutableStateOf<Int?>(8 * 60 + 30) }
