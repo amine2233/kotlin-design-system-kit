@@ -20,11 +20,13 @@ import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.molecules.DsColorGrid
 import io.github.amine2233.designsystem.molecules.DsColorPickerField
 import io.github.amine2233.designsystem.molecules.DsDatePickerField
+import io.github.amine2233.designsystem.molecules.DsFilePickerField
 import io.github.amine2233.designsystem.molecules.DsImagePickerField
 import io.github.amine2233.designsystem.molecules.DsListItem
 import io.github.amine2233.designsystem.molecules.DsMenuItem
 import io.github.amine2233.designsystem.molecules.DsOverflowMenu
 import io.github.amine2233.designsystem.molecules.DsTimePickerField
+import io.github.amine2233.designsystem.molecules.rememberDsFilePicker
 import io.github.amine2233.designsystem.molecules.rememberDsImagePicker
 
 /** Fields that open something: date, time, color, and the contextual menu. */
@@ -57,6 +59,18 @@ fun PickersGallery(modifier: Modifier = Modifier) {
                 onRemove = { picked = false },
             )
             DsImagePickerField(null, picker, label = "Logo du commerce", isError = true, supportingText = "Obligatoire")
+        }
+        CatalogSection("File") {
+            var attached by remember { mutableStateOf(true) }
+            val filePicker = rememberDsFilePicker { attached = it != null }
+            DsFilePickerField(
+                fileName = if (attached) "facture-2026-03.pdf" else null,
+                onPick = filePicker,
+                label = "Justificatif",
+                caption = "PDF · 240 Ko",
+                onRemove = { attached = false },
+            )
+            DsFilePickerField(null, filePicker, label = "Bon de commande", isError = true, supportingText = "Obligatoire")
         }
         CatalogSection("Menu") {
             val actions =

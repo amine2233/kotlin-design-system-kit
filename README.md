@@ -11,7 +11,7 @@ designsystem/
               DsIcons (curated icon set), DsImages (logo, product placeholder, illustrations — vector drawables in res/)
   atoms       DsText, DsFormField (label/supporting/error frame), DsButton (loading state) / DsIconButton / DsOAuthButton, DsChip, DsTag, DsBadge, DsAvatar, DsIconTile, DsCard, DsDivider,
               DsTextField / DsPasswordField / DsTextArea, DsPickerField, DsErrorText, DsSwitch / DsCheckbox / DsRadioButton, DsSlider, DsProgress, DsSkeleton, DsImage / DsImageSlot / DsIllustration / DsLogo
-  molecules   DsQuantityStepper, DsSegmentedControl, DsTabRow, DsDatePickerField / DsTimePickerField, DsColorPickerField / DsColorGrid, DsImagePickerField (+ rememberDsImagePicker), DsDropdown / DsMultiSelectField / DsSearchableDropdown, DsOtpField, DsMenu / DsOverflowMenu, DsAmountDisplay, DsTotalsRow, DsSearchBar, DsListItem, DsProductCard,
+  molecules   DsQuantityStepper, DsSegmentedControl, DsTabRow, DsDatePickerField / DsTimePickerField, DsColorPickerField / DsColorGrid, DsImagePickerField / DsFilePickerField (+ rememberDsImagePicker / rememberDsFilePicker), DsDropdown / DsMultiSelectField / DsSearchableDropdown, DsOtpField, DsMenu / DsOverflowMenu, DsAmountDisplay, DsTotalsRow, DsSearchBar, DsListItem, DsProductCard,
               DsStepIndicator, DsSectionLabel, DsCheckRow, DsKeypadKey, DsDashedActionRow, DsBanner, DsEmptyState, DsExpandableSection, DsAllocationBar
   organisms   DsTopBar, DsNumericKeypad (+ String.applyKey), DsTotalsBlock, DsCartLineItem, DsBottomCartBar, DsChipRow, DsPaymentMethodRow,
               DsBottomSheet, DsDialog, DsSnackbar (+ showError/showSuccess), DsBottomNavBar, DsNavigationRail, DsProcessingState,
@@ -57,6 +57,7 @@ treatment come from one place, so a new field only has to draw its control.
 | Date, time | `DsDatePickerField` (UTC millis), `DsTimePickerField` (minutes since midnight) |
 | Color | `DsColorPickerField`, or `DsColorGrid` on its own |
 | Image | `DsImagePickerField` + `rememberDsImagePicker` (Android photo picker, no permission) |
+| Document | `DsFilePickerField` + `rememberDsFilePicker` (system document picker) |
 | Row actions | `DsMenu` / `DsOverflowMenu` |
 | Sign-in | `DsOAuthButton` — see the Login reference screen |
 
