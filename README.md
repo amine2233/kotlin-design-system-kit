@@ -125,6 +125,30 @@ setContent {
 
 Local development against an unpublished version: `mise run publish:local` → `~/.m2`, then add `mavenLocal()` to the consumer's repositories and depend on `0.1.0-SNAPSHOT`.
 
+## Claude Code plugin
+
+The repo doubles as a [Claude Code](https://claude.com/claude-code) plugin: a `design-system-kit` skill that
+teaches Claude how to build with these components, with one reference per layer.
+
+```
+/plugin marketplace add amine2233/kotlin-design-system-kit
+/plugin install kotlin-design-system-kit@amine2233-design-system
+```
+
+Then `/kotlin-design-system-kit:design-system-kit`, or just let Claude pick it up when it works on Compose UI in a
+project that depends on the library.
+
+```
+.claude-plugin/plugin.json          manifest — version tracks the published library
+.claude-plugin/marketplace.json     marketplace entry
+skills/design-system-kit/SKILL.md   setup, rules, how to pick a component
+skills/design-system-kit/references/{core,atoms,molecules,organisms,templates,contributing}.md
+```
+
+The plugin version is bumped by the release: semantic-release runs `mise run plugin:version --version X.Y.Z`
+during `prepare` and commits `.claude-plugin/plugin.json` alongside `CHANGELOG.md`, so the plugin and the
+published artifacts always carry the same version.
+
 ## CI/CD
 
 CI and releases come from [kotlin-ci-shared](https://github.com/amine2233/kotlin-ci-shared).

@@ -57,6 +57,26 @@ flag "--version <version>" help="Version to publish (e.g. 1.2.3)" required=#true
 '''
 run = './gradlew publish -Pversion="${usage_version?}" --no-daemon'
 
+[tasks."plugin:version"]
+description = "Write a version into the Claude Code plugin manifest (.claude-plugin/plugin.json)."
+usage = '''
+flag "--version <version>" help="Version to write (e.g. 1.2.3)" required=#true
+'''
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+
+python3 - "${usage_version?}" <<'PYEOF'
+import json, pathlib, sys
+
+path = pathlib.Path(".claude-plugin/plugin.json")
+manifest = json.loads(path.read_text())
+manifest["version"] = sys.argv[1]
+path.write_text(json.dumps(manifest, indent=2) + "\n")
+print(f"plugin.json -> {sys.argv[1]}")
+PYEOF
+'''
+
 [tasks.release]
 description = "Run semantic-release. Use --dry-run to preview without publishing."
 usage = '''
