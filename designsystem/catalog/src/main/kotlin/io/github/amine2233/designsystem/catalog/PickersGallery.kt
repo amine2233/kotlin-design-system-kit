@@ -11,17 +11,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import io.github.amine2233.designsystem.core.DsIcons
+import io.github.amine2233.designsystem.core.DsImages
 import io.github.amine2233.designsystem.core.DsPalette
 import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.molecules.DsColorGrid
 import io.github.amine2233.designsystem.molecules.DsColorPickerField
 import io.github.amine2233.designsystem.molecules.DsDatePickerField
+import io.github.amine2233.designsystem.molecules.DsImagePickerField
 import io.github.amine2233.designsystem.molecules.DsListItem
 import io.github.amine2233.designsystem.molecules.DsMenuItem
 import io.github.amine2233.designsystem.molecules.DsOverflowMenu
 import io.github.amine2233.designsystem.molecules.DsTimePickerField
+import io.github.amine2233.designsystem.molecules.rememberDsImagePicker
 
 /** Fields that open something: date, time, color, and the contextual menu. */
 @Composable
@@ -42,6 +46,17 @@ fun PickersGallery(modifier: Modifier = Modifier) {
             DsColorPickerField(color, { color = it }, label = "Couleur de la catégorie", required = true)
             DsColorPickerField(null, {}, label = "Couleur du tag")
             DsColorGrid(selected = color, onSelect = { color = it })
+        }
+        CatalogSection("Image") {
+            var picked by remember { mutableStateOf(true) }
+            val picker = rememberDsImagePicker { picked = it != null }
+            DsImagePickerField(
+                painter = if (picked) painterResource(DsImages.ProductPlaceholder) else null,
+                onPick = picker,
+                label = "Photo de l'article",
+                onRemove = { picked = false },
+            )
+            DsImagePickerField(null, picker, label = "Logo du commerce", isError = true, supportingText = "Obligatoire")
         }
         CatalogSection("Menu") {
             val actions =
