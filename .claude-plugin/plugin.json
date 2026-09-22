@@ -1,0 +1,19 @@
+{
+  "name": "kotlin-design-system-kit",
+  "displayName": "Kotlin Design System Kit",
+  "version": "1.0.0",
+  "description": "How to build Jetpack Compose UI with the kotlin-design-system-kit: Ds* components, DsTheme tokens and the atomic layering, with a reference per layer.",
+  "author": {
+    "name": "Amine Bensalah",
+    "url": "https://github.com/amine2233"
+  },
+  "homepage": "https://github.com/amine2233/kotlin-design-system-kit#readme",
+  "repository": "https://github.com/amine2233/kotlin-design-system-kit",
+  "license": "MIT",
+  "keywords": [
+    "android",
+    "jetpack-compose",
+    "design-system",
+    "kotlin"
+  ]
+}

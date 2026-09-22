@@ -1,0 +1,14 @@
+{
+  "name": "amine2233-design-system",
+  "owner": {
+    "name": "Amine Bensalah",
+    "url": "https://github.com/amine2233"
+  },
+  "plugins": [
+    {
+      "name": "kotlin-design-system-kit",
+      "source": "./",
+      "description": "Design system skill: Ds* components, tokens and the rules for using or extending them."
+    }
+  ]
+}
