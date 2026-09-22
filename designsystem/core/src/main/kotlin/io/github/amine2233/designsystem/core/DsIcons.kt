@@ -6,10 +6,12 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.filled.ReceiptLong
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Backspace
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.CallSplit
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material.icons.filled.Contactless
 import androidx.compose.material.icons.filled.CreditCard
 import androidx.compose.material.icons.filled.Delete
@@ -22,6 +24,7 @@ import androidx.compose.material.icons.filled.Inventory2
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.LocalCafe
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PauseCircle
 import androidx.compose.material.icons.filled.Payments
@@ -30,10 +33,13 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PointOfSale
 import androidx.compose.material.icons.filled.Print
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Storefront
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.filled.WifiOff
 import androidx.compose.material.icons.outlined.Savings
@@ -65,6 +71,14 @@ object DsIcons {
     val Backspace: ImageVector = Icons.Filled.Backspace
     val Hold: ImageVector = Icons.Filled.PauseCircle
     val Print: ImageVector = Icons.Filled.Print
+
+    // Forms
+    val Lock: ImageVector = Icons.Filled.Lock
+    val Reveal: ImageVector = Icons.Filled.Visibility
+    val Hide: ImageVector = Icons.Filled.VisibilityOff
+    val Calendar: ImageVector = Icons.Filled.CalendarMonth
+    val Clock: ImageVector = Icons.Filled.Schedule
+    val Palette: ImageVector = Icons.Filled.ColorLens
 
     // POS domain
     val Cart: ImageVector = Icons.Filled.ShoppingCart

@@ -13,6 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import io.github.amine2233.designsystem.atoms.DsCheckbox
+import io.github.amine2233.designsystem.atoms.DsPasswordField
 import io.github.amine2233.designsystem.atoms.DsSwitch
 import io.github.amine2233.designsystem.atoms.DsTextField
 import io.github.amine2233.designsystem.core.DsIcons
@@ -34,6 +35,11 @@ fun FormsGallery(modifier: Modifier = Modifier) {
                 isError = true,
                 supportingText = "Adresse invalide",
             )
+        }
+        CatalogSection("Password") {
+            var password by rememberSaveable { mutableStateOf("motdepasse") }
+            DsPasswordField(password, { password = it }, label = "Mot de passe", required = true)
+            DsPasswordField("123", {}, label = "Code caisse", isError = true, supportingText = "6 chiffres minimum", revealable = false)
         }
         CatalogSection("Select") {
             var vat by rememberSaveable { mutableIntStateOf(0) }

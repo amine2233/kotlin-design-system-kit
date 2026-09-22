@@ -18,6 +18,9 @@ import io.github.amine2233.designsystem.organisms.DsPaymentOutcome
 private const val PHONE = "spec:width=375dp,height=780dp,dpi=420"
 private const val TABLET = "spec:width=960dp,height=600dp,dpi=320"
 
+// Galleries scroll past the phone viewport; forms are snapshotted on a tall canvas so every field is covered.
+private const val FORM_PAGE = "spec:width=375dp,height=1800dp,dpi=320"
+
 @Composable
 private fun Snapshot(
     dark: Boolean = false,
@@ -59,12 +62,12 @@ fun OrganismsGalleryPhone() = Snapshot { OrganismsGallery() }
 fun OrganismsGalleryPhoneDark() = Snapshot(dark = true) { OrganismsGallery() }
 
 @PreviewTest
-@Preview(name = "forms", device = PHONE, showBackground = true)
+@Preview(name = "forms", device = FORM_PAGE, showBackground = true)
 @Composable
 fun FormsGalleryPhone() = Snapshot { FormsGallery() }
 
 @PreviewTest
-@Preview(name = "forms_dark", device = PHONE, showBackground = true)
+@Preview(name = "forms_dark", device = FORM_PAGE, showBackground = true)
 @Composable
 fun FormsGalleryPhoneDark() = Snapshot(dark = true) { FormsGallery() }
 
