@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import io.github.amine2233.designsystem.atoms.DsCheckbox
 import io.github.amine2233.designsystem.atoms.DsOAuthButton
 import io.github.amine2233.designsystem.atoms.DsPasswordField
+import io.github.amine2233.designsystem.atoms.DsPhoneField
 import io.github.amine2233.designsystem.atoms.DsSlider
 import io.github.amine2233.designsystem.atoms.DsSwitch
 import io.github.amine2233.designsystem.atoms.DsTextArea
@@ -43,6 +44,11 @@ fun FormsGallery(modifier: Modifier = Modifier) {
                 isError = true,
                 supportingText = "Adresse invalide",
             )
+        }
+        CatalogSection("Phone") {
+            var phone by rememberSaveable { mutableStateOf("0612345678") }
+            DsPhoneField(phone, { phone = it }, label = "Téléphone du client")
+            DsPhoneField("0612", {}, label = "Incomplet", isError = true, supportingText = "10 chiffres attendus")
         }
         CatalogSection("Text area") {
             var note by rememberSaveable { mutableStateOf("Sans oignons, servir le café après le plat.") }

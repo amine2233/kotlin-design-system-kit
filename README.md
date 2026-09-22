@@ -10,7 +10,7 @@ designsystem/
   core        tokens (DsPalette, DsColorScheme light/dark, DsTypography, DsSpacing, DsShapes, DsMotion), DsTheme, DsWindowSize,
               DsIcons (curated icon set), DsImages (logo, product placeholder, illustrations — vector drawables in res/)
   atoms       DsText, DsFormField (label/supporting/error frame), DsButton (loading state) / DsIconButton / DsOAuthButton, DsChip, DsTag, DsBadge, DsAvatar, DsIconTile, DsCard, DsDivider,
-              DsTextField / DsPasswordField / DsTextArea, DsPickerField, DsErrorText, DsSwitch / DsCheckbox / DsRadioButton, DsSlider, DsProgress, DsSkeleton, DsImage / DsImageSlot / DsIllustration / DsLogo
+              DsTextField / DsPasswordField / DsTextArea / DsPhoneField, DsPickerField, DsErrorText, DsSwitch / DsCheckbox / DsRadioButton, DsSlider, DsProgress, DsSkeleton, DsImage / DsImageSlot / DsIllustration / DsLogo
   molecules   DsQuantityStepper, DsSegmentedControl, DsTabRow, DsDatePickerField / DsTimePickerField, DsColorPickerField / DsColorGrid, DsImagePickerField / DsFilePickerField (+ rememberDsImagePicker / rememberDsFilePicker), DsDropdown / DsMultiSelectField / DsSearchableDropdown, DsOtpField, DsMenu / DsOverflowMenu, DsAmountDisplay, DsTotalsRow, DsSearchBar, DsListItem, DsProductCard,
               DsStepIndicator, DsSectionLabel, DsCheckRow, DsKeypadKey, DsDashedActionRow, DsBanner, DsEmptyState, DsExpandableSection, DsAllocationBar
   organisms   DsTopBar, DsNumericKeypad (+ String.applyKey), DsTotalsBlock, DsCartLineItem, DsBottomCartBar, DsChipRow, DsPaymentMethodRow,
@@ -47,6 +47,7 @@ treatment come from one place, so a new field only has to draw its control.
 | Need | Component |
 |---|---|
 | Text, e-mail, amount | `DsTextField` |
+| Phone number | `DsPhoneField` (grouped on screen, raw digits in the value) |
 | Long text | `DsTextArea` (`maxLength` shows a counter and refuses longer input) |
 | Password, cash-register code | `DsPasswordField` (`revealable = false` to forbid showing it) |
 | One-time / PIN code | `DsOtpField` (`onFilled` fires on the last digit) |

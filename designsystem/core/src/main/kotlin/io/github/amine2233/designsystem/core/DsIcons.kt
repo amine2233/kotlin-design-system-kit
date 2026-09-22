@@ -30,6 +30,7 @@ import androidx.compose.material.icons.filled.PauseCircle
 import androidx.compose.material.icons.filled.Payments
 import androidx.compose.material.icons.filled.Percent
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.PointOfSale
 import androidx.compose.material.icons.filled.Print
 import androidx.compose.material.icons.filled.Remove
@@ -77,6 +78,7 @@ object DsIcons {
     val Reveal: ImageVector = Icons.Filled.Visibility
     val Hide: ImageVector = Icons.Filled.VisibilityOff
     val Calendar: ImageVector = Icons.Filled.CalendarMonth
+    val Phone: ImageVector = Icons.Filled.Phone
     val Clock: ImageVector = Icons.Filled.Schedule
     val Palette: ImageVector = Icons.Filled.ColorLens
 
