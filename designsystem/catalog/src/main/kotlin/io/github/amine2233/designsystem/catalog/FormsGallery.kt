@@ -22,6 +22,9 @@ import io.github.amine2233.designsystem.atoms.DsTextField
 import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.molecules.DsDropdown
+import io.github.amine2233.designsystem.molecules.DsListItem
+import io.github.amine2233.designsystem.molecules.DsMenuItem
+import io.github.amine2233.designsystem.molecules.DsOverflowMenu
 
 /** Every form building block on one page — the reference for assembling a form screen. */
 @Composable
@@ -62,8 +65,19 @@ fun FormsGallery(modifier: Modifier = Modifier) {
         }
         CatalogSection("Slider") {
             var tip by rememberSaveable { mutableFloatStateOf(0.15f) }
-            DsSlider(tip, { tip = it }, label = "Pourboire", valueText = "${'$'}{(tip * 100).toInt()} %")
+            DsSlider(tip, { tip = it }, label = "Pourboire", valueText = "${(tip * 100).toInt()} %")
             DsSlider(3f, {}, valueRange = 1f..5f, steps = 3, label = "Intensité d'impression", valueText = "3 / 5")
+        }
+        CatalogSection("Menu") {
+            val actions =
+                listOf(
+                    DsMenuItem("Modifier", DsIcons.Edit) {},
+                    DsMenuItem("Imprimer le ticket", DsIcons.Print) {},
+                    DsMenuItem("Supprimer la ligne", DsIcons.Delete, destructive = true) {},
+                )
+            // The open menu is a popup — it renders in its own window and never lands in a snapshot,
+            // so only the trigger is captured here.
+            DsListItem("Ligne de panier", supporting = "Cappuccino ×2", trailing = { DsOverflowMenu(actions) })
         }
         CatalogSection("Toggles") {
             var receipt by rememberSaveable { mutableStateOf(true) }
