@@ -1,32 +1,20 @@
-# kotlin-design-system-kit — working rules
+# kotlin-design-system-kit
 
-Compose-only design system, atomic design, screenshot-tested. `README.md` has the inventory; this file has the rules.
+Jetpack Compose design system, Android only. Everything public is `Ds*`.
+Layers: `core ← atoms ← molecules ← organisms ← templates ← catalog ← sample` — imports only point left.
 
-## Strategy
+- `designsystem/core` — every token: `DsTheme`, `DsColorScheme`/`DsPalette`, `DsTypography`, `DsSpacing`, `DsShapes`, `DsElevation`, `DsMotion`, `DsIcons`, `DsImages`, `DsWindowSize`, preview annotations.
+- `designsystem/atoms` — one-thing components: `DsText`, `DsButton`/`DsIconButton`/`DsOAuthButton`, `DsTextField`/`DsTextArea`/`DsPasswordField`/`DsPhoneField`, `DsFormField`/`DsFieldBox`/`DsPickerField`, `DsSwitch`/`DsCheckbox`/`DsRadioButton`, `DsSlider`, `DsChip`, `DsTag`, `DsBadge`, `DsCard`, `DsDivider`, progress, skeleton, images.
+- `designsystem/molecules` — a few atoms doing one job: `DsDropdown`/`DsMultiSelectField`/`DsSearchableDropdown`, the pickers (date, range, time, color, image, file), `DsOtpField`, `DsMenu`, `DsListItem`, `DsSearchBar`, `DsQuantityStepper`, `DsSegmentedControl`, `DsTabRow`, `DsBanner`, `DsEmptyState`.
+- `designsystem/organisms` — screen regions: `DsTopBar`, `DsBottomNavBar`/`DsNavigationRail`, `DsBottomSheet`, `DsDialog`, `DsSnackbar`, `DsNumericKeypad`, `DsCartLineItem`, `DsTotalsBlock`, `DsPaymentResult`, `DsNfcWaiting`.
+- `designsystem/templates` — page skeletons: `DsScreenScaffold`, `DsNavigationScaffold`, `DsTwoPaneLayout`, `DsCenteredLayout`.
+- `designsystem/catalog` — galleries, reference screens, screenshot tests. `sample/` — the app that browses them.
 
-- **Tokens live in `designsystem/core` only.** Colors, spacing, type, shapes, motion, elevation, icons, images. No hardcoded `dp`, `Color`, `sp` or literal duration anywhere else — read `DsTheme.colors / typography / spacing / shapes / motion`. Adding a value means adding a token first.
-- **Atomic layers, one direction.** `core ← atoms ← molecules ← organisms ← templates ← catalog ← sample`. Put a component at the lowest layer that can hold it; never import sideways or upwards. A component that needs a peer from its own layer belongs one layer up.
-- **Compose only.** No View/XML, no `AndroidView`, no Material components leaking through a public API — wrap them in a `Ds*` composable.
-- **Public API is `Ds*`.** Stateless composables: state in, lambdas out. No ViewModel, no navigation, no domain types, no I/O inside the design system.
-- **Adaptive over duplicated.** One composable branching on `DsTheme.windowSize`, not a phone copy and a tablet copy.
+New component:
 
-## Every component ships with
-
-1. The composable in its layer's package.
-2. A `@Preview` (light + dark; add RTL / Expanded when the layout changes).
-3. A catalog entry in `designsystem/catalog` — that gallery is what the screenshot tests render.
-4. Reference screenshots recorded via `mise run snapshot:update`, reviewed before committing.
-5. KDoc on the public composable: what it is for, and which layer/variant to use instead when it is the wrong choice.
-
-Animated components take a `progress` / `animate` override so snapshots stay deterministic.
-
-## Definition of done
-
-`mise run check` green (ktlint + build + unit tests + screenshot regression), conventional commit (`feat:` / `fix:` drive the release).
-
-## Don't
-
-- Add a dependency without asking.
-- Expose a component with no preview and no snapshot.
-- Change reference PNGs without an intended visual change in the same commit.
-- Break the module direction to "just reuse" something.
+1. Lowest layer that fits. `Ds` prefix, stateless (value in, lambda out), tokens only — no literal `Color`, `dp`, `sp` or duration. Missing value ⇒ add the token in `core` first.
+2. `@DsComponentPreview` wrapped in `DsPreview { }` (`@DsScreenPreview` for a screen).
+3. Add it to the matching catalog gallery — that is what the snapshots render — and to `SampleApp` if it needs a new page.
+4. `mise run snapshot:update`, look at the PNG, then `mise run check`.
+5. Animated ⇒ take `animate`/`progress` defaulting to `DsTheme.animationsEnabled`. Pure rule (formatting, filtering) ⇒ unit test. Popups never render in snapshots, so cover the closed state.
+6. One component per commit, conventional commits (`feat(atoms): …`), body says why. Ask before adding a dependency.
