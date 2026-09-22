@@ -19,7 +19,7 @@ private const val PHONE = "spec:width=375dp,height=780dp,dpi=420"
 private const val TABLET = "spec:width=960dp,height=600dp,dpi=320"
 
 // Galleries scroll past the phone viewport; forms are snapshotted on a tall canvas so every field is covered.
-private const val FORM_PAGE = "spec:width=375dp,height=1800dp,dpi=320"
+private const val FORM_PAGE = "spec:width=375dp,height=2400dp,dpi=320"
 
 @Composable
 private fun Snapshot(

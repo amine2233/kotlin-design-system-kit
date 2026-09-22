@@ -24,6 +24,7 @@ import io.github.amine2233.designsystem.atoms.DsTextField
 import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.molecules.DsDropdown
+import io.github.amine2233.designsystem.molecules.DsMultiSelectField
 import io.github.amine2233.designsystem.molecules.DsOtpField
 
 /** Text entry, selection and toggles — the fields a form is built from. Pickers live in [PickersGallery]. */
@@ -67,6 +68,14 @@ fun FormsGallery(modifier: Modifier = Modifier) {
                 supportingText = "Appliqué à toute la ligne",
             )
             DsDropdown(listOf("Fidélité", "Geste commercial"), null, {}, label = "Motif de remise")
+            var allergens by rememberSaveable { mutableStateOf(setOf(0, 1)) }
+            DsMultiSelectField(
+                listOf("Gluten", "Lait", "Fruits à coque", "Soja"),
+                allergens,
+                { allergens = it },
+                label = "Allergènes",
+            )
+            DsMultiSelectField(listOf("Cuisine", "Bar", "Comptoir"), setOf(0, 1, 2), {}, label = "Imprimantes du ticket")
         }
         CatalogSection("Slider") {
             var tip by rememberSaveable { mutableFloatStateOf(0.15f) }
