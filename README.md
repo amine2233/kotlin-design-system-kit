@@ -39,6 +39,35 @@ DsTheme.windowSize.isExpanded          // ≥ 600dp → tablet layout
 
 Change the brand color in one place: `DsPalette.Teal*` / `DsLightColors.primary`.
 
+## Forms
+
+Every field is `DsFormField` underneath — label, `required` marker, supporting text and error
+treatment come from one place, so a new field only has to draw its control.
+
+| Need | Component |
+|---|---|
+| Text, e-mail, amount | `DsTextField` |
+| Long text | `DsTextArea` (`maxLength` shows a counter and refuses longer input) |
+| Password, cash-register code | `DsPasswordField` (`revealable = false` to forbid showing it) |
+| One-time / PIN code | `DsOtpField` (`onFilled` fires on the last digit) |
+| Choice in a list | `DsDropdown` |
+| Yes/no, multi-choice | `DsSwitch`, `DsCheckbox`, `DsRadioButton`, `DsSegmentedControl` |
+| Value in a range | `DsSlider` |
+| Date, time | `DsDatePickerField` (UTC millis), `DsTimePickerField` (minutes since midnight) |
+| Color | `DsColorPickerField`, or `DsColorGrid` on its own |
+| Image | `DsImagePickerField` + `rememberDsImagePicker` (Android photo picker, no permission) |
+| Row actions | `DsMenu` / `DsOverflowMenu` |
+| Sign-in | `DsOAuthButton` — see the Login reference screen |
+
+```kotlin
+DsTextField(name, { name = it }, label = "Nom du client", required = true)
+DsDatePickerField(closing, { closing = it }, label = "Date de clôture")
+DsImagePickerField(painter = photo, onPick = rememberDsImagePicker { uri = it }, label = "Photo")
+```
+
+Fields are stateless: value in, lambda out. Validation is the caller's — pass `isError` and the
+message as `supportingText`. Browse them all in the sample app (*Forms*, *Pickers & menus*).
+
 ## Integrating the packages in your app
 
 Artifacts are published to **GitHub Packages** on every release:
