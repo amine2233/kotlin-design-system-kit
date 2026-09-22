@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -14,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import io.github.amine2233.designsystem.atoms.DsCheckbox
+import io.github.amine2233.designsystem.atoms.DsOAuthButton
 import io.github.amine2233.designsystem.atoms.DsPasswordField
 import io.github.amine2233.designsystem.atoms.DsSlider
 import io.github.amine2233.designsystem.atoms.DsSwitch
@@ -70,6 +72,11 @@ fun FormsGallery(modifier: Modifier = Modifier) {
             var tip by rememberSaveable { mutableFloatStateOf(0.15f) }
             DsSlider(tip, { tip = it }, label = "Pourboire", valueText = "${(tip * 100).toInt()} %")
             DsSlider(3f, {}, valueRange = 1f..5f, steps = 3, label = "Intensité d'impression", valueText = "3 / 5")
+        }
+        CatalogSection("Sign-in providers") {
+            DsOAuthButton("Continuer avec Google", {}, logo = { Icon(DsIcons.Account, contentDescription = null) })
+            DsOAuthButton("Continuer avec Apple", {}, logo = { Icon(DsIcons.Store, contentDescription = null) })
+            DsOAuthButton("Connexion en cours", {}, loading = true)
         }
         CatalogSection("Toggles") {
             var receipt by rememberSaveable { mutableStateOf(true) }
