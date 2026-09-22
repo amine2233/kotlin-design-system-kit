@@ -6,6 +6,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -14,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import io.github.amine2233.designsystem.atoms.DsCheckbox
 import io.github.amine2233.designsystem.atoms.DsPasswordField
+import io.github.amine2233.designsystem.atoms.DsSlider
 import io.github.amine2233.designsystem.atoms.DsSwitch
 import io.github.amine2233.designsystem.atoms.DsTextArea
 import io.github.amine2233.designsystem.atoms.DsTextField
@@ -57,6 +59,11 @@ fun FormsGallery(modifier: Modifier = Modifier) {
                 supportingText = "Appliqué à toute la ligne",
             )
             DsDropdown(listOf("Fidélité", "Geste commercial"), null, {}, label = "Motif de remise")
+        }
+        CatalogSection("Slider") {
+            var tip by rememberSaveable { mutableFloatStateOf(0.15f) }
+            DsSlider(tip, { tip = it }, label = "Pourboire", valueText = "${'$'}{(tip * 100).toInt()} %")
+            DsSlider(3f, {}, valueRange = 1f..5f, steps = 3, label = "Intensité d'impression", valueText = "3 / 5")
         }
         CatalogSection("Toggles") {
             var receipt by rememberSaveable { mutableStateOf(true) }
