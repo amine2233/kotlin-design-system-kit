@@ -4,15 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -26,7 +23,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.atoms.DsFormField
 import io.github.amine2233.designsystem.core.DsComponentPreview
+import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
@@ -40,15 +39,21 @@ fun DsDropdown(
     modifier: Modifier = Modifier,
     label: String? = null,
     placeholder: String = "Sélectionner",
+    supportingText: String? = null,
+    isError: Boolean = false,
+    required: Boolean = false,
     enabled: Boolean = true,
 ) {
     val c = DsTheme.colors
     var open by remember { mutableStateOf(false) }
-    Column(modifier) {
-        if (label != null) {
-            Text(label, style = DsTheme.typography.caption, color = c.textSecondary)
-            Spacer(Modifier.height(4.dp))
-        }
+    DsFormField(
+        modifier = modifier,
+        label = label,
+        supportingText = supportingText,
+        isError = isError,
+        required = required,
+        enabled = enabled,
+    ) {
         Box {
             Row(
                 modifier =
@@ -57,8 +62,17 @@ fun DsDropdown(
                         .heightIn(min = 40.dp)
                         .clip(DsShapes.sm)
                         .background(c.surfaceSubtle)
-                        .border(1.dp, if (open) c.primary else c.border, DsShapes.sm)
-                        .clickable(enabled = enabled) { open = true }
+                        .border(
+                            1.dp,
+                            if (isError) {
+                                c.error
+                            } else if (open) {
+                                c.primary
+                            } else {
+                                c.border
+                            },
+                            DsShapes.sm,
+                        ).clickable(enabled = enabled) { open = true }
                         .padding(horizontal = 12.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -66,11 +80,18 @@ fun DsDropdown(
                 Text(
                     value ?: placeholder,
                     style = DsTheme.typography.bodyStrong,
-                    color = if (value == null) c.textTertiary else c.textPrimary,
+                    color =
+                        if (!enabled) {
+                            c.textDisabled
+                        } else if (value == null) {
+                            c.textTertiary
+                        } else {
+                            c.textPrimary
+                        },
                     modifier = Modifier.weight(1f),
                     maxLines = 1,
                 )
-                Icon(Icons.Default.ArrowDropDown, contentDescription = null, tint = c.textSecondary)
+                Icon(DsIcons.ChevronDown, contentDescription = null, tint = c.textSecondary)
             }
             DropdownMenu(expanded = open, onDismissRequest = { open = false }, containerColor = c.surface, shape = DsShapes.md) {
                 options.forEachIndexed { i, option ->
@@ -79,14 +100,7 @@ fun DsDropdown(
                             Text(
                                 option,
                                 style = DsTheme.typography.body,
-                                color =
-                                    if (i ==
-                                        selectedIndex
-                                    ) {
-                                        c.primary
-                                    } else {
-                                        c.textPrimary
-                                    },
+                                color = if (i == selectedIndex) c.primary else c.textPrimary,
                             )
                         },
                         onClick = {

@@ -9,7 +9,7 @@ Atomic-design modules, phone + tablet adaptive layouts, screenshot-tested.
 designsystem/
   core        tokens (DsPalette, DsColorScheme light/dark, DsTypography, DsSpacing, DsShapes, DsMotion), DsTheme, DsWindowSize,
               DsIcons (curated icon set), DsImages (logo, product placeholder, illustrations — vector drawables in res/)
-  atoms       DsText, DsButton (loading state) / DsIconButton, DsChip, DsTag, DsBadge, DsAvatar, DsIconTile, DsCard, DsDivider,
+  atoms       DsText, DsFormField (label/supporting/error frame), DsButton (loading state) / DsIconButton, DsChip, DsTag, DsBadge, DsAvatar, DsIconTile, DsCard, DsDivider,
               DsTextField, DsErrorText, DsSwitch / DsCheckbox / DsRadioButton, DsProgress, DsSkeleton, DsImage / DsImageSlot / DsIllustration / DsLogo
   molecules   DsQuantityStepper, DsSegmentedControl, DsTabRow, DsDropdown, DsAmountDisplay, DsTotalsRow, DsSearchBar, DsListItem, DsProductCard,
               DsStepIndicator, DsSectionLabel, DsCheckRow, DsKeypadKey, DsDashedActionRow, DsBanner, DsEmptyState, DsExpandableSection, DsAllocationBar
@@ -17,7 +17,7 @@ designsystem/
               DsBottomSheet, DsDialog, DsSnackbar (+ showError/showSuccess), DsBottomNavBar, DsNavigationRail, DsProcessingState,
               DsNfcPulse / DsNfcWaiting (contactless animation), DsResultMark / DsPaymentResult (success / failure animation)
   templates   DsScreenScaffold, DsTwoPaneLayout, DsCenteredLayout, DsNavigationScaffold (rail on tablet at the start edge — left LTR / right RTL — tab bar on phone)
-  catalog     galleries + reference screens (Shell LTR/RTL, Main Sales, Cart, Tips, Discount, Payment, NFC, Result, Onboarding) and the screenshot tests
+  catalog     galleries (atoms, molecules, organisms, forms) + reference screens (Shell LTR/RTL, Main Sales, Cart, Tips, Discount, Payment, NFC, Result, Onboarding) and the screenshot tests
 sample/       app: browse galleries and screens, rotate / use a tablet to see the Expanded layout
 ```
 

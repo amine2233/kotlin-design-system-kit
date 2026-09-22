@@ -59,6 +59,16 @@ fun OrganismsGalleryPhone() = Snapshot { OrganismsGallery() }
 fun OrganismsGalleryPhoneDark() = Snapshot(dark = true) { OrganismsGallery() }
 
 @PreviewTest
+@Preview(name = "forms", device = PHONE, showBackground = true)
+@Composable
+fun FormsGalleryPhone() = Snapshot { FormsGallery() }
+
+@PreviewTest
+@Preview(name = "forms_dark", device = PHONE, showBackground = true)
+@Composable
+fun FormsGalleryPhoneDark() = Snapshot(dark = true) { FormsGallery() }
+
+@PreviewTest
 @Preview(name = "foundations", device = PHONE, showBackground = true)
 @Composable
 fun FoundationsGalleryPhone() = Snapshot { FoundationsGallery() }

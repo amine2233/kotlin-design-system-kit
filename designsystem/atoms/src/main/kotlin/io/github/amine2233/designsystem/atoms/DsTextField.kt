@@ -1,6 +1,5 @@
 package io.github.amine2233.designsystem.atoms
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -12,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.core.DsComponentPreview
 import io.github.amine2233.designsystem.core.DsIcons
@@ -30,30 +30,37 @@ fun DsTextField(
     trailingContent: (@Composable () -> Unit)? = null,
     isError: Boolean = false,
     supportingText: String? = null,
+    required: Boolean = false,
     enabled: Boolean = true,
     singleLine: Boolean = true,
+    minLines: Int = 1,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
 ) {
     val c = DsTheme.colors
-    Column(modifier) {
-        if (label != null) {
-            Text(label, style = DsTheme.typography.caption, color = c.textSecondary)
-            Spacer(Modifier.height(4.dp))
-        }
+    DsFormField(
+        modifier = modifier,
+        label = label,
+        supportingText = supportingText,
+        isError = isError,
+        required = required,
+        enabled = enabled,
+    ) {
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
             singleLine = singleLine,
+            minLines = minLines,
             isError = isError,
+            visualTransformation = visualTransformation,
             keyboardOptions = keyboardOptions,
             textStyle = DsTheme.typography.bodyStrong,
             shape = DsShapes.input,
             placeholder = placeholder?.let { { Text(it, style = DsTheme.typography.body, color = c.textTertiary) } },
             leadingIcon = leadingIcon?.let { { Icon(it, contentDescription = null, tint = c.textTertiary) } },
             trailingIcon = trailingContent,
-            supportingText = supportingText?.let { { Text(it, style = DsTheme.typography.caption) } },
             colors =
                 OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = c.surface,

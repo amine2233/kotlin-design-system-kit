@@ -31,6 +31,7 @@ import io.github.amine2233.designsystem.catalog.AtomsGallery
 import io.github.amine2233.designsystem.catalog.AuthLoadingScreen
 import io.github.amine2233.designsystem.catalog.CartScreen
 import io.github.amine2233.designsystem.catalog.DiscountScreen
+import io.github.amine2233.designsystem.catalog.FormsGallery
 import io.github.amine2233.designsystem.catalog.FoundationsGallery
 import io.github.amine2233.designsystem.catalog.MainSalesScreen
 import io.github.amine2233.designsystem.catalog.MoleculesGallery
@@ -56,6 +57,7 @@ private enum class Page(
     Atoms("Atoms", "Design system"),
     Molecules("Molecules", "Design system"),
     Organisms("Organisms", "Design system"),
+    Forms("Forms", "Design system"),
     Shell("App shell — rail / tab bar", "Screens"),
     ShellArabic("App shell — عربي (RTL)", "Screens"),
     MainSales("01 · Main Sales (adaptive)", "Screens"),
@@ -87,6 +89,7 @@ fun SampleApp() {
                 Page.Atoms -> AtomsGallery()
                 Page.Molecules -> MoleculesGallery()
                 Page.Organisms -> OrganismsGallery()
+                Page.Forms -> FormsGallery()
                 Page.Shell -> AppShellScreen()
                 Page.ShellArabic -> AppShellScreen(layoutDirection = LayoutDirection.Rtl)
                 Page.MainSales -> MainSalesScreen()
