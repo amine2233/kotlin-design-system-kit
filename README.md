@@ -10,8 +10,8 @@ designsystem/
   core        tokens (DsPalette, DsColorScheme light/dark, DsTypography, DsSpacing, DsShapes, DsMotion), DsTheme, DsWindowSize,
               DsIcons (curated icon set), DsImages (logo, product placeholder, illustrations — vector drawables in res/)
   atoms       DsText, DsFormField (label/supporting/error frame), DsButton (loading state) / DsIconButton, DsChip, DsTag, DsBadge, DsAvatar, DsIconTile, DsCard, DsDivider,
-              DsTextField / DsPasswordField / DsTextArea, DsErrorText, DsSwitch / DsCheckbox / DsRadioButton, DsSlider, DsProgress, DsSkeleton, DsImage / DsImageSlot / DsIllustration / DsLogo
-  molecules   DsQuantityStepper, DsSegmentedControl, DsTabRow, DsDropdown, DsMenu / DsOverflowMenu, DsAmountDisplay, DsTotalsRow, DsSearchBar, DsListItem, DsProductCard,
+              DsTextField / DsPasswordField / DsTextArea, DsPickerField, DsErrorText, DsSwitch / DsCheckbox / DsRadioButton, DsSlider, DsProgress, DsSkeleton, DsImage / DsImageSlot / DsIllustration / DsLogo
+  molecules   DsQuantityStepper, DsSegmentedControl, DsTabRow, DsDatePickerField, DsDropdown, DsMenu / DsOverflowMenu, DsAmountDisplay, DsTotalsRow, DsSearchBar, DsListItem, DsProductCard,
               DsStepIndicator, DsSectionLabel, DsCheckRow, DsKeypadKey, DsDashedActionRow, DsBanner, DsEmptyState, DsExpandableSection, DsAllocationBar
   organisms   DsTopBar, DsNumericKeypad (+ String.applyKey), DsTotalsBlock, DsCartLineItem, DsBottomCartBar, DsChipRow, DsPaymentMethodRow,
               DsBottomSheet, DsDialog, DsSnackbar (+ showError/showSuccess), DsBottomNavBar, DsNavigationRail, DsProcessingState,

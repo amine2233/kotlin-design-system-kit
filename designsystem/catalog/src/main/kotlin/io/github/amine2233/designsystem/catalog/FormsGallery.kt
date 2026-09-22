@@ -21,6 +21,7 @@ import io.github.amine2233.designsystem.atoms.DsTextArea
 import io.github.amine2233.designsystem.atoms.DsTextField
 import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsTheme
+import io.github.amine2233.designsystem.molecules.DsDatePickerField
 import io.github.amine2233.designsystem.molecules.DsDropdown
 import io.github.amine2233.designsystem.molecules.DsListItem
 import io.github.amine2233.designsystem.molecules.DsMenuItem
@@ -67,6 +68,11 @@ fun FormsGallery(modifier: Modifier = Modifier) {
             var tip by rememberSaveable { mutableFloatStateOf(0.15f) }
             DsSlider(tip, { tip = it }, label = "Pourboire", valueText = "${(tip * 100).toInt()} %")
             DsSlider(3f, {}, valueRange = 1f..5f, steps = 3, label = "Intensité d'impression", valueText = "3 / 5")
+        }
+        CatalogSection("Date") {
+            var day by rememberSaveable { mutableStateOf<Long?>(1_772_236_800_000L) }
+            DsDatePickerField(day, { day = it }, label = "Date de clôture", required = true)
+            DsDatePickerField(null, {}, label = "Date de livraison", supportingText = "Facultatif")
         }
         CatalogSection("Menu") {
             val actions =
