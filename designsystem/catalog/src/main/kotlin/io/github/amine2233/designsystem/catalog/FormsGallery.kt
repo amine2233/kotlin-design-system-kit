@@ -22,6 +22,7 @@ import io.github.amine2233.designsystem.atoms.DsTextField
 import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.molecules.DsDropdown
+import io.github.amine2233.designsystem.molecules.DsOtpField
 
 /** Text entry, selection and toggles — the fields a form is built from. Pickers live in [PickersGallery]. */
 @Composable
@@ -47,6 +48,11 @@ fun FormsGallery(modifier: Modifier = Modifier) {
             var password by rememberSaveable { mutableStateOf("motdepasse") }
             DsPasswordField(password, { password = it }, label = "Mot de passe", required = true)
             DsPasswordField("123", {}, label = "Code caisse", isError = true, supportingText = "6 chiffres minimum", revealable = false)
+        }
+        CatalogSection("Code") {
+            var code by rememberSaveable { mutableStateOf("4218") }
+            DsOtpField(code, { code = it }, label = "Code reçu par SMS")
+            DsOtpField("1234", {}, length = 4, obscure = true, isError = true, supportingText = "Code incorrect")
         }
         CatalogSection("Select") {
             var vat by rememberSaveable { mutableIntStateOf(0) }
