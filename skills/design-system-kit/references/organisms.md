@@ -20,12 +20,18 @@ handles the RTL start edge. `DsTopBar.actions` is the slot for `DsIconButton` / 
 
 ```kotlin
 DsBottomSheet(onDismiss, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) { … }
+DsModal(title, onDismiss, size = DsModalSize.Half, windowSize = DsTheme.windowSize, footer = null) { … }
 DsSheetHandle()
 DsDialog(title, text, confirmLabel, onConfirm, onDismiss, dismissLabel = "Annuler", destructive = false)
 DsSnackbarHost(hostState)
 DsSnackbar(message, tone = DsSnackbarTone.Neutral, actionLabel, onAction, onDismiss)
 SnackbarHostState.showError(message) / showSuccess(message)
 ```
+
+`DsModal` is a bottom sheet on a phone and a centred dialog on a tablet — that switch is the point of it: a
+full-width sheet crawling up a 960dp tablet reads as a stretched phone app. `Half` is for a choice the user makes
+and leaves, `Full` for a task they work inside (`dsModalHeightFraction` holds the numbers, unit-tested). Its
+header is always there, because a sheet without one leaves dragging as the only way out.
 
 `DsDialog(destructive = true)` turns the confirm button red — use it for anything that deletes or voids.
 Overlays are popups: they never appear in screenshot tests, so snapshot the trigger and the state behind it.
