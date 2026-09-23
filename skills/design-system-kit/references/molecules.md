@@ -134,7 +134,13 @@ DsStepIndicator(steps: List<String>, currentStep: Int)
 DsAmountDisplay(amount, unit, label = null, prefix = null)
 DsTotalsRow(label, value, emphasis = DsTotalsEmphasis.Normal, valueColor = null)
 DsAllocationBar(parts: List<DsAllocation>)
+DsTagGroup(tags: List<DsTagEntry>, layout = DsTagLayout.Wrap, max = null, overflowLabel, spacing)
 ```
+
+`DsTagGroup` holds read-only tags. `Wrap` flows onto more lines and never scrolls — a detail panel where every
+tag must be readable; `Scroll` keeps one line — a dense row that must not grow taller. Past `max` the rest
+collapse into one "+n" tag rather than disappearing (`dsVisibleTags` is that rule, unit-tested). Tags describe;
+for a set the user picks from, use the filter group.
 
 `DsTotalsEmphasis`: `Muted`, `Normal`, `Discount`, `Positive`, `Total` — the row picks weight and color, callers
 never pass a color for a total.

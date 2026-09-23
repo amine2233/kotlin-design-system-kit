@@ -47,6 +47,9 @@ import io.github.amine2233.designsystem.molecules.DsSegmentedControl
 import io.github.amine2233.designsystem.molecules.DsStepIndicator
 import io.github.amine2233.designsystem.molecules.DsTabItem
 import io.github.amine2233.designsystem.molecules.DsTabRow
+import io.github.amine2233.designsystem.molecules.DsTagEntry
+import io.github.amine2233.designsystem.molecules.DsTagGroup
+import io.github.amine2233.designsystem.molecules.DsTagLayout
 import io.github.amine2233.designsystem.molecules.DsTotalsEmphasis
 import io.github.amine2233.designsystem.molecules.DsTotalsRow
 
@@ -78,6 +81,22 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
                 selectedIndex = section,
                 onSelect = { section = it },
             )
+        }
+        CatalogSection("Tag groups") {
+            val tags =
+                listOf(
+                    DsTagEntry("Sans gluten", DsTagTone.Success),
+                    DsTagEntry("Épicé", DsTagTone.Warning),
+                    DsTagEntry("Nouveau", DsTagTone.Primary),
+                    DsTagEntry("Fruits à coque", DsTagTone.Error),
+                    DsTagEntry("Végétarien"),
+                )
+            DsSectionLabel("Wrap — tout est lisible")
+            DsTagGroup(tags)
+            DsSectionLabel("Scroll — une seule ligne")
+            DsTagGroup(tags, layout = DsTagLayout.Scroll)
+            DsSectionLabel("Débordement compté")
+            DsTagGroup(tags, max = 2)
         }
         CatalogSection("Filters") {
             var category by rememberSaveable { mutableIntStateOf(0) }
