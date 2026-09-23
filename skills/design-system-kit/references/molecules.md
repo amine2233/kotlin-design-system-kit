@@ -15,7 +15,14 @@ DsSearchableDropdown(options, selectedIndex, onSelect, label, placeholder, searc
 DsSegmentedControl(options, selectedIndex, onSelect, shape = DsShapes.md, height = 40.dp)
 DsTabRow(tabs: List<String>, selectedIndex, onSelect)
 DsTabRow(items: List<DsTabItem>, selectedIndex, onSelect, layout = DsTabLayout…)  // badge, icon
+DsFilterGroup(options, selected: Set<Int>, onSelectedChange, selection = DsFilterSelection.Multiple,
+              layout = DsFilterLayout.Inline, allLabel = null, tone, enabled, spacing)
 ```
+
+`DsFilterGroup` is the chip bar a list is filtered with. `Single` replaces the selection and never empties it on a
+re-tap — clearing is `allLabel`'s job, and that chip lights up exactly when nothing else is selected, so the bar
+always has one chip lit. `Multiple` toggles. `dsToggleFilter` is the rule alone, unit-tested. `DsChipRow`
+(organisms) is the older single-select row that predates this.
 
 - Selection crosses the boundary as indices into `options`, so the caller keeps its own option type.
 - `DsMultiSelectField` keeps the menu open while ticking; the closed box shows `dsSummarizeSelection` —

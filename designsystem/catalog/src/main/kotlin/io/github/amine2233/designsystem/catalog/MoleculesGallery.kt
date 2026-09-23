@@ -33,6 +33,9 @@ import io.github.amine2233.designsystem.molecules.DsDashedActionRow
 import io.github.amine2233.designsystem.molecules.DsDropdown
 import io.github.amine2233.designsystem.molecules.DsEmptyState
 import io.github.amine2233.designsystem.molecules.DsExpandableSection
+import io.github.amine2233.designsystem.molecules.DsFilterGroup
+import io.github.amine2233.designsystem.molecules.DsFilterLayout
+import io.github.amine2233.designsystem.molecules.DsFilterSelection
 import io.github.amine2233.designsystem.molecules.DsKeyTone
 import io.github.amine2233.designsystem.molecules.DsKeypadKey
 import io.github.amine2233.designsystem.molecules.DsListItem
@@ -74,6 +77,25 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
                 ),
                 selectedIndex = section,
                 onSelect = { section = it },
+            )
+        }
+        CatalogSection("Filters") {
+            var category by rememberSaveable { mutableIntStateOf(0) }
+            DsSectionLabel("Un seul choix — chip « Tous » pour effacer")
+            DsFilterGroup(
+                listOf("Chauds", "Froids", "Snacks", "Desserts"),
+                selected = setOf(category),
+                onSelectedChange = { category = it.firstOrNull() ?: 0 },
+                selection = DsFilterSelection.Single,
+                allLabel = "Tous",
+            )
+            DsSectionLabel("Plusieurs choix, sur plusieurs lignes")
+            var methods by rememberSaveable { mutableStateOf(setOf(0, 2)) }
+            DsFilterGroup(
+                listOf("Carte", "Espèces", "Mixte", "En attente", "Remboursé"),
+                selected = methods,
+                onSelectedChange = { methods = it },
+                layout = DsFilterLayout.Wrap,
             )
         }
         CatalogSection("Step indicator") {
