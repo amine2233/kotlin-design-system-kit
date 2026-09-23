@@ -37,6 +37,7 @@ import io.github.amine2233.designsystem.catalog.FormsGallery
 import io.github.amine2233.designsystem.catalog.FoundationsGallery
 import io.github.amine2233.designsystem.catalog.LoginScreen
 import io.github.amine2233.designsystem.catalog.MainSalesScreen
+import io.github.amine2233.designsystem.catalog.MenuCardsGallery
 import io.github.amine2233.designsystem.catalog.MoleculesGallery
 import io.github.amine2233.designsystem.catalog.NfcPaymentScreen
 import io.github.amine2233.designsystem.catalog.OnboardingScreen
@@ -67,6 +68,7 @@ private enum class Page(
     Pickers("Pickers & menus", "Design system"),
     Overlays("Overlays & rail", "Design system"),
     Calendars("Calendriers", "Design system"),
+    MenuCards("Cartes produit (menu)", "Design system"),
     Shell("App shell — rail / tab bar", "Screens"),
     ShellArabic("App shell — عربي (RTL)", "Screens"),
     MainSales("01 · Main Sales (adaptive)", "Screens"),
@@ -104,6 +106,7 @@ fun SampleApp() {
                 Page.Pickers -> PickersGallery()
                 Page.Overlays -> OverlaysGallery()
                 Page.Calendars -> CalendarGallery()
+                Page.MenuCards -> MenuCardsGallery()
                 Page.Shell -> AppShellScreen()
                 Page.ShellArabic -> AppShellScreen(layoutDirection = LayoutDirection.Rtl)
                 Page.MainSales -> MainSalesScreen()

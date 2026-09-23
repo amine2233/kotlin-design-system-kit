@@ -102,6 +102,9 @@ working; non-digits are dropped and `onFilled` fires on the last digit — submi
 ```kotlin
 DsListItem(headline, supporting, selected = false, onClick, leading, trailing)
 DsProductCard(name, price, onClick, inCartCount = 0, onLongClick, image)
+DsMenuCard(name, price, variant = DsMenuCardVariant.Tile, description, tag, tagTone, selected,
+           onClick, media, footer)                       // header/body built for you
+DsMenuCard(variant, selected, onClick, media, footer, header = { … }, body = { … })   // slots
 DsCheckRow(text, filled = true)                       // static "included" line
 DsDashedActionRow(text, onClick)                      // dashed "add something" row
 DsSectionLabel(text)
@@ -114,6 +117,11 @@ DsAllocationBar(parts: List<DsAllocation>)
 
 `DsTotalsEmphasis`: `Muted`, `Normal`, `Discount`, `Positive`, `Total` — the row picks weight and color, callers
 never pass a color for a total.
+
+`DsMenuCard` is the product card of a menu-order screen: header, body, optional footer, optional media.
+`DsMenuCardVariant.Tile` is the product grid (media on top); `.Row` is a list — order review, search results —
+with the footer trailing so a stepper stays under the thumb. `DsProductCard` stays the minimal grid tile when all
+you have is a name and a price.
 
 ## Menus and messages
 
