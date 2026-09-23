@@ -13,10 +13,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsText
 import io.github.amine2233.designsystem.core.DsTheme
+import io.github.amine2233.designsystem.molecules.DsDateBounds
 import io.github.amine2233.designsystem.molecules.DsInlineDatePicker
 import io.github.amine2233.designsystem.molecules.DsInlineDateRangePicker
 import io.github.amine2233.designsystem.molecules.dsFormatDate
 import io.github.amine2233.designsystem.molecules.dsFormatDateRange
+import java.time.DayOfWeek
+import java.time.Instant
+import java.time.ZoneOffset
 
 private const val FEB28 = 1_772_236_800_000L
 private const val MAR06 = 1_772_755_200_000L
@@ -36,6 +40,18 @@ fun CalendarGallery(modifier: Modifier = Modifier) {
                 day?.let(::dsFormatDate) ?: "Aucune date",
                 style = DsTheme.typography.bodyStrong,
                 color = DsTheme.colors.primary,
+            )
+        }
+        CatalogSection("Bounded: past only, closed on Sundays") {
+            var day by remember { mutableStateOf<Long?>(null) }
+            DsInlineDatePicker(
+                day,
+                { day = it },
+                initialDisplayedMonthUtcMillis = FEB28,
+                bounds =
+                    DsDateBounds.upTo(FEB28).copy(
+                        isDayAllowed = { Instant.ofEpochMilli(it).atZone(ZoneOffset.UTC).dayOfWeek != DayOfWeek.SUNDAY },
+                    ),
             )
         }
         CatalogSection("Inline range picker") {

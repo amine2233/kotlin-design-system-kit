@@ -44,6 +44,20 @@ as it happens (the range one only once both ends exist), so there is no confirm 
 `DsInlineDateRangePicker` scrolls its own month list: give it a bounded height and never put it inside a
 `verticalScroll` column, or measuring fails.
 
+Every date component takes `bounds: DsDateBounds` — a design-system value, so callers never touch Material's
+experimental `SelectableDates`:
+
+```kotlin
+DsDatePickerField(value, onValueChange, bounds = DsDateBounds.upTo(todayUtcMillis))        // no future
+DsDateRangeField(start, end, onRangeChange, bounds = DsDateBounds.from(todayUtcMillis))    // no past
+DsInlineDatePicker(value, onValueChange, bounds = DsDateBounds.between(open, close).copy(
+    isDayAllowed = { millis -> … },                                                        // closed weekdays
+))
+```
+
+`allows(utcMillis)` / `allowsYear(year)` are the plain predicates behind it — unit-tested, and usable to validate
+a value the user typed elsewhere.
+
 Units crossing the boundary — no date or time type enters the design system:
 
 | Component | Value | Formatter |

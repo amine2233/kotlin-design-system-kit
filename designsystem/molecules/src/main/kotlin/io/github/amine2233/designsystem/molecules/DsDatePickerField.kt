@@ -3,6 +3,7 @@ package io.github.amine2233.designsystem.molecules
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,6 +36,7 @@ fun dsFormatDate(utcMillis: Long): String = IsoDayFormatter.format(Instant.ofEpo
  * date type crosses the design system boundary. [format] stays with the caller because the
  * display format is a locale decision, not a design one.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DsDatePickerField(
     value: Long?,
@@ -46,6 +48,7 @@ fun DsDatePickerField(
     isError: Boolean = false,
     required: Boolean = false,
     enabled: Boolean = true,
+    bounds: DsDateBounds = DsDateBounds(),
     confirmText: String = "Valider",
     dismissText: String = "Annuler",
     format: (Long) -> String = ::dsFormatDate,
@@ -64,7 +67,11 @@ fun DsDatePickerField(
         enabled = enabled,
     )
     if (open) {
-        val state = rememberDatePickerState(initialSelectedDateMillis = value)
+        val state =
+            rememberDatePickerState(
+                initialSelectedDateMillis = value,
+                selectableDates = bounds.toSelectableDates(),
+            )
         DatePickerDialog(
             onDismissRequest = { open = false },
             shape = DsShapes.lg,

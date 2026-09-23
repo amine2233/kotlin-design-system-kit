@@ -62,6 +62,7 @@ fun DsDateRangeField(
     isError: Boolean = false,
     required: Boolean = false,
     enabled: Boolean = true,
+    bounds: DsDateBounds = DsDateBounds(),
     confirmText: String = "Valider",
     dismissText: String = "Annuler",
     format: (Long) -> String = ::dsFormatDate,
@@ -84,6 +85,7 @@ fun DsDateRangeField(
             rememberDateRangePickerState(
                 initialSelectedStartDateMillis = startUtcMillis,
                 initialSelectedEndDateMillis = endUtcMillis,
+                selectableDates = bounds.toSelectableDates(),
             )
         DatePickerDialog(
             onDismissRequest = { open = false },

@@ -29,6 +29,7 @@ fun DsInlineDatePicker(
     onValueChange: (Long?) -> Unit,
     modifier: Modifier = Modifier,
     initialDisplayedMonthUtcMillis: Long? = value,
+    bounds: DsDateBounds = DsDateBounds(),
     title: (@Composable () -> Unit)? = null,
     headline: (@Composable () -> Unit)? = null,
     showModeToggle: Boolean = false,
@@ -37,6 +38,7 @@ fun DsInlineDatePicker(
         rememberDatePickerState(
             initialSelectedDateMillis = value,
             initialDisplayedMonthMillis = initialDisplayedMonthUtcMillis,
+            selectableDates = bounds.toSelectableDates(),
         )
     LaunchedEffect(state) {
         snapshotFlow { state.selectedDateMillis }.collect { if (it != value) onValueChange(it) }
@@ -66,6 +68,7 @@ fun DsInlineDateRangePicker(
     onRangeChange: (Long, Long) -> Unit,
     modifier: Modifier = Modifier,
     initialDisplayedMonthUtcMillis: Long? = startUtcMillis,
+    bounds: DsDateBounds = DsDateBounds(),
     title: (@Composable () -> Unit)? = null,
     headline: (@Composable () -> Unit)? = null,
     showModeToggle: Boolean = false,
@@ -75,6 +78,7 @@ fun DsInlineDateRangePicker(
             initialSelectedStartDateMillis = startUtcMillis,
             initialSelectedEndDateMillis = endUtcMillis,
             initialDisplayedMonthMillis = initialDisplayedMonthUtcMillis,
+            selectableDates = bounds.toSelectableDates(),
         )
     LaunchedEffect(state) {
         snapshotFlow { state.selectedStartDateMillis to state.selectedEndDateMillis }.collect { (start, end) ->
