@@ -60,7 +60,7 @@ fun DsSearchBar(
                 .height(height)
                 .background(if (enabled) c.surfaceSubtle else c.surfaceMuted, DsShapes.pill)
                 .border(1.dp, c.border, DsShapes.pill)
-                .padding(start = 12.dp, end = if (showClear && value.isNotEmpty() || trailing != null) 4.dp else 12.dp),
+                .padding(start = 12.dp, end = if ((showClear && value.isNotEmpty()) || trailing != null) 4.dp else 12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(2.dp),
     ) {
