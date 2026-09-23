@@ -14,12 +14,16 @@ reusing `DsSearchBar` (a molecule).
 
 1. The composable in its layer's package, `Ds`-prefixed, stateless, KDoc saying what it is for and when to use
    something else instead.
-2. A `@DsComponentPreview` (light + dark) — `@DsScreenPreview` for anything screen-sized. Wrap in `DsPreview { }`.
-3. An entry in a catalog gallery — that gallery is what the screenshot tests render:
+2. A `@DsComponentPreview` (light + dark) in the component's own file — `@DsScreenPreview` for anything
+   screen-sized. Wrap in `DsPreview { }` and show every state that changes the layout: each enum value, error,
+   disabled, empty.
+3. An entry in a catalog gallery, reachable from a `SampleApp` page — a component you cannot open on a device
+   does not exist. That gallery is also what the screenshot tests render:
    `AtomsGallery`, `MoleculesGallery`, `OrganismsGallery`, `FoundationsGallery`, `FormsGallery`, `ChoicesGallery`,
    `PickersGallery`, `OverlaysGallery`, `CalendarGallery`.
-4. A recorded reference screenshot (below), reviewed before committing.
-5. A page in the sample app if it is a new gallery or reference screen (`sample/…/SampleApp.kt`).
+4. A `@PreviewTest` entry in `CatalogScreenshots.kt` (light + dark) and its recorded reference screenshot,
+   reviewed before committing.
+5. A new `Page` in `sample/…/SampleApp.kt` when the component brought a new gallery or reference screen.
 6. A unit test for any pure rule it introduces (`dsFormatPhone`, `otpDigits`, `dsMatchesQuery`, `applyKey`…).
    Composables themselves are covered by the snapshots.
 

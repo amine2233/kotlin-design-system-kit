@@ -13,9 +13,9 @@ Layers: `core ← atoms ← molecules ← organisms ← templates ← catalog �
 New component:
 
 1. Lowest layer that fits. `Ds` prefix, stateless (value in, lambda out), tokens only — no literal `Color`, `dp`, `sp` or duration. Missing value ⇒ add the token in `core` first.
-2. `@DsComponentPreview` wrapped in `DsPreview { }` (`@DsScreenPreview` for a screen).
-3. Add it to the matching catalog gallery — that is what the snapshots render — and to `SampleApp` if it needs a new page.
-4. `mise run snapshot:update`, look at the PNG, then `mise run check`.
+2. **Preview** — `@DsComponentPreview` in the component's own file, wrapped in `DsPreview { }` (`@DsScreenPreview` for a screen), showing every state that changes the layout (each enum value, error, disabled, empty).
+3. **Example in the sample app** — add it to the catalog gallery of its layer, and make sure a `SampleApp` page reaches that gallery (a new gallery needs a new `Page` entry). Not optional: a component you cannot open on a device does not exist.
+4. **Snapshot test** — the gallery needs a `@PreviewTest` entry in `CatalogScreenshots.kt` (light + dark); then `mise run snapshot:update`, look at the PNG, then `mise run check`.
 5. Animated ⇒ take `animate`/`progress` defaulting to `DsTheme.animationsEnabled`. Pure rule (formatting, filtering) ⇒ unit test. Popups never render in snapshots, so cover the closed state.
 6. One component per commit, conventional commits (`feat(atoms): …`), body says why. Ask before adding a dependency.
 
