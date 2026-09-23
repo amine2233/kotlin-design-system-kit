@@ -24,3 +24,5 @@ How the work is organised:
 - One component per branch, each in its own worktree **next to** the repo folder: `git worktree add ../ds-<name> -b feat/<name>` (run gradle there with `JAVA_HOME`/`ANDROID_HOME` set; `mise env` and the rtk git wrapper are unavailable inside an isolated worktree).
 - Push the branch and open a pull request — `main` takes merges, not direct feature commits. Docs and release chores may land on `main` directly.
 - A PR is ready when the six steps above are done and `mise run check` is green; remove the worktree once it is merged (`git worktree remove ../ds-<name>`).
+- The PR **title** is linted by CI with commitlint: conventional prefix, and the subject must not start with a PascalCase name — `feat(molecules): tag group that wraps` passes, `feat(molecules): DsTagGroup wraps` fails (`subject-case`). Put the component name later in the sentence.
+- Run `mise run lint` before pushing, not just `mise run format`: rules like `mixed-condition-operators` are reported but never auto-fixed.

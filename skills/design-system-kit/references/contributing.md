@@ -45,6 +45,17 @@ Two things that will bite:
 A gallery page is rendered on a tall canvas (`FORM_PAGE` in `CatalogScreenshots.kt`). Content taller than the
 canvas is silently clipped — when a page outgrows it, raise the height or split the gallery.
 
+## What CI checks
+
+Three jobs run on every pull request:
+
+- **Lint** — `mise run lint` (ktlint). Run it yourself before pushing: `mise run format` fixes most rules but not
+  all of them (`mixed-condition-operators`, for one, is reported and left alone).
+- **Test** — unit tests plus the screenshot validation, on Linux against macOS-recorded references.
+- **Pull request title** — commitlint with config-conventional. The subject must not read as PascalCase, so
+  `feat(molecules): DsTagGroup wraps or scrolls` fails while `feat(molecules): tag group that wraps or scrolls`
+  passes. Name the component later in the sentence, or in the body.
+
 ## Commits and release
 
 Conventional commits, one component per commit: `feat(atoms): …`, `feat(molecules): …`, `fix(core): …`,
