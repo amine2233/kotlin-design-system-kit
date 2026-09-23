@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.atoms.DsIconButton
 import io.github.amine2233.designsystem.atoms.DsRadioIndicator
 import io.github.amine2233.designsystem.atoms.DsTag
 import io.github.amine2233.designsystem.atoms.DsTagTone
@@ -79,6 +80,14 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
         CatalogSection("Search & list items") {
             var query by rememberSaveable { mutableStateOf("") }
             DsSearchBar(query, { query = it })
+            DsSearchBar("cappu", {})
+            DsSearchBar(
+                "crème",
+                {},
+                height = DsTheme.spacing.minTouchTarget,
+                trailing = { DsIconButton(DsIcons.Settings, contentDescription = "Filtres", onClick = {}) },
+            )
+            DsSearchBar("", {}, enabled = false, placeholder = "Recherche indisponible")
             DsListItem("Cappuccino", supporting = "×2 · 200 DA/u. · TVA 10%", leading = {
                 DsRadioIndicator(false)
             }, trailing = { Text("400 DA", style = DsTheme.typography.labelStrong, color = DsTheme.colors.textSecondary) })

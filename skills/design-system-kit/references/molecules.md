@@ -93,9 +93,14 @@ URI is the app's job.
 DsOtpField(value, onValueChange, length = 6, label, supportingText, isError, enabled,
            obscure = false, onFilled = {})
 DsQuantityStepper(quantity, onQuantityChange, min = 0, max = Int.MAX_VALUE)
-DsSearchBar(value, onValueChange, placeholder = "Rechercher...")
+DsSearchBar(value, onValueChange, placeholder, enabled, showClear = true, onSearch = null,
+            height = 36.dp, trailing = null)
 DsKeypadKey(label, onClick, tone = DsKeyTone.Default)     // Default, Secondary, Destructive
 ```
+
+`DsSearchBar` clears through `onValueChange("")`, so the query has one owner; the × only appears once there is
+something to clear. `onSearch` switches the keyboard's action key to Search — leave it out for a live filter,
+which is what most POS lists want. Give it `height = DsTheme.spacing.minTouchTarget` on a touch-first screen.
 
 `DsOtpField` drives its boxes from one hidden text field, so keyboard, paste and one-time-code autofill keep
 working; non-digits are dropped and `onFilled` fires on the last digit — submit there.
