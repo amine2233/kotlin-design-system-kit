@@ -21,8 +21,20 @@ import io.github.amine2233.designsystem.core.DsTheme
 /** Whether a filter group lets one option through at a time or several. */
 enum class DsFilterSelection { Single, Multiple }
 
-/** One line that scrolls, or several that wrap — same trade-off as a tag group. */
-enum class DsFilterLayout { Scroll, Wrap }
+/**
+ * How the chips are laid out.
+ *
+ * [Inline] keeps one line and scrolls horizontally — the filter bar above a list, where the chips
+ * must not steal vertical room. [Grid] wraps onto as many lines as it needs and never scrolls — a
+ * filter panel, where seeing every option at once is the point.
+ *
+ * Neither stretches a chip: each is as wide as its own label plus padding, so "Mixte" never takes
+ * the same width as "Remboursé".
+ *
+ * Declared here rather than shared with `DsTagLayout`: the two components are free to gain layouts
+ * the other should not have.
+ */
+enum class DsFilterLayout { Inline, Grid }
 
 /**
  * What tapping option [index] leaves selected.
@@ -59,7 +71,7 @@ fun DsFilterGroup(
     onSelectedChange: (Set<Int>) -> Unit,
     modifier: Modifier = Modifier,
     selection: DsFilterSelection = DsFilterSelection.Multiple,
-    layout: DsFilterLayout = DsFilterLayout.Scroll,
+    layout: DsFilterLayout = DsFilterLayout.Inline,
     allLabel: String? = null,
     tone: DsChipTone = DsChipTone.Neutral,
     enabled: Boolean = true,
@@ -84,14 +96,14 @@ fun DsFilterGroup(
         }
     }
     when (layout) {
-        DsFilterLayout.Scroll -> {
+        DsFilterLayout.Inline -> {
             Row(
                 modifier = modifier.horizontalScroll(rememberScrollState()),
                 horizontalArrangement = Arrangement.spacedBy(spacing),
             ) { chips() }
         }
 
-        DsFilterLayout.Wrap -> {
+        DsFilterLayout.Grid -> {
             FlowRow(
                 modifier = modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(spacing),
@@ -117,7 +129,7 @@ private fun DsFilterGroupPreview() =
             listOf("Carte", "Espèces", "Mixte", "En attente", "Remboursé"),
             selected = setOf(0, 2),
             onSelectedChange = {},
-            layout = DsFilterLayout.Wrap,
+            layout = DsFilterLayout.Grid,
         )
         Spacer(Modifier.height(DsTheme.spacing.sm))
         DsFilterGroup(

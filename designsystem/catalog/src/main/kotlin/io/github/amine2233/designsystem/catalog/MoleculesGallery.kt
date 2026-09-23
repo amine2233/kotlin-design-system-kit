@@ -81,7 +81,7 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
         }
         CatalogSection("Filters") {
             var category by rememberSaveable { mutableIntStateOf(0) }
-            DsSectionLabel("Un seul choix — chip « Tous » pour effacer")
+            DsSectionLabel("Inline, un seul choix — chip « Tous » pour effacer")
             DsFilterGroup(
                 listOf("Chauds", "Froids", "Snacks", "Desserts"),
                 selected = setOf(category),
@@ -89,13 +89,13 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
                 selection = DsFilterSelection.Single,
                 allLabel = "Tous",
             )
-            DsSectionLabel("Plusieurs choix, sur plusieurs lignes")
+            DsSectionLabel("Grid, plusieurs choix — rien ne défile")
             var methods by rememberSaveable { mutableStateOf(setOf(0, 2)) }
             DsFilterGroup(
                 listOf("Carte", "Espèces", "Mixte", "En attente", "Remboursé"),
                 selected = methods,
                 onSelectedChange = { methods = it },
-                layout = DsFilterLayout.Wrap,
+                layout = DsFilterLayout.Grid,
             )
         }
         CatalogSection("Step indicator") {

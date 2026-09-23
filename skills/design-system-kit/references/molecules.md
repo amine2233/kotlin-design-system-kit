@@ -22,7 +22,9 @@ DsFilterGroup(options, selected: Set<Int>, onSelectedChange, selection = DsFilte
 `DsFilterGroup` is the chip bar a list is filtered with. `Single` replaces the selection and never empties it on a
 re-tap — clearing is `allLabel`'s job, and that chip lights up exactly when nothing else is selected, so the bar
 always has one chip lit. `Multiple` toggles. `dsToggleFilter` is the rule alone, unit-tested. `DsChipRow`
-(organisms) is the older single-select row that predates this.
+(organisms) is the older single-select row that predates this. `Inline` is one scrolling line — the bar above a
+list; `Grid` wraps and never scrolls — a filter panel. Chips keep their own label width in both. Each component declares its own layout enum rather than
+sharing one, so gaining a layout here never forces it on tags.
 
 - Selection crosses the boundary as indices into `options`, so the caller keeps its own option type.
 - `DsMultiSelectField` keeps the menu open while ticking; the closed box shows `dsSummarizeSelection` —
