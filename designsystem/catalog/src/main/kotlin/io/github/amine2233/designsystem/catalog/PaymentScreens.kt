@@ -31,6 +31,7 @@ import io.github.amine2233.designsystem.molecules.DsStepIndicator
 import io.github.amine2233.designsystem.molecules.DsTotalsEmphasis
 import io.github.amine2233.designsystem.molecules.DsTotalsRow
 import io.github.amine2233.designsystem.organisms.DsChipRow
+import io.github.amine2233.designsystem.organisms.DsChipRowLayout
 import io.github.amine2233.designsystem.organisms.DsNumericKeypad
 import io.github.amine2233.designsystem.organisms.DsPaymentMethodRow
 import io.github.amine2233.designsystem.organisms.DsTopBar
@@ -88,7 +89,13 @@ fun DiscountScreen(
             DsSegmentedControl(listOf("% Pourcentage", "DA Montant fixe"), type, {
                 type = it
             }, Modifier.fillMaxWidth(), shape = DsTheme.shapes.sm, height = 34.dp)
-            DsChipRow(listOf("5%", "10%", "20%", "Perso."), quick, { quick = it }, scrollable = false, modifier = Modifier.padding(0.dp))
+            DsChipRow(
+                listOf("5%", "10%", "20%", "Perso."),
+                quick,
+                { quick = it },
+                layout = DsChipRowLayout.Grid,
+                modifier = Modifier.padding(0.dp),
+            )
             DsDropdown(listOf("Fidélité", "Geste commercial", "Erreur de saisie"), reason, { reason = it }, label = "Motif")
         }
         DsDivider()
@@ -148,7 +155,7 @@ fun PaymentScreen(
                 listOf("Exact", "1 200", "1 500", "2 000"),
                 quick,
                 { quick = it },
-                scrollable = false,
+                layout = DsChipRowLayout.Grid,
                 modifier = Modifier.padding(0.dp),
             )
             DsAmountDisplay(received, "DA", label = "Reçu du client")

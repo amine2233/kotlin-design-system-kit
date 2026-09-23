@@ -51,6 +51,7 @@ import io.github.amine2233.designsystem.molecules.DsTotalsEmphasis
 import io.github.amine2233.designsystem.organisms.DsBottomCartBar
 import io.github.amine2233.designsystem.organisms.DsCartLineItem
 import io.github.amine2233.designsystem.organisms.DsChipRow
+import io.github.amine2233.designsystem.organisms.DsChipRowLayout
 import io.github.amine2233.designsystem.organisms.DsNumericKeypad
 import io.github.amine2233.designsystem.organisms.DsTopBar
 import io.github.amine2233.designsystem.organisms.DsTotalsBlock
@@ -258,7 +259,7 @@ fun TipsScreen(
                 listOf("5%", "10%", "15%", "20%", "Aucun"),
                 preset,
                 { preset = it },
-                scrollable = false,
+                layout = DsChipRowLayout.Grid,
                 modifier = Modifier.padding(0.dp),
             )
         }
