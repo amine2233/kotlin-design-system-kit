@@ -68,7 +68,10 @@ Units crossing the boundary — no date or time type enters the design system:
 | `DsColorPickerField` | `Color` | `dsFormatColor(color)` → `#00796B` |
 
 - `DsDateRangeField` rather than two date fields: the range calendar cannot produce an inverted period, and the
-  field reports a change only once both ends exist.
+  field reports a change only once both ends exist. `presets = dsDefaultDateRangePresets()` puts quick periods
+  above the calendar; they are computed from `todayUtcMillis`, which the caller pins — nothing here reads a clock,
+  so a report stays reproducible. `dsRangeToday` / `dsRangeYesterday` / `dsRangeThisWeek` / `dsRangeThisMonth` /
+  `dsRangeLast7Days` are the plain functions behind them, unit-tested and reusable for a report query.
 - The color picker offers a fixed palette on purpose — picked colors must stay legible on the surface and carry
   white text, which an arbitrary HSV value cannot promise. `DsColorGrid` is the grid without the dialog.
 

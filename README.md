@@ -56,7 +56,7 @@ treatment come from one place, so a new field only has to draw its control.
 | Yes/no, multi-choice | `DsSwitch`, `DsCheckbox`, `DsRadioButton`, `DsSegmentedControl` |
 | Value in a range | `DsSlider` |
 | Date, time | `DsDatePickerField` (UTC millis), `DsTimePickerField` (minutes since midnight) |
-| Period | `DsDateRangeField` — both ends in one field, no inverted range possible |
+| Period | `DsDateRangeField` — both ends in one field, no inverted range possible; `presets = dsDefaultDateRangePresets()` adds Aujourd'hui / Hier / Cette semaine / Ce mois |
 | Calendar in the page | `DsInlineDatePicker` / `DsInlineDateRangePicker` — no dialog, reports as you pick |
 | Limit which days | `bounds = DsDateBounds.upTo(…)` / `.from(…)` / `.between(…)`, plus `isDayAllowed` |
 | Color | `DsColorPickerField`, or `DsColorGrid` on its own |

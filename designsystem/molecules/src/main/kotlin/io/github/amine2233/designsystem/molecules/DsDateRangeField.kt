@@ -1,9 +1,15 @@
 package io.github.amine2233.designsystem.molecules
 
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DateRangePicker
+import androidx.compose.material3.DateRangePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
@@ -16,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsButton
 import io.github.amine2233.designsystem.atoms.DsButtonSize
 import io.github.amine2233.designsystem.atoms.DsButtonVariant
+import io.github.amine2233.designsystem.atoms.DsChip
 import io.github.amine2233.designsystem.atoms.DsPickerField
 import io.github.amine2233.designsystem.core.DsComponentPreview
 import io.github.amine2233.designsystem.core.DsIcons
@@ -44,6 +51,9 @@ fun dsFormatDateRange(
 /**
  * Period entry: one field holding both ends, opening the Material range calendar.
  *
+ * Pass [presets] to put quick periods above the calendar ("Cette semaine"); [todayUtcMillis] is what
+ * they are computed from, so a report can pin the day instead of reading the clock.
+ *
  * Two [DsDatePickerField]s would let a user pick an end before the start and leave the screen to
  * catch it; the range calendar cannot produce an inverted period, and this field only reports a
  * change once both ends exist. Values are UTC epoch millis at day precision, like the single-date
@@ -63,6 +73,8 @@ fun DsDateRangeField(
     required: Boolean = false,
     enabled: Boolean = true,
     bounds: DsDateBounds = DsDateBounds(),
+    presets: List<DsDateRangePreset> = emptyList(),
+    todayUtcMillis: Long = dsTodayUtcMillis(),
     confirmText: String = "Valider",
     dismissText: String = "Annuler",
     format: (Long) -> String = ::dsFormatDate,
@@ -106,10 +118,50 @@ fun DsDateRangeField(
                 DsButton(dismissText, variant = DsButtonVariant.Ghost, size = DsButtonSize.Small, onClick = { open = false })
             },
         ) {
+            if (presets.isNotEmpty()) {
+                DsDateRangePresetRow(presets, todayUtcMillis, bounds, state)
+            }
             DateRangePicker(
                 state = state,
                 modifier = Modifier.height(520.dp),
                 colors = DatePickerDefaults.colors(containerColor = DsTheme.colors.surface),
+            )
+        }
+    }
+}
+
+/**
+ * The chips above the calendar.
+ *
+ * A preset whose period falls outside [bounds] is left out rather than shown inert: the calendar
+ * refuses a selection it cannot render, so offering the chip would only produce a dead tap.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun DsDateRangePresetRow(
+    presets: List<DsDateRangePreset>,
+    todayUtcMillis: Long,
+    bounds: DsDateBounds,
+    state: DateRangePickerState,
+) {
+    val offered =
+        presets.map { it to it.range(todayUtcMillis) }.filter { (_, range) ->
+            bounds.allows(range.first) &&
+                bounds.allows(range.second)
+        }
+    if (offered.isEmpty()) return
+    Row(
+        Modifier
+            .horizontalScroll(rememberScrollState())
+            .padding(horizontal = DsTheme.spacing.lg, vertical = DsTheme.spacing.sm),
+        horizontalArrangement = Arrangement.spacedBy(DsTheme.spacing.sm),
+    ) {
+        offered.forEach { (preset, range) ->
+            val (start, end) = range
+            DsChip(
+                preset.label,
+                selected = state.selectedStartDateMillis == start && state.selectedEndDateMillis == end,
+                onClick = { state.setSelection(start, end) },
             )
         }
     }

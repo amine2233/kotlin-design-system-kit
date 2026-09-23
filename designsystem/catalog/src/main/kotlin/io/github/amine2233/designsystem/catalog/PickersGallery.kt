@@ -31,6 +31,7 @@ import io.github.amine2233.designsystem.molecules.DsMenu
 import io.github.amine2233.designsystem.molecules.DsMenuItem
 import io.github.amine2233.designsystem.molecules.DsOverflowMenu
 import io.github.amine2233.designsystem.molecules.DsTimePickerField
+import io.github.amine2233.designsystem.molecules.dsDefaultDateRangePresets
 import io.github.amine2233.designsystem.molecules.rememberDsFilePicker
 import io.github.amine2233.designsystem.molecules.rememberDsImagePicker
 
@@ -50,6 +51,16 @@ fun PickersGallery(modifier: Modifier = Modifier) {
                 label = "Période du rapport",
             )
             DsDateRangeField(null, null, { _, _ -> }, label = "Période comparée", supportingText = "Facultatif")
+            // Presets are computed from a pinned "today" so the example stays reproducible.
+            DsDateRangeField(
+                period.first,
+                period.second,
+                { start, end -> if (start != null && end != null) period = start to end },
+                label = "Période (raccourcis)",
+                presets = dsDefaultDateRangePresets(),
+                todayUtcMillis = 1_772_755_200_000L,
+                supportingText = "Aujourd'hui · Hier · Cette semaine · Ce mois",
+            )
         }
         CatalogSection("Time") {
             var opening by rememberSaveable { mutableStateOf<Int?>(8 * 60 + 30) }
