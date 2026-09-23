@@ -91,10 +91,10 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
                     DsTagEntry("Fruits à coque", DsTagTone.Error),
                     DsTagEntry("Végétarien"),
                 )
-            DsSectionLabel("Wrap — tout est lisible")
+            DsSectionLabel("Grid — tout est lisible, rien ne défile")
             DsTagGroup(tags)
-            DsSectionLabel("Scroll — une seule ligne")
-            DsTagGroup(tags, layout = DsTagLayout.Scroll)
+            DsSectionLabel("Inline — une seule ligne qui défile")
+            DsTagGroup(tags, layout = DsTagLayout.Inline)
             DsSectionLabel("Débordement compté")
             DsTagGroup(tags, max = 2)
         }

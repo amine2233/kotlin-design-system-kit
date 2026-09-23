@@ -29,11 +29,14 @@ data class DsTagEntry(
 /**
  * How a [DsTagGroup] deals with more tags than fit on a line.
  *
- * [Wrap] flows onto further lines and never scrolls — a detail panel, where every tag must be
- * readable without interaction. [Scroll] keeps one line and scrolls horizontally — a dense list
- * row, where the group must not push the rest of the row down.
+ * [Inline] keeps a single line and scrolls horizontally — a dense list row, where the group must
+ * not push the rest of the row down. [Grid] wraps onto as many lines as it needs and never
+ * scrolls — a detail panel, where every tag must be readable without interaction.
+ *
+ * Neither stretches a tag: each is as wide as its own text plus padding, so "Épicé" never occupies
+ * the same width as "Fruits à coque".
  */
-enum class DsTagLayout { Wrap, Scroll }
+enum class DsTagLayout { Inline, Grid }
 
 /**
  * Splits [tags] into what is shown and how many are hidden.
@@ -63,7 +66,7 @@ fun dsVisibleTags(
 fun DsTagGroup(
     tags: List<DsTagEntry>,
     modifier: Modifier = Modifier,
-    layout: DsTagLayout = DsTagLayout.Wrap,
+    layout: DsTagLayout = DsTagLayout.Grid,
     max: Int? = null,
     overflowLabel: (Int) -> String = { "+$it" },
     spacing: Dp = DsTheme.spacing.xs,
@@ -75,7 +78,7 @@ fun DsTagGroup(
         if (hidden > 0) DsTag(overflowLabel(hidden), tone = DsTagTone.Neutral)
     }
     when (layout) {
-        DsTagLayout.Wrap -> {
+        DsTagLayout.Grid -> {
             FlowRow(
                 modifier = modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(spacing),
@@ -83,7 +86,7 @@ fun DsTagGroup(
             ) { items() }
         }
 
-        DsTagLayout.Scroll -> {
+        DsTagLayout.Inline -> {
             Row(
                 modifier = modifier.horizontalScroll(rememberScrollState()),
                 horizontalArrangement = Arrangement.spacedBy(spacing),
@@ -113,7 +116,7 @@ private fun DsTagGroupPreview() =
                 DsTagEntry("Nouveau", DsTagTone.Primary),
                 DsTagEntry("Fruits à coque", DsTagTone.Error),
             ),
-            layout = DsTagLayout.Scroll,
+            layout = DsTagLayout.Inline,
             max = 2,
         )
     }

@@ -134,11 +134,14 @@ DsStepIndicator(steps: List<String>, currentStep: Int)
 DsAmountDisplay(amount, unit, label = null, prefix = null)
 DsTotalsRow(label, value, emphasis = DsTotalsEmphasis.Normal, valueColor = null)
 DsAllocationBar(parts: List<DsAllocation>)
-DsTagGroup(tags: List<DsTagEntry>, layout = DsTagLayout.Wrap, max = null, overflowLabel, spacing)
+DsTagGroup(tags: List<DsTagEntry>, layout = DsTagLayout.Grid, max = null, overflowLabel, spacing)
 ```
 
-`DsTagGroup` holds read-only tags. `Wrap` flows onto more lines and never scrolls — a detail panel where every
-tag must be readable; `Scroll` keeps one line — a dense row that must not grow taller. Past `max` the rest
+`DsTagGroup` holds read-only tags. `Grid` wraps onto as many lines as it needs and never scrolls — a detail panel
+where every tag must be readable; `Inline` keeps one line that scrolls — a dense row that must not grow taller. Neither layout stretches a tag:
+each keeps its own text width.
+Every component with these two behaviours declares its own enum (`DsTagLayout`, `DsFilterLayout`, …) so one
+component's layouts never constrain another's. Past `max` the rest
 collapse into one "+n" tag rather than disappearing (`dsVisibleTags` is that rule, unit-tested). Tags describe;
 for a set the user picks from, use the filter group.
 
