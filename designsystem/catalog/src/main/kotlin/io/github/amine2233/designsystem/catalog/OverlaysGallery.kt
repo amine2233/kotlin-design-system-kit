@@ -30,6 +30,8 @@ import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.organisms.DsBottomSheet
 import io.github.amine2233.designsystem.organisms.DsDialog
+import io.github.amine2233.designsystem.organisms.DsModal
+import io.github.amine2233.designsystem.organisms.DsModalSize
 import io.github.amine2233.designsystem.organisms.DsNavItem
 import io.github.amine2233.designsystem.organisms.DsNavigationRail
 import io.github.amine2233.designsystem.organisms.DsSheetHandle
@@ -51,6 +53,8 @@ fun OverlaysGallery(modifier: Modifier = Modifier) {
     var dialog by remember { mutableStateOf(false) }
     var destructiveDialog by remember { mutableStateOf(false) }
     var sheet by remember { mutableStateOf(false) }
+    var halfModal by remember { mutableStateOf(false) }
+    var fullModal by remember { mutableStateOf(false) }
 
     Box(modifier.fillMaxWidth()) {
         Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
@@ -66,6 +70,15 @@ fun OverlaysGallery(modifier: Modifier = Modifier) {
             CatalogSection("Bottom sheet") {
                 DsButton("Ouvrir la feuille", onClick = { sheet = true }, variant = DsButtonVariant.Outlined, size = DsButtonSize.Medium)
                 DsSheetHandle()
+            }
+            CatalogSection("Modals — sheet on phone, dialog on tablet") {
+                DsButton("Ouvrir en demi-hauteur", onClick = { halfModal = true }, size = DsButtonSize.Medium)
+                DsButton(
+                    "Ouvrir en plein écran",
+                    onClick = { fullModal = true },
+                    variant = DsButtonVariant.Outlined,
+                    size = DsButtonSize.Medium,
+                )
             }
             CatalogSection("Snackbar host") {
                 Row(horizontalArrangement = Arrangement.spacedBy(DsTheme.spacing.sm)) {
@@ -115,6 +128,21 @@ fun OverlaysGallery(modifier: Modifier = Modifier) {
             onDismiss = { destructiveDialog = false },
             destructive = true,
         )
+    }
+    if (halfModal) {
+        DsModal(title = "Actions sur la ligne", onDismiss = { halfModal = false }) {
+            DsText("Modifier la quantité, appliquer une remise, retirer l'article.")
+        }
+    }
+    if (fullModal) {
+        DsModal(
+            title = "Catalogue",
+            onDismiss = { fullModal = false },
+            size = DsModalSize.Full,
+            footer = { DsButton("Fermer", onClick = { fullModal = false }, modifier = Modifier.fillMaxWidth()) },
+        ) {
+            DsText("Une tâche que l'on mène dans la feuille : recherche, sélection, quantités.")
+        }
     }
     if (sheet) {
         DsBottomSheet(onDismiss = { sheet = false }) {

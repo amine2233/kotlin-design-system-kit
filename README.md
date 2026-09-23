@@ -14,7 +14,7 @@ designsystem/
   molecules   DsQuantityStepper, DsSegmentedControl, DsTabRow, DsDatePickerField / DsDateRangeField / DsInlineDatePicker / DsInlineDateRangePicker (+ DsDateBounds) / DsTimePickerField, DsColorPickerField / DsColorGrid, DsImagePickerField / DsFilePickerField (+ rememberDsImagePicker / rememberDsFilePicker), DsDropdown / DsMultiSelectField / DsSearchableDropdown, DsOtpField, DsMenu / DsOverflowMenu, DsAmountDisplay, DsTotalsRow, DsSearchBar, DsListItem, DsProductCard, DsMenuCard (Tile / Row),
               DsStepIndicator, DsSectionLabel, DsCheckRow, DsKeypadKey, DsDashedActionRow, DsBanner, DsEmptyState, DsExpandableSection, DsAllocationBar
   organisms   DsTopBar, DsNumericKeypad (+ String.applyKey), DsTotalsBlock, DsCartLineItem, DsBottomCartBar, DsChipRow, DsPaymentMethodRow,
-              DsBottomSheet, DsDialog, DsSnackbar (+ showError/showSuccess), DsBottomNavBar, DsNavigationRail, DsProcessingState,
+              DsBottomSheet, DsModal (Half / Full, dialog on tablet), DsDialog, DsSnackbar (+ showError/showSuccess), DsBottomNavBar, DsNavigationRail, DsProcessingState,
               DsNfcPulse / DsNfcWaiting (contactless animation), DsResultMark / DsPaymentResult (success / failure animation)
   templates   DsScreenScaffold, DsTwoPaneLayout, DsCenteredLayout, DsNavigationScaffold (rail on tablet at the start edge — left LTR / right RTL — tab bar on phone)
   catalog     galleries (atoms, molecules, organisms, forms, choices, pickers, overlays, calendars, menu cards) + reference screens (Shell LTR/RTL, Main Sales, Cart, Tips, Discount, Payment, NFC, Result, Onboarding, Login OAuth) and the screenshot tests
