@@ -35,7 +35,14 @@ DsColorPickerField(value: Color?, onValueChange, colors = DsPalette.swatches, �
 DsColorGrid(selected: Color?, onSelect, colors = DsPalette.swatches, perRow = 5, swatchSize = 44.dp)
 DsImagePickerField(painter: Painter?, onPick, label, pickText, replaceText, onRemove, …, previewSize = 72.dp)
 DsFilePickerField(fileName: String?, onPick, label, pickText, caption, icon, onRemove, …)
+DsInlineDatePicker(value: Long?, onValueChange, initialDisplayedMonthUtcMillis, title, headline, showModeToggle)
+DsInlineDateRangePicker(startUtcMillis, endUtcMillis, onRangeChange: (Long, Long) -> Unit, …)
 ```
+
+The inline pair is the calendar with no dialog — a tablet side pane, a report filter panel. They report selection
+as it happens (the range one only once both ends exist), so there is no confirm button.
+`DsInlineDateRangePicker` scrolls its own month list: give it a bounded height and never put it inside a
+`verticalScroll` column, or measuring fails.
 
 Units crossing the boundary — no date or time type enters the design system:
 

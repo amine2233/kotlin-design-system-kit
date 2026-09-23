@@ -29,6 +29,7 @@ import io.github.amine2233.designsystem.atoms.DsIconButton
 import io.github.amine2233.designsystem.catalog.AppShellScreen
 import io.github.amine2233.designsystem.catalog.AtomsGallery
 import io.github.amine2233.designsystem.catalog.AuthLoadingScreen
+import io.github.amine2233.designsystem.catalog.CalendarGallery
 import io.github.amine2233.designsystem.catalog.CartScreen
 import io.github.amine2233.designsystem.catalog.ChoicesGallery
 import io.github.amine2233.designsystem.catalog.DiscountScreen
@@ -65,6 +66,7 @@ private enum class Page(
     Choices("Selects, toggles & sign-in", "Design system"),
     Pickers("Pickers & menus", "Design system"),
     Overlays("Overlays & rail", "Design system"),
+    Calendars("Calendriers", "Design system"),
     Shell("App shell — rail / tab bar", "Screens"),
     ShellArabic("App shell — عربي (RTL)", "Screens"),
     MainSales("01 · Main Sales (adaptive)", "Screens"),
@@ -101,6 +103,7 @@ fun SampleApp() {
                 Page.Choices -> ChoicesGallery()
                 Page.Pickers -> PickersGallery()
                 Page.Overlays -> OverlaysGallery()
+                Page.Calendars -> CalendarGallery()
                 Page.Shell -> AppShellScreen()
                 Page.ShellArabic -> AppShellScreen(layoutDirection = LayoutDirection.Rtl)
                 Page.MainSales -> MainSalesScreen()

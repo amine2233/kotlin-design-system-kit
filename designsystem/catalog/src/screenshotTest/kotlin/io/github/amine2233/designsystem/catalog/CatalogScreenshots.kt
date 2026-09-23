@@ -92,6 +92,16 @@ fun PickersGalleryPhone() = Snapshot { PickersGallery() }
 fun PickersGalleryPhoneDark() = Snapshot(dark = true) { PickersGallery() }
 
 @PreviewTest
+@Preview(name = "calendars", device = FORM_PAGE, showBackground = true)
+@Composable
+fun CalendarGalleryPhone() = Snapshot { CalendarGallery() }
+
+@PreviewTest
+@Preview(name = "calendars_dark", device = FORM_PAGE, showBackground = true)
+@Composable
+fun CalendarGalleryPhoneDark() = Snapshot(dark = true) { CalendarGallery() }
+
+@PreviewTest
 @Preview(name = "overlays", device = FORM_PAGE, showBackground = true)
 @Composable
 fun OverlaysGalleryPhone() = Snapshot { OverlaysGallery() }
