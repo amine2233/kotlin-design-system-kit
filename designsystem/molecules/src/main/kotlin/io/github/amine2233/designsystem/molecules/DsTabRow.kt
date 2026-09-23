@@ -1,13 +1,20 @@
 package io.github.amine2233.designsystem.molecules
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabPosition
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
@@ -16,7 +23,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsBadge
 import io.github.amine2233.designsystem.core.DsComponentPreview
@@ -33,10 +42,19 @@ data class DsTabItem(
 )
 
 /**
- * Past this many tabs the row scrolls instead of dividing the width further; below it, equal
- * widths keep the set readable as one thing.
+ * How the tabs share the width.
+ *
+ * [Grid] wraps onto as many lines as it needs and never scrolls, each tab as wide as its own label.
+ * [Inline] keeps one line and scrolls, so a long set stays on a single row instead of stacking.
+ * Neither stretches a tab to a column: "Prêtes" should not be as wide as "Commandes".
+ *
+ * This is DsTabRow's own enum; a sibling that lays items out the same way declares its own, so
+ * gaining a layout here never forces it on chips or tags.
  */
-private const val SCROLLABLE_FROM = 4
+enum class DsTabLayout { Inline, Grid }
+
+/** Past this many tabs equal widths stop being readable on a phone, so the row goes [DsTabLayout.Inline]. */
+private const val GRID_UP_TO = 4
 
 /** Underlined tabs (Catalogue groups, orders filters). For a toggle use [DsSegmentedControl]. */
 @Composable
@@ -52,18 +70,19 @@ fun DsTabRow(
 /**
  * Tabs carrying a count or an icon, and scrolling once there are too many to divide the width.
  *
- * [scrollable] defaults to "more than four": equal widths stop being readable past that on a phone,
- * and a scrolling row keeps each label whole instead of truncating every one of them. Force it
- * either way when the screen knows better — a tablet pane with six short labels does not need to
- * scroll.
+ * [layout] defaults to "more than four tabs scroll": equal widths stop being readable past that on
+ * a phone, and a scrolling row keeps each label whole instead of truncating every one of them.
+ * Pass it explicitly when the screen knows better — a tablet pane with six short labels has the
+ * room to keep them all visible.
  */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun DsTabRow(
     items: List<DsTabItem>,
     selectedIndex: Int,
     onSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    scrollable: Boolean = items.size > SCROLLABLE_FROM,
+    layout: DsTabLayout = if (items.size > GRID_UP_TO) DsTabLayout.Inline else DsTabLayout.Grid,
 ) {
     val c = DsTheme.colors
     val tabs: @Composable () -> Unit = {
@@ -99,33 +118,88 @@ fun DsTabRow(
             )
         }
     }
-    val indicator: @Composable (List<TabPosition>) -> Unit = { positions ->
-        TabRowDefaults.SecondaryIndicator(
-            Modifier.tabIndicatorOffset(positions[selectedIndex]),
-            height = 2.dp,
-            color = c.primary,
-        )
-    }
-    if (scrollable) {
+    if (layout == DsTabLayout.Inline) {
         ScrollableTabRow(
             selectedTabIndex = selectedIndex,
             modifier = modifier,
             containerColor = c.surface,
             contentColor = c.primary,
             edgePadding = DsTheme.spacing.smd,
-            indicator = indicator,
+            indicator = { positions ->
+                TabRowDefaults.SecondaryIndicator(
+                    Modifier.tabIndicatorOffset(positions[selectedIndex]),
+                    height = 2.dp,
+                    color = c.primary,
+                )
+            },
             divider = { HorizontalDivider(color = c.border) },
             tabs = tabs,
         )
     } else {
-        TabRow(
-            selectedTabIndex = selectedIndex,
-            modifier = modifier,
-            containerColor = c.surface,
-            contentColor = c.primary,
-            indicator = indicator,
-            divider = { HorizontalDivider(color = c.border) },
-            tabs = tabs,
+        Column(modifier) {
+            FlowRow(Modifier.fillMaxWidth()) {
+                items.forEachIndexed { index, item ->
+                    DsFlowTab(item, index == selectedIndex) { onSelect(index) }
+                }
+            }
+            HorizontalDivider(color = c.border)
+        }
+    }
+}
+
+/**
+ * A tab that is as wide as its content, with its own underline.
+ *
+ * Material's TabRow divides the width equally and its indicator slides between fixed positions,
+ * neither of which survives wrapping onto a second line — so the grid layout draws the tab and its
+ * underline itself.
+ */
+@Composable
+private fun DsFlowTab(
+    item: DsTabItem,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    val c = DsTheme.colors
+    Column(
+        Modifier
+            // Intrinsic width, or the underline below (which fills what it is given) would stretch
+            // the tab to the whole row and push every other tab onto its own line.
+            .width(IntrinsicSize.Max)
+            .selectable(selected = selected, role = Role.Tab, onClick = onClick)
+            .padding(horizontal = DsTheme.spacing.smd),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Row(
+            Modifier.padding(vertical = DsTheme.spacing.smd),
+            horizontalArrangement = Arrangement.spacedBy(DsTheme.spacing.xs),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            if (item.icon != null) {
+                Icon(
+                    item.icon,
+                    contentDescription = null,
+                    tint = if (selected) c.primary else c.textSecondary,
+                    modifier = Modifier.size(16.dp),
+                )
+            }
+            Text(
+                item.label,
+                style = if (selected) DsTheme.typography.labelStrong else DsTheme.typography.label,
+                color = if (selected) c.primary else c.textSecondary,
+                maxLines = 1,
+            )
+            if (item.badge != null) {
+                DsBadge(
+                    item.badge,
+                    containerColor = if (selected) c.primary else c.surfaceMuted,
+                    contentColor = if (selected) c.onPrimary else c.textSecondary,
+                )
+            }
+        }
+        HorizontalDivider(
+            thickness = 2.dp,
+            color = if (selected) c.primary else Color.Transparent,
         )
     }
 }
