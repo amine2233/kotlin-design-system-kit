@@ -92,6 +92,9 @@ DsIconTile(icon, size = 44.dp, selected = false, content = null)
 ```kotlin
 DsCard(onClick = null, selected = false, shape = DsShapes.card, containerColor, borderColor,
        borderWidth, elevation = DsElevation.none, contentPadding = 0.dp) { content() }
+DsContainer(style = DsContainerStyle.Neutral, shape = DsShapes.md, contentPadding, borderWidth,
+            backgroundAlpha = DsAlpha.TINT, borderAlpha = DsAlpha.BORDER) { content() }   // ColumnScope
+DsContainerStyle.accent()        // the tone at full strength, for text/icons inside
 DsDivider(thickness = 1.dp) / DsVerticalDivider(thickness = 1.dp)
 DsErrorText(message)                                  // icon + short message, error color
 DsLinearProgress(progress: Float?)                    // null = indeterminate
@@ -100,6 +103,12 @@ DsSkeleton(shape = DsShapes.sm, animate = DsTheme.animationsEnabled)
 ```
 
 `selected = true` on `DsCard` switches to the primary container + border, the system-wide selected look.
+
+`DsContainer` is the tinted, bordered box for a message or any content — `Neutral`, `Info`, `Success`, `Warning`,
+`Danger`, `Primary`. Background and border are the same tone at two opacities (`DsAlpha.TINT` / `DsAlpha.BORDER`)
+rather than two opaque colors, so it sits correctly on whatever is behind it in both themes and a new tone costs
+one color instead of a light/dark pair. `DsBanner` (molecules) stays the choice when the message needs an icon, a
+title and a dismiss action.
 
 ## Images
 

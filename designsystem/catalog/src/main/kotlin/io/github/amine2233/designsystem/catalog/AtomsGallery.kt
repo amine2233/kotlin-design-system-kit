@@ -35,6 +35,8 @@ import io.github.amine2233.designsystem.atoms.DsCheckbox
 import io.github.amine2233.designsystem.atoms.DsChip
 import io.github.amine2233.designsystem.atoms.DsChipTone
 import io.github.amine2233.designsystem.atoms.DsCircularProgress
+import io.github.amine2233.designsystem.atoms.DsContainer
+import io.github.amine2233.designsystem.atoms.DsContainerStyle
 import io.github.amine2233.designsystem.atoms.DsDivider
 import io.github.amine2233.designsystem.atoms.DsErrorText
 import io.github.amine2233.designsystem.atoms.DsIconButton
@@ -48,6 +50,7 @@ import io.github.amine2233.designsystem.atoms.DsTag
 import io.github.amine2233.designsystem.atoms.DsTagTone
 import io.github.amine2233.designsystem.atoms.DsTextField
 import io.github.amine2233.designsystem.atoms.DsVerticalDivider
+import io.github.amine2233.designsystem.atoms.accent
 import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsPalette
 import io.github.amine2233.designsystem.core.DsShapes
@@ -150,6 +153,18 @@ fun AtomsGallery(modifier: Modifier = Modifier) {
                 DsSkeleton(Modifier.size(120.dp, 14.dp), animate = false)
             }
             DsErrorText("Montant invalide")
+        }
+        CatalogSection("Containers") {
+            DsContainerStyle.entries.forEach { style ->
+                DsContainer(Modifier.fillMaxWidth(), style = style) {
+                    Text(style.name, style = DsTheme.typography.bodyStrong, color = style.accent())
+                    Text("Bordure et fond teintés, translucides sur n'importe quelle surface.", style = DsTheme.typography.caption)
+                }
+            }
+            DsContainer(Modifier.fillMaxWidth(), style = DsContainerStyle.Primary, contentPadding = 20.dp) {
+                Text("Contenu libre", style = DsTheme.typography.body)
+                DsButton("Action", onClick = {}, size = DsButtonSize.Small)
+            }
         }
         CatalogSection("Dividers") {
             DsDivider()
