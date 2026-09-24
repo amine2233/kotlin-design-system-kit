@@ -13,7 +13,8 @@ DsMultiSelectField(options, selected: Set<Int>, onSelectedChange, label, placeho
 DsSearchableDropdown(options, selectedIndex, onSelect, label, placeholder, searchPlaceholder,
                      emptyText, supportingText, isError, required, enabled, filter = ::dsMatchesQuery)
 DsSegmentedControl(options, selectedIndex, onSelect, shape = DsShapes.md, height = 40.dp)
-DsTabRow(tabs, selectedIndex, onSelect)
+DsTabRow(tabs: List<String>, selectedIndex, onSelect)
+DsTabRow(items: List<DsTabItem>, selectedIndex, onSelect, layout = DsTabLayout…)  // badge, icon
 ```
 
 - Selection crosses the boundary as indices into `options`, so the caller keeps its own option type.
@@ -22,7 +23,10 @@ DsTabRow(tabs, selectedIndex, onSelect)
 - `DsSearchableDropdown` past ~a dozen options only. `dsMatchesQuery` folds case and accents ("creme" finds
   "Crème brûlée"); pass your own `filter` for fuzzy or field-specific matching.
 - `DsSegmentedControl` for 2–3 mutually exclusive options that must all stay visible; `DsTabRow` for switching
-  content panes.
+  content panes. `DsTabLayout.Grid` divides the width equally
+  and never scrolls; `Inline` keeps one line that scrolls. It flips to `Inline` past four tabs — equal widths stop
+  being readable on a phone and every label gets truncated — and takes an explicit value when the screen knows
+  better.
 
 ## Pickers
 

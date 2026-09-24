@@ -42,6 +42,7 @@ import io.github.amine2233.designsystem.molecules.DsSearchBar
 import io.github.amine2233.designsystem.molecules.DsSectionLabel
 import io.github.amine2233.designsystem.molecules.DsSegmentedControl
 import io.github.amine2233.designsystem.molecules.DsStepIndicator
+import io.github.amine2233.designsystem.molecules.DsTabItem
 import io.github.amine2233.designsystem.molecules.DsTabRow
 import io.github.amine2233.designsystem.molecules.DsTotalsEmphasis
 import io.github.amine2233.designsystem.molecules.DsTotalsRow
@@ -49,6 +50,32 @@ import io.github.amine2233.designsystem.molecules.DsTotalsRow
 @Composable
 fun MoleculesGallery(modifier: Modifier = Modifier) {
     Column(modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
+        CatalogSection("Tabs") {
+            var orders by rememberSaveable { mutableIntStateOf(0) }
+            DsSectionLabel("Compteurs")
+            DsTabRow(
+                listOf(
+                    DsTabItem("En cours", badge = "3"),
+                    DsTabItem("Prêtes", badge = "12"),
+                    DsTabItem("Servies"),
+                ),
+                selectedIndex = orders,
+                onSelect = { orders = it },
+            )
+            DsSectionLabel("Icônes, défilement au-delà de quatre onglets")
+            var section by rememberSaveable { mutableIntStateOf(1) }
+            DsTabRow(
+                listOf(
+                    DsTabItem("Vente", icon = DsIcons.Register),
+                    DsTabItem("Commandes", icon = DsIcons.Receipt, badge = "2"),
+                    DsTabItem("Catalogue", icon = DsIcons.Catalogue),
+                    DsTabItem("Clients", icon = DsIcons.Account),
+                    DsTabItem("Réglages", icon = DsIcons.Settings),
+                ),
+                selectedIndex = section,
+                onSelect = { section = it },
+            )
+        }
         CatalogSection("Step indicator") {
             DsStepIndicator(listOf("Panier", "Pourboire", "Paiement"), currentStep = 0)
             DsStepIndicator(listOf("Panier", "Pourboire", "Paiement"), currentStep = 1)
