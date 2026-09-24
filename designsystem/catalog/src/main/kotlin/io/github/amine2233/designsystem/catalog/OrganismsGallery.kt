@@ -30,6 +30,7 @@ import io.github.amine2233.designsystem.organisms.DsBottomCartBar
 import io.github.amine2233.designsystem.organisms.DsBottomNavBar
 import io.github.amine2233.designsystem.organisms.DsCartLineItem
 import io.github.amine2233.designsystem.organisms.DsChipRow
+import io.github.amine2233.designsystem.organisms.DsChipRowLayout
 import io.github.amine2233.designsystem.organisms.DsNavItem
 import io.github.amine2233.designsystem.organisms.DsNfcPulse
 import io.github.amine2233.designsystem.organisms.DsNumericKeypad
@@ -58,7 +59,7 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
             var cat by rememberSaveable { mutableIntStateOf(0) }
             DsChipRow(listOf("Tous", "Chauds", "Froids", "Snacks", "Pâtisserie", "Extras"), cat, { cat = it })
             var tva by rememberSaveable { mutableIntStateOf(1) }
-            DsChipRow(listOf("20%", "10%", "5,5%", "0%"), tva, { tva = it }, scrollable = false)
+            DsChipRow(listOf("20%", "10%", "5,5%", "0%"), tva, { tva = it }, layout = DsChipRowLayout.Grid)
         }
         CatalogSection("Cart line items") {
             var q1 by rememberSaveable { mutableIntStateOf(2) }

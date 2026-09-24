@@ -45,8 +45,12 @@ DsTotalsBlock(lines: List<DsTotalsLine>, total: DsTotalsLine)
 DsPaymentMethodRow(icon, title, subtitle, selected, onClick)
 DsNumericKeypad(onKey: (DsKey) -> Unit, rowModifier, gap = 7.dp)
 String.applyKey(key: DsKey): String
-DsChipRow(options, selectedIndex, onSelect, scrollable = true)
+DsChipRow(options, selectedIndex, onSelect, layout = DsChipRowLayout.Inline)
 ```
+
+`DsChipRow.layout` names what the boolean used to hide: `Inline` keeps one scrolling line for a long category
+list, `Grid` divides the width equally for a short fixed set like TVA rates. Its own enum, like every other
+component with these two behaviours.
 
 `DsNumericKeypad` emits `DsKey` events; `applyKey` is the pure amount-editing rule (digits fill cents right to
 left with French grouping, backspace drops one, comma is a no-op) and is unit-tested — use it instead of
