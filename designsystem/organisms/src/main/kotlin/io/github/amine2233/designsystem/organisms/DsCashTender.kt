@@ -243,29 +243,27 @@ private const val PREVIEW_DUE = 118_800L
 private fun CashTenderPreview(
     tendered: Long,
     selectedQuickTender: Long? = null,
-) = DsPreview {
-    DsCashTender(
-        amountDue = PREVIEW_DUE,
-        tendered = tendered,
-        onKey = {},
-        onQuickTender = {},
-        unit = "DA",
-        selectedQuickTender = selectedQuickTender,
-    )
-}
+) = DsCashTender(
+    amountDue = PREVIEW_DUE,
+    tendered = tendered,
+    onKey = {},
+    onQuickTender = {},
+    unit = "DA",
+    selectedQuickTender = selectedQuickTender,
+)
 
 @DsComponentPreview
 @Composable
-private fun DsCashTenderEmptyPreview() = CashTenderPreview(tendered = 0)
+private fun DsCashTenderEmptyPreview() = DsPreview { CashTenderPreview(tendered = 0) }
 
 @DsComponentPreview
 @Composable
-private fun DsCashTenderExactPreview() = CashTenderPreview(tendered = PREVIEW_DUE, selectedQuickTender = PREVIEW_DUE)
+private fun DsCashTenderExactPreview() = DsPreview { CashTenderPreview(tendered = PREVIEW_DUE, selectedQuickTender = PREVIEW_DUE) }
 
 @DsComponentPreview
 @Composable
-private fun DsCashTenderChangePreview() = CashTenderPreview(tendered = 150_000, selectedQuickTender = 150_000)
+private fun DsCashTenderChangePreview() = DsPreview { CashTenderPreview(tendered = 150_000, selectedQuickTender = 150_000) }
 
 @DsComponentPreview
 @Composable
-private fun DsCashTenderInsufficientPreview() = CashTenderPreview(tendered = 100_000)
+private fun DsCashTenderInsufficientPreview() = DsPreview { CashTenderPreview(tendered = 100_000) }
