@@ -27,7 +27,8 @@ object DsTheme {
 @Composable
 fun DsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    colors: DsColorScheme = if (darkTheme) DsDarkColors else DsLightColors,
+    colorTheme: DsColorTheme = DsColorTheme.Teal,
+    colors: DsColorScheme = colorTheme.colors(darkTheme),
     typography: DsTypography = DsDefaultTypography,
     animationsEnabled: Boolean = true,
     content: @Composable () -> Unit,
