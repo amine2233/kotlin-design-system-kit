@@ -73,8 +73,8 @@ The curated set — product code uses these names, not `Icons.Filled.*`, so the 
 - Navigation: `Back`, `Close`, `ChevronRight`, `ChevronDown`, `ChevronUp`, `More`, `Home`, `Settings`, `Search`, `Account`
 - Actions: `Add`, `Remove`, `Edit`, `Delete`, `Check`, `Backspace`, `Hold`, `Print`, `Email`, `Sms`
 - Forms: `Lock`, `Reveal`, `Hide`, `Calendar`, `Phone`, `Clock`, `Palette`
-- POS: `Cart`, `Card`, `Cash`, `Contactless`, `Split`, `Discount`, `Tip`, `Receipt`, `Register`, `Catalogue`, `Store`, `Coffee`, `Image`, `Scan`
-- Status: `Info`, `Success`, `Warning`, `Error`, `Offline`, `TrendUp`, `TrendDown`, `TrendFlat`
+- POS: `Cart`, `Card`, `Cash`, `Contactless`, `Split`, `Discount`, `Tip`, `Receipt`, `Register`, `Catalogue`, `Store`, `Coffee`, `Image`, `Scan`, `CashDrawer`
+- Status: `Info`, `Success`, `Warning`, `Error`, `Offline`, `Network`, `TrendUp`, `TrendDown`, `TrendFlat`
 - Rating: `StarFilled`, `StarHalf`, `StarOutline`
 
 Need an icon that is not here? Add it to `DsIcons` rather than importing a Material icon in a screen.
