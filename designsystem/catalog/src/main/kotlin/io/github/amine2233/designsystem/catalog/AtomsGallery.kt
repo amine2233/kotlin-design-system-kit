@@ -44,12 +44,14 @@ import io.github.amine2233.designsystem.atoms.DsErrorText
 import io.github.amine2233.designsystem.atoms.DsIconButton
 import io.github.amine2233.designsystem.atoms.DsIconTile
 import io.github.amine2233.designsystem.atoms.DsLinearProgress
+import io.github.amine2233.designsystem.atoms.DsPresence
 import io.github.amine2233.designsystem.atoms.DsProgressRing
 import io.github.amine2233.designsystem.atoms.DsProgressRingSize
 import io.github.amine2233.designsystem.atoms.DsProgressRingStyle
 import io.github.amine2233.designsystem.atoms.DsRadioButton
 import io.github.amine2233.designsystem.atoms.DsRadioIndicator
 import io.github.amine2233.designsystem.atoms.DsSkeleton
+import io.github.amine2233.designsystem.atoms.DsStatusDot
 import io.github.amine2233.designsystem.atoms.DsSwitch
 import io.github.amine2233.designsystem.atoms.DsTag
 import io.github.amine2233.designsystem.atoms.DsTagTone
@@ -127,6 +129,16 @@ fun AtomsGallery(modifier: Modifier = Modifier) {
                 DsRadioIndicator(selected = false)
                 DsCheckBullet()
                 DsCheckBullet(filled = false)
+            }
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                DsStatusDot(DsPresence.Online, contentDescription = "Online")
+                DsStatusDot(DsPresence.Away, contentDescription = "Away")
+                DsStatusDot(DsPresence.Busy, contentDescription = "Busy")
+                DsStatusDot(DsPresence.Offline, contentDescription = "Offline")
+                DsAvatar("AK", status = DsPresence.Online, statusContentDescription = "Online")
             }
         }
         CatalogSection("Inputs") {
