@@ -66,6 +66,9 @@ import io.github.amine2233.designsystem.organisms.DsSignatureStroke
 import io.github.amine2233.designsystem.organisms.DsSnackbar
 import io.github.amine2233.designsystem.organisms.DsSnackbarTone
 import io.github.amine2233.designsystem.organisms.DsSplitBill
+import io.github.amine2233.designsystem.organisms.DsSplitByItem
+import io.github.amine2233.designsystem.organisms.DsSplitGuest
+import io.github.amine2233.designsystem.organisms.DsSplitItemLine
 import io.github.amine2233.designsystem.organisms.DsSplitMode
 import io.github.amine2233.designsystem.organisms.DsSplitPart
 import io.github.amine2233.designsystem.organisms.DsStaffMember
@@ -469,6 +472,25 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
                 ),
             )
         }
+        CatalogSection("Split by item") {
+            var lines by remember { mutableStateOf(splitItemLines) }
+            var selectedGuest by remember { mutableIntStateOf(0) }
+            DsSplitByItem(
+                lines = lines,
+                guests = listOf(DsSplitGuest("Karim"), DsSplitGuest("Sonia")),
+                selectedGuest = selectedGuest,
+                onSelectGuest = { selectedGuest = it },
+                onAssign = { lineIndex, guestIndex, quantity ->
+                    lines = lines.mapIndexed { index, line -> if (index == lineIndex) line.assign(guestIndex, quantity) else line }
+                },
+                formatAmount = ::splitAmount,
+                quantityLabel = { "×$it" },
+                unassignedUnitsLabel = { if (it == 0) "Tout réparti" else "$it restant(s)" },
+                totalLabel = "Total",
+                assignedLabel = "Réparti",
+                unassignedLabel = "Non réparti",
+            )
+        }
         CatalogSection("Receipt") {
             DsReceipt(
                 merchantName = "Café Central",
@@ -541,6 +563,21 @@ private val galleryProducts =
         DsProductGridItem(5, "Limonade", "160 DA", inCartCount = 1) to 2,
         DsProductGridItem(6, "Croissant", "90 DA") to 3,
     )
+
+private val splitItemLines =
+    listOf(
+        DsSplitItemLine("Cappuccino", quantity = 2, totalMinor = 40_000L, assignedQuantities = listOf(1, 1)),
+        DsSplitItemLine("Mezzé à partager", quantity = 3, totalMinor = 100_000L, assignedQuantities = listOf(1, 0)),
+        DsSplitItemLine("Croissant", quantity = 1, totalMinor = 9_000L),
+    )
+
+private fun DsSplitItemLine.assign(
+    guestIndex: Int,
+    quantity: Int,
+): DsSplitItemLine {
+    val size = maxOf(assignedQuantities.size, guestIndex + 1)
+    return copy(assignedQuantities = List(size) { if (it == guestIndex) quantity else assignedQuantities.getOrElse(it) { 0 } })
+}
 
 private fun splitAmount(minor: Long): String = "${minor / 100},${(minor % 100).toString().padStart(2, '0')} DA"
 
