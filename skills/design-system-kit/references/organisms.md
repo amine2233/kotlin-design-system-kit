@@ -138,6 +138,29 @@ no amount entry. While Custom amounts exceed the total, the over-allocated row s
 every collect action is disabled.
 
 ```kotlin
+DsSplitByItem(lines: List<DsSplitItemLine>, guests: List<DsSplitGuest>, selectedGuest, onSelectGuest: (Int) -> Unit,
+              onAssign: (lineIndex: Int, guestIndex: Int, quantity: Int) -> Unit, formatAmount: (Long) -> String,
+              quantityLabel: (Int) -> String, unassignedUnitsLabel: (Int) -> String, totalLabel, assignedLabel,
+              unassignedLabel, modifier, guestLabel = { "Guest ${it + 1}" })
+DsSplitItemLine(name, quantity, totalMinor, assignedQuantities: List<Int> = emptyList())
+DsSplitGuest(label = null)
+dsSplitItemAssigned(line, guestCount): List<Int>        // clamped units per guest
+dsSplitItemFreeUnits(line, guestCount): Int
+dsSplitItemShares(line, guestCount): List<Long>
+dsSplitItemGuestSubtotals(lines, guestCount): List<Long>
+dsSplitItemTotal(lines): Long
+dsSplitItemUnassigned(lines, guestCount): Long          // never negative
+```
+
+`DsSplitByItem` splits a bill by item: the cashier picks a guest tile, then sets with each line's stepper how many
+whole units that guest takes. Units are never shared between guests. The caller owns each line's
+`assignedQuantities`, indexed by guest, and writes `onAssign`'s already clamped quantity back into it. Bad input is
+clamped, never thrown: negative quantities and assignments count as 0, then guests are served in index order, so
+an over-assigned line is cut back from the last guests. The line's units carry `dsEqualSplit` of its total — the
+first `total % quantity` units are one minor unit higher — and are handed out in order to guests in index order,
+so a fully assigned line sums exactly to its total. A line with quantity 0 counts its whole total as unassigned.
+
+```kotlin
 DsProductModifier(groups: List<DsModifierGroup>, selectedOptionIds: Set<String>, onSelectionChange: (Set<String>) -> Unit,
                   notes, onNotesChange, quantity, onQuantityChange, basePriceMinor, unit, modifier,
                   showErrors = false, maxQuantity = 99, notesMaxLength = 200,
