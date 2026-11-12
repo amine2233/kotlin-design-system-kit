@@ -219,6 +219,55 @@ fun LoginTablet() = Snapshot { LoginScreen() }
 fun LoginLoadingPhone() = Snapshot { LoginScreen(loadingProvider = "google") }
 
 @PreviewTest
+@Preview(name = "register_phone", device = PHONE)
+@Composable
+fun RegisterPhone() = Snapshot { RegisterScreen() }
+
+@PreviewTest
+@Preview(name = "register_phone_dark", device = PHONE)
+@Composable
+fun RegisterPhoneDark() = Snapshot(dark = true) { RegisterScreen() }
+
+@PreviewTest
+@Preview(name = "register_errors_phone", device = PHONE)
+@Composable
+fun RegisterErrorsPhone() =
+    Snapshot {
+        RegisterScreen(
+            name = "A",
+            email = "amine@exemple",
+            password = "123",
+            nameError = "Indiquez votre nom complet",
+            emailError = "Adresse e-mail invalide",
+            passwordError = "8 caractères minimum",
+        )
+    }
+
+@PreviewTest
+@Preview(name = "register_submitting_phone", device = PHONE)
+@Composable
+fun RegisterSubmittingPhone() =
+    Snapshot {
+        RegisterScreen(
+            name = "Amine Benali",
+            email = "amine@exemple.fr",
+            password = "motdepasse",
+            termsAccepted = true,
+            submitting = true,
+        )
+    }
+
+@PreviewTest
+@Preview(name = "about_phone", device = PHONE)
+@Composable
+fun AboutPhone() = Snapshot { AboutScreen() }
+
+@PreviewTest
+@Preview(name = "about_phone_dark", device = PHONE)
+@Composable
+fun AboutPhoneDark() = Snapshot(dark = true) { AboutScreen() }
+
+@PreviewTest
 @Preview(name = "auth_loading_phone", device = PHONE)
 @Composable
 fun AuthLoadingPhone() = Snapshot { AuthLoadingScreen() }
