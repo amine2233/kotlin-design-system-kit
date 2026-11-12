@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsChip
 import io.github.amine2233.designsystem.atoms.DsIconButton
+import io.github.amine2233.designsystem.catalog.AboutScreen
 import io.github.amine2233.designsystem.catalog.AppShellScreen
 import io.github.amine2233.designsystem.catalog.AtomsGallery
 import io.github.amine2233.designsystem.catalog.AuthLoadingScreen
@@ -54,6 +55,7 @@ import io.github.amine2233.designsystem.catalog.OverlaysGallery
 import io.github.amine2233.designsystem.catalog.PaymentResultScreen
 import io.github.amine2233.designsystem.catalog.PaymentScreen
 import io.github.amine2233.designsystem.catalog.PickersGallery
+import io.github.amine2233.designsystem.catalog.RegisterScreen
 import io.github.amine2233.designsystem.catalog.TipsScreen
 import io.github.amine2233.designsystem.core.DsColorTheme
 import io.github.amine2233.designsystem.core.DsIcons
@@ -90,6 +92,8 @@ private enum class Page(
     Failure("04 · Paiement refusé", "Screens"),
     Onboarding("Onboarding", "Screens"),
     Login("Connexion (OAuth)", "Screens"),
+    Register("Inscription", "Screens"),
+    About("À propos", "Screens"),
     AuthLoading("Authentification", "Screens"),
 }
 
@@ -131,10 +135,30 @@ fun SampleApp(
                 Page.Failure -> PaymentResultScreen(DsPaymentOutcome.Failure)
                 Page.Onboarding -> OnboardingScreen()
                 Page.Login -> LoginScreen()
+                Page.Register -> RegisterPage()
+                Page.About -> AboutScreen(onBack = back)
                 Page.AuthLoading -> AuthLoadingScreen()
             }
         }
     }
+}
+
+@Composable
+private fun RegisterPage() {
+    var name by rememberSaveable { mutableStateOf("") }
+    var email by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
+    var termsAccepted by rememberSaveable { mutableStateOf(false) }
+    RegisterScreen(
+        name = name,
+        email = email,
+        password = password,
+        termsAccepted = termsAccepted,
+        onNameChange = { name = it },
+        onEmailChange = { email = it },
+        onPasswordChange = { password = it },
+        onTermsChange = { termsAccepted = it },
+    )
 }
 
 @Composable

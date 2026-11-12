@@ -14,10 +14,10 @@ designsystem/
   molecules   DsQuantityStepper, DsSegmentedControl, DsFilterGroup (Single / Multiple, Inline / Grid), DsTabRow (+ DsTabItem: badges, icons; Inline / Grid), DsDatePickerField / DsDateRangeField / DsInlineDatePicker / DsInlineDateRangePicker (+ DsDateBounds) / DsTimePickerField, DsColorPickerField / DsColorGrid, DsImagePickerField / DsFilePickerField (+ rememberDsImagePicker / rememberDsFilePicker), DsDropdown / DsMultiSelectField / DsSearchableDropdown, DsOtpField, DsMenu / DsOverflowMenu, DsAmountDisplay, DsTotalsRow, DsSearchBar, DsListItem, DsSettingsRow (Navigation / Toggle / Value / Destructive), DsProductCard, DsMenuCard (Tile / Row), DsTagGroup (Inline / Grid), DsAvatarGroup, DsStatisticTile, DsSelectionList (Single / Multiple, Start / End) + DsSelectionDraft, DsButtonGroup (Horizontal / Vertical),
               DsStepIndicator, DsSectionLabel, DsCheckRow, DsKeypadKey, DsDashedActionRow, DsBanner, DsEmptyState, DsFailureState, DsExpandableSection, DsAllocationBar
   organisms   DsTopBar, DsNumericKeypad (+ String.applyKey), DsTotalsBlock, DsCartLineItem, DsBottomCartBar, DsChipRow (Inline / Grid), DsPaymentMethodRow,
-              DsBottomSheet, DsModal (Half / Full, dialog on tablet), DsDialog, DsSnackbar (+ showError/showSuccess), DsToast (+ DsToastHost, DsToastHostState), DsBottomNavBar, DsNavigationRail, DsProcessingState,
+              DsBottomSheet, DsModal (Half / Full, dialog on tablet), DsDialog, DsSnackbar (+ showError/showSuccess), DsToast (+ DsToastHost, DsToastHostState), DsBottomNavBar, DsNavigationRail, DsProcessingState, DsPullToRefresh,
               DsNfcPulse / DsNfcWaiting (contactless animation), DsResultMark / DsPaymentResult (success / failure animation), DsCircleMenu (radial action menu)
   templates   DsScreenScaffold, DsTwoPaneLayout, DsCenteredLayout, DsNavigationScaffold (rail on tablet at the start edge — left LTR / right RTL — tab bar on phone)
-  catalog     galleries (atoms, molecules, organisms, forms, choices, pickers, overlays, calendars, menu cards) + reference screens (Shell LTR/RTL, Main Sales, Cart, Tips, Discount, Payment, NFC, Result, Onboarding, Login OAuth) and the screenshot tests
+  catalog     galleries (atoms, molecules, organisms, forms, choices, pickers, overlays, calendars, menu cards) + reference screens (Shell LTR/RTL, Main Sales, Cart, Tips, Discount, Payment, NFC, Result, Onboarding, Login OAuth, Register, About) and the screenshot tests
 sample/       app: browse galleries and screens, rotate / use a tablet to see the Expanded layout
 ```
 
@@ -179,6 +179,6 @@ mise run publish:local    # publish all modules to ~/.m2
 mise run release --dry-run
 ```
 
-Reference PNGs: `designsystem/catalog/src/screenshotTestDebug/reference/` — 22 shots: phone 375×780 + tablet 960×600, light + dark, LTR + RTL (Arabic).
+Reference PNGs: `designsystem/catalog/src/screenshotTestDebug/reference/` — 43 shots: phone 375×780 + tablet 960×600 + tall gallery pages, light + dark, LTR + RTL (Arabic).
 Animated components take a `progress` / `animate` override so snapshots are deterministic.
 JDK 17 via mise, AGP 9.4, Gradle 9.7 wrapper.
