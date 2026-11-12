@@ -17,6 +17,10 @@ DsTabRow(tabs: List<String>, selectedIndex, onSelect)
 DsTabRow(items: List<DsTabItem>, selectedIndex, onSelect, layout = DsTabLayout…)  // badge, icon
 DsFilterGroup(options, selected: Set<Int>, onSelectedChange, selection = DsFilterSelection.Multiple,
               layout = DsFilterLayout.Inline, allLabel = null, tone, enabled, spacing)
+DsSelectionList(options, selected: Set<Int>, onSelectedChange, mode = DsSelectionListMode.Single,
+                indicatorPlacement = DsSelectionIndicatorPlacement.Start, enabled)
+DsSelectionDraft.from(committed: Set<Int>, mode): DsSelectionDraft
+draft.choose(index): DsSelectionDraft   // draft.selected, draft.mode
 ```
 
 `DsFilterGroup` is the chip bar a list is filtered with. `Single` replaces the selection and never empties it on a
@@ -25,6 +29,14 @@ always has one chip lit. `Multiple` toggles. `dsToggleFilter` is the rule alone,
 (organisms) is the older single-select row that predates this. `Inline` is one scrolling line — the bar above a
 list; `Grid` wraps and never scrolls — a filter panel. Chips keep their own label width in both. Each component declares its own layout enum rather than
 sharing one, so gaining a layout here never forces it on tags.
+
+`DsSelectionList` is a short, always-visible list of text options — radios in `Single`, checkboxes in `Multiple`,
+at the `Start` or `End` of each row (mirrored in RTL). The rule is `dsChooseOption`, which delegates to
+`dsToggleFilter`, so it never disagrees with `DsFilterGroup`: `Single` never empties on a re-tap. The whole row is
+the single touch target and focus stop; the indicator only draws state. The list draws no title, buttons, sheet or
+dialog. For apply/cancel, the caller holds a `DsSelectionDraft` next to the committed selection: `choose` returns a
+new draft, applying copies `draft.selected` into the committed state, cancelling drops the draft. `from` in
+`Single` keeps only the lowest index.
 
 - Selection crosses the boundary as indices into `options`, so the caller keeps its own option type.
 - `DsMultiSelectField` keeps the menu open while ticking; the closed box shows `dsSummarizeSelection` —
