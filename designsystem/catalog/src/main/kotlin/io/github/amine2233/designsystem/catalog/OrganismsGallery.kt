@@ -14,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -47,6 +48,9 @@ import io.github.amine2233.designsystem.organisms.DsPullToRefresh
 import io.github.amine2233.designsystem.organisms.DsResultMark
 import io.github.amine2233.designsystem.organisms.DsSnackbar
 import io.github.amine2233.designsystem.organisms.DsSnackbarTone
+import io.github.amine2233.designsystem.organisms.DsSplitBill
+import io.github.amine2233.designsystem.organisms.DsSplitMode
+import io.github.amine2233.designsystem.organisms.DsSplitPart
 import io.github.amine2233.designsystem.organisms.DsToast
 import io.github.amine2233.designsystem.organisms.DsToastStyle
 import io.github.amine2233.designsystem.organisms.DsTopBar
@@ -194,7 +198,61 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
                 DsCircleMenu(ticketMenuOpen, { ticketMenuOpen = it }, actions, "Actions du ticket")
             }
         }
+        CatalogSection("Split bill") {
+            var equalParts by remember { mutableStateOf(List(3) { DsSplitPart() }) }
+            SplitBillExample(
+                DsSplitMode.Equal,
+                equalParts,
+                onPartCountChange = { count -> equalParts = List(count) { equalParts.getOrElse(it) { DsSplitPart() } } },
+                onCollect = { index -> equalParts = equalParts.mapIndexed { i, part -> if (i == index) part.copy(paid = true) else part } },
+            )
+            SplitBillExample(
+                DsSplitMode.Custom,
+                listOf(
+                    DsSplitPart(paid = true, amountMinor = 50_000L, label = "Karim"),
+                    DsSplitPart(amountMinor = 30_000L, label = "Sonia"),
+                ),
+            )
+            SplitBillExample(
+                DsSplitMode.Custom,
+                listOf(
+                    DsSplitPart(amountMinor = 70_000L, label = "Karim"),
+                    DsSplitPart(amountMinor = 45_000L, label = "Sonia"),
+                ),
+            )
+        }
     }
+}
+
+private fun splitAmount(minor: Long): String = "${minor / 100},${(minor % 100).toString().padStart(2, '0')} DA"
+
+@Composable
+private fun SplitBillExample(
+    mode: DsSplitMode,
+    parts: List<DsSplitPart>,
+    onPartCountChange: (Int) -> Unit = {},
+    onCollect: (Int) -> Unit = {},
+) {
+    DsSplitBill(
+        totalMinor = 100_000L,
+        mode = mode,
+        onModeChange = {},
+        parts = parts,
+        onPartCountChange = onPartCountChange,
+        maxParts = 8,
+        onPartClick = {},
+        onCollect = onCollect,
+        formatAmount = ::splitAmount,
+        equalModeLabel = "Parts égales",
+        customModeLabel = "Montants libres",
+        partCountLabel = "Nombre de parts",
+        totalLabel = "Total",
+        paidLabel = "Payé",
+        remainingLabel = "Reste à payer",
+        unallocatedLabel = "Non réparti",
+        overAllocatedLabel = "Dépassement",
+        collectLabel = "Encaisser",
+    )
 }
 
 @Composable
