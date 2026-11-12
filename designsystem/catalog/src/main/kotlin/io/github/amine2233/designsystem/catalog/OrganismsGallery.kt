@@ -64,6 +64,9 @@ import io.github.amine2233.designsystem.organisms.DsReceiptItem
 import io.github.amine2233.designsystem.organisms.DsRefundLine
 import io.github.amine2233.designsystem.organisms.DsRefundSelection
 import io.github.amine2233.designsystem.organisms.DsResultMark
+import io.github.amine2233.designsystem.organisms.DsSignaturePad
+import io.github.amine2233.designsystem.organisms.DsSignaturePoint
+import io.github.amine2233.designsystem.organisms.DsSignatureStroke
 import io.github.amine2233.designsystem.organisms.DsSnackbar
 import io.github.amine2233.designsystem.organisms.DsSnackbarTone
 import io.github.amine2233.designsystem.organisms.DsSplitBill
@@ -120,6 +123,30 @@ private val PRODUCT_MODIFIER_GROUPS =
         ),
     )
 private const val DEMO_PIN = "1234"
+
+private val SIGNATURE_SAMPLE =
+    listOf(
+        DsSignatureStroke(
+            listOf(
+                DsSignaturePoint(0.08f, 0.62f),
+                DsSignaturePoint(0.12f, 0.28f),
+                DsSignaturePoint(0.17f, 0.6f),
+                DsSignaturePoint(0.22f, 0.3f),
+                DsSignaturePoint(0.27f, 0.62f),
+            ),
+        ),
+        DsSignatureStroke(
+            listOf(
+                DsSignaturePoint(0.32f, 0.55f),
+                DsSignaturePoint(0.4f, 0.35f),
+                DsSignaturePoint(0.48f, 0.6f),
+                DsSignaturePoint(0.58f, 0.38f),
+                DsSignaturePoint(0.7f, 0.56f),
+                DsSignaturePoint(0.78f, 0.45f),
+            ),
+        ),
+        DsSignatureStroke(listOf(DsSignaturePoint(0.84f, 0.5f))),
+    )
 
 @Composable
 fun OrganismsGallery(modifier: Modifier = Modifier) {
@@ -296,6 +323,36 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
             var method by rememberSaveable { mutableIntStateOf(0) }
             DsPaymentMethodRow(DsIcons.Card, "Carte bancaire", "Terminal connecté", selected = method == 0, onClick = { method = 0 })
             DsPaymentMethodRow(DsIcons.Cash, "Espèces", "Calcul de la monnaie", selected = method == 1, onClick = { method = 1 })
+        }
+        CatalogSection("Signature pad") {
+            var strokes by remember { mutableStateOf(emptyList<DsSignatureStroke>()) }
+            var confirmed by remember { mutableStateOf(false) }
+            DsSignaturePad(
+                strokes = strokes,
+                onStrokesChange = {
+                    strokes = it
+                    confirmed = false
+                },
+                onConfirm = { confirmed = true },
+                hint = "Signez ici",
+                clearLabel = "Effacer",
+                confirmLabel = "Valider",
+                description = "Zone de signature",
+                emptyStateDescription = "Vide",
+                signedStateDescription = "Signée",
+            )
+            if (confirmed) DsText("Signature enregistrée", color = DsTheme.colors.success)
+            DsSignaturePad(
+                strokes = SIGNATURE_SAMPLE,
+                onStrokesChange = {},
+                onConfirm = {},
+                hint = "Signez ici",
+                clearLabel = "Effacer",
+                confirmLabel = "Valider",
+                description = "Zone de signature",
+                emptyStateDescription = "Vide",
+                signedStateDescription = "Signée",
+            )
         }
         CatalogSection("Snackbars (errors & confirmations)") {
             DsSnackbar("Échec du paiement — terminal injoignable", tone = DsSnackbarTone.Error, actionLabel = "Réessayer")
