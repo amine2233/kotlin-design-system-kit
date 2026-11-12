@@ -73,6 +73,8 @@ import io.github.amine2233.designsystem.molecules.DsTabRow
 import io.github.amine2233.designsystem.molecules.DsTagEntry
 import io.github.amine2233.designsystem.molecules.DsTagGroup
 import io.github.amine2233.designsystem.molecules.DsTagLayout
+import io.github.amine2233.designsystem.molecules.DsTipSelection
+import io.github.amine2233.designsystem.molecules.DsTipSelector
 import io.github.amine2233.designsystem.molecules.DsTotalsEmphasis
 import io.github.amine2233.designsystem.molecules.DsTotalsRow
 import io.github.amine2233.designsystem.molecules.DsTrendDirection
@@ -297,6 +299,30 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             DsTotalsRow("Pourboire (10%)", "+ 108 DA", emphasis = DsTotalsEmphasis.Positive)
             DsTotalsRow("Total TTC", "1 080 DA", emphasis = DsTotalsEmphasis.Total)
         }
+        CatalogSection("Tip selector") {
+            var tip by remember { mutableStateOf<DsTipSelection>(DsTipSelection.Preset(10)) }
+            DsTipSelector(
+                subtotalMinor = 108_000L,
+                selection = tip,
+                onSelectionChange = { tip = it },
+                formatAmount = ::catalogAmount,
+                noneLabel = "Aucun",
+                customLabel = "Personnalisé",
+                tipLabel = "Pourboire",
+                totalLabel = "Nouveau total",
+            )
+            DsSectionLabel("Montant personnalisé")
+            DsTipSelector(
+                subtotalMinor = 108_000L,
+                selection = DsTipSelection.Custom(25_000L),
+                onSelectionChange = {},
+                formatAmount = ::catalogAmount,
+                noneLabel = "Aucun",
+                customLabel = "Personnalisé",
+                tipLabel = "Pourboire",
+                totalLabel = "Nouveau total",
+            )
+        }
         CatalogSection("Search & list items") {
             var query by rememberSaveable { mutableStateOf("") }
             DsSearchBar(query, { query = it })
@@ -412,3 +438,14 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
 @Preview(name = "molecules", device = "spec:width=375dp,height=780dp,dpi=420", showBackground = true)
 @Composable
 private fun MoleculesGalleryPreview() = DsTheme { MoleculesGallery() }
+
+private fun catalogAmount(minor: Long): String {
+    val units =
+        (minor / 100)
+            .toString()
+            .reversed()
+            .chunked(3)
+            .joinToString(" ")
+            .reversed()
+    return "$units,${(minor % 100).toString().padStart(2, '0')} DA"
+}
