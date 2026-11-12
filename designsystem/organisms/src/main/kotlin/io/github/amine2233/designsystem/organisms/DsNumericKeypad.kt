@@ -3,6 +3,7 @@ package io.github.amine2233.designsystem.organisms
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,13 +26,18 @@ sealed interface DsKey {
     data object Backspace : DsKey
 }
 
-/** Shared 3×4 keypad: 1–9, comma, 0, backspace (red). Rows share height via [rowModifier] (e.g. weight(1f)). */
+/**
+ * Shared 3×4 keypad: 1–9, comma, 0, backspace (red). Rows share height via [rowModifier] (e.g. weight(1f)).
+ * [showComma] false leaves the comma slot empty so 0 and backspace keep their columns.
+ */
 @Composable
 fun DsNumericKeypad(
     onKey: (DsKey) -> Unit,
     modifier: Modifier = Modifier,
     rowModifier: Modifier = Modifier,
     gap: androidx.compose.ui.unit.Dp = 7.dp,
+    showComma: Boolean = true,
+    enabled: Boolean = true,
 ) {
     val rows =
         listOf(
@@ -44,13 +50,23 @@ fun DsNumericKeypad(
         rows.forEach { row ->
             Row(Modifier.fillMaxWidth().then(rowModifier), horizontalArrangement = Arrangement.spacedBy(gap)) {
                 row.forEach { key ->
+                    if (key == DsKey.Comma && !showComma) {
+                        Spacer(Modifier.weight(1f))
+                        return@forEach
+                    }
                     val (label, tone) =
                         when (key) {
                             is DsKey.Digit -> key.value.toString() to DsKeyTone.Default
                             DsKey.Comma -> "," to DsKeyTone.Secondary
                             DsKey.Backspace -> "⌫" to DsKeyTone.Destructive
                         }
-                    DsKeypadKey(label, onClick = { onKey(key) }, modifier = Modifier.weight(1f).fillMaxHeight(), tone = tone)
+                    DsKeypadKey(
+                        label,
+                        onClick = { onKey(key) },
+                        modifier = Modifier.weight(1f).fillMaxHeight(),
+                        tone = tone,
+                        enabled = enabled,
+                    )
                 }
             }
         }

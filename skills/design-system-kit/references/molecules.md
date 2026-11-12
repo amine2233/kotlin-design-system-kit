@@ -121,14 +121,86 @@ DsQuantityStepper(quantity, onQuantityChange, min = 0, max = Int.MAX_VALUE)
 DsSearchBar(value, onValueChange, placeholder, enabled, showClear = true, onSearch = null,
             height = 36.dp, trailing = null)
 DsKeypadKey(label, onClick, tone = DsKeyTone.Default)     // Default, Secondary, Destructive
+DsBarcodeScanField(value, onValueChange, state: DsBarcodeScanState, onScan, onSubmit, label = "Code-barres",
+                   placeholder = "Scanner ou saisir un code", enabled = true,
+                   scanContentDescription = "Scanner un code-barres", scanningContentDescription = "Scan en cours",
+                   foundText = "Article trouvé", notFoundText = "Article introuvable")
+// state: DsBarcodeScanState.Idle, Scanning, Found(message = null), NotFound(message = null)
+dsBarcodeScanStatusText(state, foundText, notFoundText): String?
 ```
 
 `DsSearchBar` clears through `onValueChange("")`, so the query has one owner; the × only appears once there is
 something to clear. `onSearch` switches the keyboard's action key to Search — leave it out for a live filter,
 which is what most POS lists want. Give it `height = DsTheme.spacing.minTouchTarget` on a touch-first screen.
 
+`DsBarcodeScanField` has no camera code: `onScan` is a lambda the caller wires to whatever scanner it has. The IME
+Search key and a hardware Enter both call `onSubmit` once, without inserting a newline, so keyboard-wedge scanners
+(code then Enter) work as they are. The caller sets the state: `Scanning` swaps the scan button for a spinner of the
+same footprint, `Found` draws a success border with a check and its message, `NotFound` an error border with an
+error icon and its message. The status line is announced politely and read as one node.
+
 `DsOtpField` drives its boxes from one hidden text field, so keyboard, paste and one-time-code autofill keep
 working; non-digits are dropped and `onFilled` fires on the last digit — submit there.
+
+## Point of sale
+
+```kotlin
+DsTipSelector(subtotalMinor, selection, onSelectionChange, formatAmount, noneLabel, customLabel, tipLabel,
+              totalLabel, presets = listOf(10, 15, 20), presetLabel = { "$it %" })
+// selection: DsTipSelection.None, DsTipSelection.Preset(percent), DsTipSelection.Custom(amountMinor)
+dsTipAmount(subtotalMinor, selection): Long
+dsTipTotal(subtotalMinor, selection): Long
+```
+
+`DsTipSelector` is a single-choice chip group — "none", each preset, "custom" — above the tip and the new total.
+Amounts are minor units (`Long`); `dsTipAmount` rounds a preset half up to the nearest minor unit with integer
+arithmetic only and treats negative inputs as 0. The kit has no money formatter, so `formatAmount` comes from the
+caller. Tapping "custom" emits `Custom(0)` (or the current amount if already custom): the screen collects the digits,
+for example with a `DsNumericKeypad`, and passes them back in `selection`.
+
+## Device status
+
+```kotlin
+DsDeviceStatusChip(icon, label, status: DsDeviceStatus, statusText, onClick = null, animate = DsTheme.animationsEnabled)
+DsDeviceStatusRow(devices: List<DsDeviceStatusEntry>, spacing = DsTheme.spacing.xs, animate = DsTheme.animationsEnabled)
+DsDeviceStatusEntry(icon, label, status, statusText, onClick = null)
+// status: DsDeviceStatus.Connected, Connecting, Offline, Attention
+dsDeviceStatusTone(status): DsTagTone   // Success, Info, Neutral, Error
+```
+
+`DsDeviceStatusChip` is a pill for one peripheral (printer, card terminal, cash drawer, network): its icon, its label,
+then a status glyph and the visible status text, in the same colours as a `DsTag` of the matching tone. Connecting
+shows a tiny spinner instead of a glyph, a fixed arc when `animate` is false. The kit ships no strings and no device
+list: icon, label and status text come from the caller, and it never detects a device itself. TalkBack reads one item,
+"label, status text"; with `onClick` the chip is a button with a 48dp touch area. The label ellipsizes first, so a chip
+never outgrows its space. `DsDeviceStatusRow` wraps its chips like a `DsTagGroup` in `Grid`, and draws nothing when empty.
+
+## Discounts and promo codes
+
+```kotlin
+dsDiscount(subtotal: Long, mode: DsDiscountMode, value: Long): DsDiscountResult   // Percent, FixedAmount
+DsDiscountResult(discount: Long, total: Long)
+DsDiscountEntry(mode, onModeChange, value, currencyLabel, discountLabel, discountValue, error = null,
+                percentLabel = "Pourcentage", fixedAmountLabel = "Montant fixe")
+DsPromoCodeField(code, onCodeChange, state: DsPromoCodeState, onApply, onRemove, label = "Code promo",
+                 placeholder = "Saisir un code", applyText = "Appliquer",
+                 appliedDescription = ::dsPromoCodeAppliedDescription, removeDescription = ::dsPromoCodeRemoveDescription)
+DsPromoCodeState.Idle / .Applied(code, description) / .Invalid(message)
+```
+
+`dsDiscount` works in minor units with `Long` maths only — never a `Float` or `Double`. In `Percent`, `value` is
+basis points (`1000` = 10,00 %) and the result rounds half up to the nearest minor unit; in `FixedAmount` it is minor
+units. Negative inputs count as 0 and the discount is clamped to `0..subtotal`, so the total is never negative, and
+it does not overflow for any `Long` subtotal.
+
+`DsDiscountEntry` is presentational: a full-width, 48 dp percent / fixed toggle, the typed `value` in a
+`DsAmountDisplay` (unit `%` or `currencyLabel`) and a `Discount` totals line. The caller formats the value and the
+line (computed with `dsDiscount`) and owns the keypad, which is an organism. `error` is announced politely.
+
+`DsPromoCodeField` never validates a code — the caller sets the state. `Idle` and `Invalid` show a text field with
+an apply button that stays disabled while the code is blank; `Invalid` puts the field in error and announces the
+message. `Applied` replaces the field with the code, its description and a × that calls `onRemove`; TalkBack reads
+the row once ("Code PROMO10 appliqué, −10 %") and announces it when it appears.
 
 ## Rows, cards, sections
 
@@ -136,7 +208,8 @@ working; non-digits are dropped and `onFilled` fires on the last digit — submi
 DsListItem(headline, supporting, selected = false, onClick, leading, trailing)
 DsSettingsRow(title, variant: DsSettingsVariant, supporting = null, icon = null,
               tone = DsSettingsTone.Neutral, enabled = true)   // flat settings row
-DsProductCard(name, price, onClick, inCartCount = 0, onLongClick, image)
+DsProductCard(name, price, onClick, inCartCount = 0, onLongClick, image, outOfStock = false,
+              outOfStockLabel = "Rupture de stock")
 DsMenuCard(name, price, variant = DsMenuCardVariant.Tile, description, tag, tagTone, selected,
            onClick, media, footer)                       // header/body built for you
 DsMenuCard(variant, selected, onClick, media, footer, header = { … }, body = { … })   // slots

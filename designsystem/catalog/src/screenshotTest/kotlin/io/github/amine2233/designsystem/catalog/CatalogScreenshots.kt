@@ -1,6 +1,10 @@
 package io.github.amine2233.designsystem.catalog
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
@@ -21,16 +25,24 @@ private const val TABLET = "spec:width=960dp,height=600dp,dpi=320"
 // Galleries scroll past the phone viewport; forms are snapshotted on a tall canvas so every field is covered.
 private const val FORM_PAGE = "spec:width=375dp,height=2400dp,dpi=320"
 
-// The atoms and molecules galleries are the longest pages in the catalog; they need a taller canvas.
+// The atoms, molecules and organisms galleries are the longest pages in the catalog; they need a taller canvas.
 private const val ATOMS_PAGE = "spec:width=375dp,height=4000dp,dpi=320"
-private const val MOLECULES_PAGE = "spec:width=375dp,height=6400dp,dpi=320"
+private const val MOLECULES_PAGE = "spec:width=375dp,height=8000dp,dpi=320"
+private const val ORGANISMS_PAGE = "spec:width=375dp,height=9400dp,dpi=320"
+private const val FOUNDATIONS_PAGE = "spec:width=375dp,height=2400dp,dpi=320"
 
 @Composable
 private fun Snapshot(
     dark: Boolean = false,
     content: @Composable () -> Unit,
 ) {
-    DsTheme(darkTheme = dark, animationsEnabled = false, content = content)
+    DsTheme(darkTheme = dark, animationsEnabled = false) {
+        if (dark) {
+            Box(Modifier.fillMaxSize().background(DsTheme.colors.background)) { content() }
+        } else {
+            content()
+        }
+    }
 }
 
 // ── Galleries (phone, light + dark) ─────────────────────────────
@@ -56,12 +68,12 @@ fun MoleculesGalleryPhone() = Snapshot { MoleculesGallery() }
 fun MoleculesGalleryPhoneDark() = Snapshot(dark = true) { MoleculesGallery() }
 
 @PreviewTest
-@Preview(name = "organisms", device = PHONE, showBackground = true)
+@Preview(name = "organisms", device = ORGANISMS_PAGE, showBackground = true)
 @Composable
 fun OrganismsGalleryPhone() = Snapshot { OrganismsGallery() }
 
 @PreviewTest
-@Preview(name = "organisms_dark", device = PHONE, showBackground = true)
+@Preview(name = "organisms_dark", device = ORGANISMS_PAGE, showBackground = true)
 @Composable
 fun OrganismsGalleryPhoneDark() = Snapshot(dark = true) { OrganismsGallery() }
 
@@ -126,9 +138,14 @@ fun OverlaysGalleryPhone() = Snapshot { OverlaysGallery() }
 fun OverlaysGalleryPhoneDark() = Snapshot(dark = true) { OverlaysGallery() }
 
 @PreviewTest
-@Preview(name = "foundations", device = PHONE, showBackground = true)
+@Preview(name = "foundations", device = FOUNDATIONS_PAGE, showBackground = true)
 @Composable
 fun FoundationsGalleryPhone() = Snapshot { FoundationsGallery() }
+
+@PreviewTest
+@Preview(name = "foundations_dark", device = FOUNDATIONS_PAGE, showBackground = true)
+@Composable
+fun FoundationsGalleryPhoneDark() = Snapshot(dark = true) { FoundationsGallery() }
 
 // ── Screens: phone vs tablet ────────────────────────────────────
 
@@ -216,6 +233,55 @@ fun LoginTablet() = Snapshot { LoginScreen() }
 @Preview(name = "login_loading_phone", device = PHONE)
 @Composable
 fun LoginLoadingPhone() = Snapshot { LoginScreen(loadingProvider = "google") }
+
+@PreviewTest
+@Preview(name = "register_phone", device = PHONE)
+@Composable
+fun RegisterPhone() = Snapshot { RegisterScreen() }
+
+@PreviewTest
+@Preview(name = "register_phone_dark", device = PHONE)
+@Composable
+fun RegisterPhoneDark() = Snapshot(dark = true) { RegisterScreen() }
+
+@PreviewTest
+@Preview(name = "register_errors_phone", device = PHONE)
+@Composable
+fun RegisterErrorsPhone() =
+    Snapshot {
+        RegisterScreen(
+            name = "A",
+            email = "amine@exemple",
+            password = "123",
+            nameError = "Indiquez votre nom complet",
+            emailError = "Adresse e-mail invalide",
+            passwordError = "8 caractères minimum",
+        )
+    }
+
+@PreviewTest
+@Preview(name = "register_submitting_phone", device = PHONE)
+@Composable
+fun RegisterSubmittingPhone() =
+    Snapshot {
+        RegisterScreen(
+            name = "Amine Benali",
+            email = "amine@exemple.fr",
+            password = "motdepasse",
+            termsAccepted = true,
+            submitting = true,
+        )
+    }
+
+@PreviewTest
+@Preview(name = "about_phone", device = PHONE)
+@Composable
+fun AboutPhone() = Snapshot { AboutScreen() }
+
+@PreviewTest
+@Preview(name = "about_phone_dark", device = PHONE)
+@Composable
+fun AboutPhoneDark() = Snapshot(dark = true) { AboutScreen() }
 
 @PreviewTest
 @Preview(name = "auth_loading_phone", device = PHONE)

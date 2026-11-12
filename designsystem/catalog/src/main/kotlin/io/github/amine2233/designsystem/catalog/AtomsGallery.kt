@@ -90,13 +90,13 @@ fun AtomsGallery(modifier: Modifier = Modifier) {
         }
         CatalogSection("Typography") {
             val t = DsTheme.typography
-            Text("Display 1 080 DA", style = t.displayMedium)
-            Text("Headline", style = t.headline)
-            Text("Title large", style = t.titleLarge)
-            Text("Title", style = t.title)
-            Text("Body large", style = t.bodyLarge)
-            Text("Body — Encaissez vite, gérez mieux.", style = t.body)
-            Text("Label", style = t.label)
+            Text("Display 1 080 DA", style = t.displayMedium, color = DsTheme.colors.textPrimary)
+            Text("Headline", style = t.headline, color = DsTheme.colors.textPrimary)
+            Text("Title large", style = t.titleLarge, color = DsTheme.colors.textPrimary)
+            Text("Title", style = t.title, color = DsTheme.colors.textPrimary)
+            Text("Body large", style = t.bodyLarge, color = DsTheme.colors.textPrimary)
+            Text("Body — Encaissez vite, gérez mieux.", style = t.body, color = DsTheme.colors.textPrimary)
+            Text("Label", style = t.label, color = DsTheme.colors.textPrimary)
             Text("Caption", style = t.caption, color = DsTheme.colors.textSecondary)
             Text("OVERLINE", style = t.overline, color = DsTheme.colors.textTertiary)
         }
@@ -166,7 +166,7 @@ fun AtomsGallery(modifier: Modifier = Modifier) {
             var rating by rememberSaveable { mutableFloatStateOf(3.5f) }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 DsRating(rating, onValueChange = { rating = it }, allowHalf = true, stateDescription = "$rating / 5")
-                Text("$rating / 5", style = DsTheme.typography.bodyStrong)
+                Text("$rating / 5", style = DsTheme.typography.bodyStrong, color = DsTheme.colors.textPrimary)
             }
             DsRating(4.5f, stateDescription = "4.5 / 5")
             DsRating(2f, onValueChange = {}, enabled = false)
@@ -191,25 +191,31 @@ fun AtomsGallery(modifier: Modifier = Modifier) {
             DsContainerStyle.entries.forEach { style ->
                 DsContainer(Modifier.fillMaxWidth(), style = style) {
                     Text(style.name, style = DsTheme.typography.bodyStrong, color = style.accent())
-                    Text("Bordure et fond teintés, translucides sur n'importe quelle surface.", style = DsTheme.typography.caption)
+                    Text(
+                        "Bordure et fond teintés, translucides sur n'importe quelle surface.",
+                        style = DsTheme.typography.caption,
+                        color = DsTheme.colors.textPrimary,
+                    )
                 }
             }
             DsContainer(Modifier.fillMaxWidth(), style = DsContainerStyle.Primary, contentPadding = 20.dp) {
-                Text("Contenu libre", style = DsTheme.typography.body)
+                Text("Contenu libre", style = DsTheme.typography.body, color = DsTheme.colors.textPrimary)
                 DsButton("Action", onClick = {}, size = DsButtonSize.Small)
             }
         }
         CatalogSection("Dividers") {
             DsDivider()
             Row(Modifier.height(24.dp), verticalAlignment = Alignment.CenterVertically) {
-                Text("Sous-total", style = DsTheme.typography.body)
+                Text("Sous-total", style = DsTheme.typography.body, color = DsTheme.colors.textPrimary)
                 DsVerticalDivider(Modifier.padding(horizontal = 8.dp))
-                Text("1 080 DA", style = DsTheme.typography.body)
+                Text("1 080 DA", style = DsTheme.typography.body, color = DsTheme.colors.textPrimary)
             }
         }
         CatalogSection("Cards & progress") {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                DsCard(Modifier.weight(1f), contentPadding = 12.dp) { Text("Card", style = DsTheme.typography.body) }
+                DsCard(Modifier.weight(1f), contentPadding = 12.dp) {
+                    Text("Card", style = DsTheme.typography.body, color = DsTheme.colors.textPrimary)
+                }
                 DsCard(Modifier.weight(1f), selected = true, contentPadding = 12.dp) {
                     Text("Selected", style = DsTheme.typography.body, color = DsTheme.colors.primary)
                 }

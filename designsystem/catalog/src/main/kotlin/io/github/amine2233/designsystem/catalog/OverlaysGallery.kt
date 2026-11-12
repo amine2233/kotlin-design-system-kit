@@ -3,6 +3,8 @@ package io.github.amine2233.designsystem.catalog
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -39,20 +41,25 @@ import io.github.amine2233.designsystem.organisms.DsNavItem
 import io.github.amine2233.designsystem.organisms.DsNavigationRail
 import io.github.amine2233.designsystem.organisms.DsSheetHandle
 import io.github.amine2233.designsystem.organisms.DsSnackbarHost
+import io.github.amine2233.designsystem.organisms.DsToastHost
+import io.github.amine2233.designsystem.organisms.DsToastMessage
+import io.github.amine2233.designsystem.organisms.DsToastStyle
+import io.github.amine2233.designsystem.organisms.rememberDsToastHostState
 import io.github.amine2233.designsystem.organisms.showError
 import io.github.amine2233.designsystem.organisms.showSuccess
 import kotlinx.coroutines.launch
 
 /**
- * The components that only exist while open — dialog, bottom sheet, snackbar host, popover — plus
- * the navigation rail on its own. Open them from the sample app: a popup renders in its own window and
- * never lands in a snapshot, so only the triggers (and the popover's surface, shown inline) are
+ * The components that only exist while open — dialog, bottom sheet, modal, snackbar host, toast host,
+ * popover — plus the navigation rail on its own. Open them from the sample app: a popup renders in its own
+ * window and never lands in a snapshot, so only the triggers (and the popover's surface, shown inline) are
  * captured here.
  */
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun OverlaysGallery(modifier: Modifier = Modifier) {
     val snackbarHost = remember { SnackbarHostState() }
+    val toastHost = rememberDsToastHostState()
     val scope = rememberCoroutineScope()
     var dialog by remember { mutableStateOf(false) }
     var destructiveDialog by remember { mutableStateOf(false) }
@@ -131,6 +138,25 @@ fun OverlaysGallery(modifier: Modifier = Modifier) {
                     }, size = DsButtonSize.Small)
                 }
             }
+            CatalogSection("Toast host") {
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(DsTheme.spacing.sm),
+                    verticalArrangement = Arrangement.spacedBy(DsTheme.spacing.sm),
+                ) {
+                    DsButton("Info", onClick = {
+                        toastHost.show(DsToastMessage("Synchronisation terminée"))
+                    }, variant = DsButtonVariant.Outlined, size = DsButtonSize.Small)
+                    DsButton("Succès", onClick = {
+                        toastHost.show(DsToastMessage("Ticket imprimé", DsToastStyle.Success))
+                    }, size = DsButtonSize.Small)
+                    DsButton("Alerte", onClick = {
+                        toastHost.show(DsToastMessage("Papier bientôt épuisé", DsToastStyle.Warning, title = "Imprimante"))
+                    }, variant = DsButtonVariant.Outlined, size = DsButtonSize.Small)
+                    DsButton("Erreur", onClick = {
+                        toastHost.show(DsToastMessage("Terminal injoignable", DsToastStyle.Error))
+                    }, variant = DsButtonVariant.Danger, size = DsButtonSize.Small)
+                }
+            }
             CatalogSection("Navigation rail (tablet)") {
                 var rail by rememberSaveable { mutableIntStateOf(0) }
                 Box(Modifier.height(320.dp)) {
@@ -149,6 +175,7 @@ fun OverlaysGallery(modifier: Modifier = Modifier) {
             }
         }
         DsSnackbarHost(snackbarHost, Modifier.align(Alignment.BottomCenter))
+        DsToastHost(toastHost, Modifier.align(Alignment.TopCenter))
     }
 
     if (dialog) {
