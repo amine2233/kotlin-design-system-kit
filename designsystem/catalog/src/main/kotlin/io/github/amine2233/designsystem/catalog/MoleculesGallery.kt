@@ -36,6 +36,9 @@ import io.github.amine2233.designsystem.molecules.DsAvatarEntry
 import io.github.amine2233.designsystem.molecules.DsAvatarGroup
 import io.github.amine2233.designsystem.molecules.DsBanner
 import io.github.amine2233.designsystem.molecules.DsBannerTone
+import io.github.amine2233.designsystem.molecules.DsButtonGroup
+import io.github.amine2233.designsystem.molecules.DsButtonGroupItem
+import io.github.amine2233.designsystem.molecules.DsButtonGroupOrientation
 import io.github.amine2233.designsystem.molecules.DsCheckRow
 import io.github.amine2233.designsystem.molecules.DsDashedActionRow
 import io.github.amine2233.designsystem.molecules.DsDropdown
@@ -150,6 +153,33 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
                 selected = methods,
                 onSelectedChange = { methods = it },
                 layout = DsFilterLayout.Grid,
+            )
+        }
+        CatalogSection("Button groups") {
+            DsSectionLabel("Horizontal — largeurs égales")
+            DsButtonGroup(
+                listOf(
+                    DsButtonGroupItem("Annuler", {}, variant = DsButtonVariant.Ghost),
+                    DsButtonGroupItem("Valider", {}),
+                ),
+            )
+            DsSectionLabel("Trois actions, une désactivée")
+            DsButtonGroup(
+                listOf(
+                    DsButtonGroupItem("Supprimer", {}, variant = DsButtonVariant.Danger),
+                    DsButtonGroupItem("Brouillon", {}, variant = DsButtonVariant.Outlined, enabled = false),
+                    DsButtonGroupItem("Publier", {}),
+                ),
+                size = DsButtonSize.Medium,
+            )
+            DsSectionLabel("Vertical — action principale en premier")
+            DsButtonGroup(
+                listOf(
+                    DsButtonGroupItem("Payer", {}, loading = true),
+                    DsButtonGroupItem("Imprimer le ticket", {}, variant = DsButtonVariant.Outlined, leadingIcon = DsIcons.Print),
+                    DsButtonGroupItem("Annuler", {}, variant = DsButtonVariant.Ghost),
+                ),
+                orientation = DsButtonGroupOrientation.Vertical,
             )
         }
         CatalogSection("Selection list") {
