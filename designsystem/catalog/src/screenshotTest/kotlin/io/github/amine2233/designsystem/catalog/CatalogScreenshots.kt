@@ -25,6 +25,7 @@ private const val FORM_PAGE = "spec:width=375dp,height=2400dp,dpi=320"
 private const val ATOMS_PAGE = "spec:width=375dp,height=4000dp,dpi=320"
 private const val MOLECULES_PAGE = "spec:width=375dp,height=6800dp,dpi=320"
 private const val ORGANISMS_PAGE = "spec:width=375dp,height=3600dp,dpi=320"
+private const val FOUNDATIONS_PAGE = "spec:width=375dp,height=2400dp,dpi=320"
 
 @Composable
 private fun Snapshot(
@@ -127,9 +128,14 @@ fun OverlaysGalleryPhone() = Snapshot { OverlaysGallery() }
 fun OverlaysGalleryPhoneDark() = Snapshot(dark = true) { OverlaysGallery() }
 
 @PreviewTest
-@Preview(name = "foundations", device = PHONE, showBackground = true)
+@Preview(name = "foundations", device = FOUNDATIONS_PAGE, showBackground = true)
 @Composable
 fun FoundationsGalleryPhone() = Snapshot { FoundationsGallery() }
+
+@PreviewTest
+@Preview(name = "foundations_dark", device = FOUNDATIONS_PAGE, showBackground = true)
+@Composable
+fun FoundationsGalleryPhoneDark() = Snapshot(dark = true) { FoundationsGallery() }
 
 // ── Screens: phone vs tablet ────────────────────────────────────
 
@@ -217,6 +223,55 @@ fun LoginTablet() = Snapshot { LoginScreen() }
 @Preview(name = "login_loading_phone", device = PHONE)
 @Composable
 fun LoginLoadingPhone() = Snapshot { LoginScreen(loadingProvider = "google") }
+
+@PreviewTest
+@Preview(name = "register_phone", device = PHONE)
+@Composable
+fun RegisterPhone() = Snapshot { RegisterScreen() }
+
+@PreviewTest
+@Preview(name = "register_phone_dark", device = PHONE)
+@Composable
+fun RegisterPhoneDark() = Snapshot(dark = true) { RegisterScreen() }
+
+@PreviewTest
+@Preview(name = "register_errors_phone", device = PHONE)
+@Composable
+fun RegisterErrorsPhone() =
+    Snapshot {
+        RegisterScreen(
+            name = "A",
+            email = "amine@exemple",
+            password = "123",
+            nameError = "Indiquez votre nom complet",
+            emailError = "Adresse e-mail invalide",
+            passwordError = "8 caractères minimum",
+        )
+    }
+
+@PreviewTest
+@Preview(name = "register_submitting_phone", device = PHONE)
+@Composable
+fun RegisterSubmittingPhone() =
+    Snapshot {
+        RegisterScreen(
+            name = "Amine Benali",
+            email = "amine@exemple.fr",
+            password = "motdepasse",
+            termsAccepted = true,
+            submitting = true,
+        )
+    }
+
+@PreviewTest
+@Preview(name = "about_phone", device = PHONE)
+@Composable
+fun AboutPhone() = Snapshot { AboutScreen() }
+
+@PreviewTest
+@Preview(name = "about_phone_dark", device = PHONE)
+@Composable
+fun AboutPhoneDark() = Snapshot(dark = true) { AboutScreen() }
 
 @PreviewTest
 @Preview(name = "auth_loading_phone", device = PHONE)

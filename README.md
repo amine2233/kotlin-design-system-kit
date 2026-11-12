@@ -7,7 +7,7 @@ Atomic-design modules, phone + tablet adaptive layouts, screenshot-tested.
 
 ```
 designsystem/
-  core        tokens (DsPalette, DsColorScheme light/dark, DsTypography, DsSpacing, DsShapes, DsMotion), DsTheme, DsWindowSize,
+  core        tokens (DsPalette, DsColorScheme light/dark, DsTypography, DsSpacing, DsShapes, DsMotion), DsTheme, DsColorTheme (Teal / Blue / Purple), DsWindowSize,
               DsIcons (curated icon set), DsImages (logo, product placeholder, illustrations — vector drawables in res/)
   atoms       DsText, DsFormField (label/supporting/error frame), DsButton (loading state) / DsIconButton / DsOAuthButton, DsChip, DsTag, DsBadge, DsAvatar / DsStatusDot, DsIconTile, DsCard, DsContainer (DsContainerStyle: Neutral/Info/Success/Warning/Danger/Primary), DsDivider,
               DsTextField / DsPasswordField / DsTextArea / DsPhoneField, DsPickerField, DsErrorText, DsSwitch / DsCheckbox / DsRadioButton, DsSlider, DsRating, DsProgress / DsProgressRing, DsSpinner (DsSpinnerSize / DsSpinnerStyle), DsSkeleton, DsImage / DsImageSlot / DsIllustration / DsLogo
@@ -18,7 +18,7 @@ designsystem/
               DsBottomSheet, DsModal (Half / Full, dialog on tablet), DsDialog, DsSnackbar (+ showError/showSuccess), DsToast (+ DsToastHost, DsToastHostState), DsBottomNavBar, DsNavigationRail, DsProcessingState, DsPullToRefresh,
               DsNfcPulse / DsNfcWaiting (contactless animation), DsResultMark / DsPaymentResult (success / failure animation), DsCircleMenu (radial action menu)
   templates   DsScreenScaffold, DsTwoPaneLayout, DsCenteredLayout, DsNavigationScaffold (rail on tablet at the start edge — left LTR / right RTL — tab bar on phone)
-  catalog     galleries (atoms, molecules, organisms, forms, choices, pickers, overlays, calendars, menu cards) + reference screens (Shell LTR/RTL, Main Sales, Cart, Tips, Discount, Payment, NFC, Result, Onboarding, Login OAuth) and the screenshot tests
+  catalog     galleries (atoms, molecules, organisms, forms, choices, pickers, overlays, calendars, menu cards) + reference screens (Shell LTR/RTL, Main Sales, Cart, Tips, Discount, Payment, NFC, Result, Onboarding, Login OAuth, Register, About) and the screenshot tests
 sample/       app: browse galleries and screens, rotate / use a tablet to see the Expanded layout
 ```
 
@@ -38,7 +38,8 @@ DsTheme.typography.title
 DsTheme.windowSize.isExpanded          // ≥ 600dp → tablet layout
 ```
 
-Change the brand color in one place: `DsPalette.Teal*` / `DsLightColors.primary`.
+Pick a color theme with `DsTheme(colorTheme = DsColorTheme.Blue) { … }` — `Teal` (the default), `Blue` or `Purple`.
+Themes only swap the primary family; the raw hues live in `DsPalette` and each theme's schemes in `DsColorTheme.kt`.
 
 ## Forms
 
@@ -179,6 +180,6 @@ mise run publish:local    # publish all modules to ~/.m2
 mise run release --dry-run
 ```
 
-Reference PNGs: `designsystem/catalog/src/screenshotTestDebug/reference/` — 22 shots: phone 375×780 + tablet 960×600, light + dark, LTR + RTL (Arabic).
+Reference PNGs: `designsystem/catalog/src/screenshotTestDebug/reference/` — 43 shots: phone 375×780 + tablet 960×600 + tall gallery pages, light + dark, LTR + RTL (Arabic).
 Animated components take a `progress` / `animate` override so snapshots are deterministic.
 JDK 17 via mise, AGP 9.4, Gradle 9.7 wrapper.
