@@ -26,6 +26,8 @@ import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.molecules.DsAllocation
 import io.github.amine2233.designsystem.molecules.DsAllocationBar
 import io.github.amine2233.designsystem.molecules.DsAmountDisplay
+import io.github.amine2233.designsystem.molecules.DsAvatarEntry
+import io.github.amine2233.designsystem.molecules.DsAvatarGroup
 import io.github.amine2233.designsystem.molecules.DsBanner
 import io.github.amine2233.designsystem.molecules.DsBannerTone
 import io.github.amine2233.designsystem.molecules.DsCheckRow
@@ -97,6 +99,26 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             DsTagGroup(tags, layout = DsTagLayout.Inline)
             DsSectionLabel("Débordement compté")
             DsTagGroup(tags, max = 2)
+        }
+        CatalogSection("Avatar groups") {
+            val people =
+                listOf(
+                    DsAvatarEntry("AK", "Amine Kacem"),
+                    DsAvatarEntry("B", "Bob"),
+                    DsAvatarEntry("CL", "Chloé"),
+                    DsAvatarEntry("DM", "David"),
+                    DsAvatarEntry("EV", "Eva"),
+                    DsAvatarEntry("FN", "Fanny"),
+                    DsAvatarEntry("GR", "Gaël"),
+                )
+            DsSectionLabel("Sans débordement")
+            DsAvatarGroup(people.take(3))
+            DsSectionLabel("Débordement compté")
+            DsAvatarGroup(people)
+            DsSectionLabel("Une seule personne")
+            DsAvatarGroup(people.take(1))
+            DsSectionLabel("Grande taille")
+            DsAvatarGroup(people, size = 48.dp)
         }
         CatalogSection("Filters") {
             var category by rememberSaveable { mutableIntStateOf(0) }

@@ -135,6 +135,7 @@ DsAmountDisplay(amount, unit, label = null, prefix = null)
 DsTotalsRow(label, value, emphasis = DsTotalsEmphasis.Normal, valueColor = null)
 DsAllocationBar(parts: List<DsAllocation>)
 DsTagGroup(tags: List<DsTagEntry>, layout = DsTagLayout.Grid, max = null, overflowLabel, spacing)
+DsAvatarGroup(avatars: List<DsAvatarEntry>, maxVisible = 3, size = 36.dp, overflowLabel, contentDescription)
 ```
 
 `DsTagGroup` holds read-only tags. `Grid` wraps onto as many lines as it needs and never scrolls — a detail panel
@@ -144,6 +145,11 @@ Every component with these two behaviours declares its own enum (`DsTagLayout`, 
 component's layouts never constrain another's. Past `max` the rest
 collapse into one "+n" tag rather than disappearing (`dsVisibleTags` is that rule, unit-tested). Tags describe;
 for a set the user picks from, use the filter group.
+
+`DsAvatarGroup` stacks overlapping `DsAvatar` initials, each ringed in the page background so overlaps stay
+readable. Past `maxVisible` (at least 1) the rest collapse into one neutral "+n" bubble (`dsVisibleAvatars` is
+that rule, unit-tested). TalkBack reads the whole group once, e.g. "Amine Kacem, Bob et 2 autres"
+(`dsAvatarGroupDescription`, overridable through `contentDescription`). Initials only — no photos, not clickable.
 
 `DsTotalsEmphasis`: `Muted`, `Normal`, `Discount`, `Positive`, `Total` — the row picks weight and color, callers
 never pass a color for a total.
