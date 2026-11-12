@@ -4,7 +4,7 @@ Jetpack Compose design system, Android only. Everything public is `Ds*`.
 Layers: `core ← atoms ← molecules ← organisms ← templates ← catalog ← sample` — imports only point left.
 
 - `designsystem/core` — every token: `DsTheme`, `DsColorScheme`/`DsPalette`, `DsTypography`, `DsSpacing`, `DsShapes`, `DsElevation`, `DsMotion`, `DsIcons`, `DsImages`, `DsWindowSize`, preview annotations.
-- `designsystem/atoms` — one-thing components: `DsText`, `DsButton`/`DsIconButton`/`DsOAuthButton`, `DsTextField`/`DsTextArea`/`DsPasswordField`/`DsPhoneField`, `DsFormField`/`DsFieldBox`/`DsPickerField`, `DsSwitch`/`DsCheckbox`/`DsRadioButton`, `DsSlider`, `DsChip`, `DsTag`, `DsBadge`, `DsCard`, `DsDivider`, progress, skeleton, images.
+- `designsystem/atoms` — one-thing components: `DsText`, `DsButton`/`DsIconButton`/`DsOAuthButton`, `DsTextField`/`DsTextArea`/`DsPasswordField`/`DsPhoneField`, `DsFormField`/`DsFieldBox`/`DsPickerField`, `DsSwitch`/`DsCheckbox`/`DsRadioButton`, `DsSlider`, `DsChip`, `DsTag`, `DsBadge`, `DsAvatar`/`DsStatusDot`, `DsCard`, `DsDivider`, progress, skeleton, images.
 - `designsystem/molecules` — a few atoms doing one job: `DsDropdown`/`DsMultiSelectField`/`DsSearchableDropdown`, the pickers (date, range, time, color, image, file), `DsOtpField`, `DsMenu`, `DsListItem`, `DsSearchBar`, `DsQuantityStepper`, `DsSegmentedControl`, `DsTabRow`, `DsBanner`, `DsEmptyState`.
 - `designsystem/organisms` — screen regions: `DsTopBar`, `DsBottomNavBar`/`DsNavigationRail`, `DsBottomSheet`, `DsDialog`, `DsSnackbar`, `DsNumericKeypad`, `DsCartLineItem`, `DsTotalsBlock`, `DsPaymentResult`, `DsNfcWaiting`.
 - `designsystem/templates` — page skeletons: `DsScreenScaffold`, `DsNavigationScaffold`, `DsTwoPaneLayout`, `DsCenteredLayout`.

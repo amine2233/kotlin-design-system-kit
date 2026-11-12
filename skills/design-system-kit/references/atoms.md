@@ -80,12 +80,14 @@ DsCheckBullet(size = 20.dp, filled = true)   // static check bullet, for feature
 DsChip(label, selected = false, onClick = null, tone = DsChipTone.Neutral, shape, contentPadding)
 DsTag(text, tone = DsTagTone.Neutral)
 DsBadge(text, containerColor = DsTheme.colors.primary, contentColor = …)
-DsAvatar(initials, size = 36.dp)
+DsAvatar(initials, size = 36.dp, status = null, statusContentDescription = null)
+DsStatusDot(presence, size = 10.dp, contentDescription = null)
 DsIconTile(icon, size = 44.dp, selected = false, content = null)
 ```
 
 - `DsChipTone`: `Neutral`, `Primary`, `Warning`, `Error` — a chip is interactive (filter, toggle).
 - `DsTagTone`: `Neutral`, `Primary`, `Success`, `Warning`, `Error`, `Info` — a tag is a read-only status.
+- `DsPresence`: `Online` (`success`), `Away` (`warning`), `Busy` (`error`), `Offline` (`textTertiary`). `DsAvatar(status = …)` puts the dot on the bottom-end corner with a `surface` ring; `contentDescription = null` keeps the dot decorative.
 
 ## Surfaces, separators, feedback
 
