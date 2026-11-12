@@ -26,12 +26,22 @@ DsDialog(title, text, confirmLabel, onConfirm, onDismiss, dismissLabel = "Annule
 DsSnackbarHost(hostState)
 DsSnackbar(message, tone = DsSnackbarTone.Neutral, actionLabel, onAction, onDismiss)
 SnackbarHostState.showError(message) / showSuccess(message)
+DsToastHost(state = rememberDsToastHostState(), modifier, animate = DsTheme.animationsEnabled)
+DsToastHostState.show(DsToastMessage(message, style = DsToastStyle.Info, title, duration = 4.seconds, id))
+DsToastHostState.dismiss(id)
+DsToast(message, style = DsToastStyle.Info, title = null)
 ```
 
 `DsModal` is a bottom sheet on a phone and a centred dialog on a tablet — that switch is the point of it: a
 full-width sheet crawling up a 960dp tablet reads as a stretched phone app. `Half` is for a choice the user makes
 and leaves, `Full` for a task they work inside (`dsModalHeightFraction` holds the numbers, unit-tested). Its
 header is always there, because a sheet without one leaves dragging as the only way out.
+
+`DsToast` is for information the user only needs to read — "Ticket imprimé", "Synchronisation terminée" — and
+has no action or close button; anything the user can act on (retry, undo) is a `DsSnackbar`. `DsToastHost` shows
+one toast at a time in FIFO order, leaves it up for its `duration` (4 s by default, a non-positive one falls back to
+4 s, at least 10 s while TalkBack is on), and dismisses it on tap or sideways swipe. Showing an id already queued
+updates that toast in place. `dsToastDismissDelay` and `DsToastQueueState` hold the rules and are unit-tested.
 
 `DsDialog(destructive = true)` turns the confirm button red — use it for anything that deletes or voids.
 Overlays are popups: they never appear in screenshot tests, so snapshot the trigger and the state behind it.

@@ -40,6 +40,8 @@ import io.github.amine2233.designsystem.organisms.DsProcessingState
 import io.github.amine2233.designsystem.organisms.DsResultMark
 import io.github.amine2233.designsystem.organisms.DsSnackbar
 import io.github.amine2233.designsystem.organisms.DsSnackbarTone
+import io.github.amine2233.designsystem.organisms.DsToast
+import io.github.amine2233.designsystem.organisms.DsToastStyle
 import io.github.amine2233.designsystem.organisms.DsTopBar
 import io.github.amine2233.designsystem.organisms.DsTotalsBlock
 import io.github.amine2233.designsystem.organisms.DsTotalsLine
@@ -107,6 +109,17 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
             DsSnackbar("Échec du paiement — terminal injoignable", tone = DsSnackbarTone.Error, actionLabel = "Réessayer")
             DsSnackbar("Commande mise en attente", tone = DsSnackbarTone.Success)
             DsSnackbar("Article supprimé", actionLabel = "Annuler", onDismiss = {})
+        }
+        CatalogSection("Toasts") {
+            DsToast("Synchronisation terminée", Modifier.fillMaxWidth(), style = DsToastStyle.Info)
+            DsToast(
+                "La commande a été transmise à la cuisine.",
+                Modifier.fillMaxWidth(),
+                style = DsToastStyle.Success,
+                title = "Commande envoyée",
+            )
+            DsToast("Papier bientôt épuisé", Modifier.fillMaxWidth(), style = DsToastStyle.Warning)
+            DsToast("Terminal injoignable", Modifier.fillMaxWidth(), style = DsToastStyle.Error)
         }
         CatalogSection("Processing state") {
             DsProcessingState(
