@@ -134,6 +134,8 @@ working; non-digits are dropped and `onFilled` fires on the last digit — submi
 
 ```kotlin
 DsListItem(headline, supporting, selected = false, onClick, leading, trailing)
+DsSettingsRow(title, variant: DsSettingsVariant, supporting = null, icon = null,
+              tone = DsSettingsTone.Neutral, enabled = true)   // flat settings row
 DsProductCard(name, price, onClick, inCartCount = 0, onLongClick, image)
 DsMenuCard(name, price, variant = DsMenuCardVariant.Tile, description, tag, tagTone, selected,
            onClick, media, footer)                       // header/body built for you
@@ -150,6 +152,15 @@ DsTagGroup(tags: List<DsTagEntry>, layout = DsTagLayout.Grid, max = null, overfl
 DsAvatarGroup(avatars: List<DsAvatarEntry>, maxVisible = 3, size = 36.dp, overflowLabel, contentDescription)
 DsStatisticTile(value, label, trend: DsStatisticTrend? = null, icon = null, onClick = null, contentDescription)
 ```
+
+`DsSettingsRow` is one flat settings line, with no card or border of its own: group several in a `DsCard`,
+separated by `DsDivider`. The `DsSettingsVariant` picks the trailing content and the interaction —
+`Navigation(onClick)` ends in a chevron, `Toggle(checked, onCheckedChange)` ends in a switch and the whole row
+flips it, `Value(value, onClick = null)` shows a value (plus a chevron when clickable), and `Destructive(onClick)`
+turns the title red and forces the tile to the error tone. The optional `icon` sits in a small tonal tile:
+`DsSettingsTone` maps `Neutral` to `surfaceSubtle`/`textSecondary` and `Primary`, `Success`, `Warning`, `Info`,
+`Error` to their container colour behind their own colour (`dsSettingsTileColors`, unit-tested). Each row is a
+single focus stop of at least `minTouchTarget`; `enabled = false` greys the text, tile and chevron and ignores taps.
 
 `DsTagGroup` holds read-only tags. `Grid` wraps onto as many lines as it needs and never scrolls — a detail panel
 where every tag must be readable; `Inline` keeps one line that scrolls — a dense row that must not grow taller. Neither layout stretches a tag:

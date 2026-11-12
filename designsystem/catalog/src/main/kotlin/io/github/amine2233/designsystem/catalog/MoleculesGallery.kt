@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsButton
 import io.github.amine2233.designsystem.atoms.DsButtonSize
 import io.github.amine2233.designsystem.atoms.DsButtonVariant
+import io.github.amine2233.designsystem.atoms.DsCard
+import io.github.amine2233.designsystem.atoms.DsDivider
 import io.github.amine2233.designsystem.atoms.DsIconButton
 import io.github.amine2233.designsystem.atoms.DsRadioIndicator
 import io.github.amine2233.designsystem.atoms.DsTag
@@ -59,6 +61,9 @@ import io.github.amine2233.designsystem.molecules.DsSelectionDraft
 import io.github.amine2233.designsystem.molecules.DsSelectionIndicatorPlacement
 import io.github.amine2233.designsystem.molecules.DsSelectionList
 import io.github.amine2233.designsystem.molecules.DsSelectionListMode
+import io.github.amine2233.designsystem.molecules.DsSettingsRow
+import io.github.amine2233.designsystem.molecules.DsSettingsTone
+import io.github.amine2233.designsystem.molecules.DsSettingsVariant
 import io.github.amine2233.designsystem.molecules.DsStatisticTile
 import io.github.amine2233.designsystem.molecules.DsStatisticTrend
 import io.github.amine2233.designsystem.molecules.DsStepIndicator
@@ -308,6 +313,42 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             DsListItem("Espresso", supporting = "×1 · 150 DA/u. · TVA 10%", selected = true, leading = {
                 DsRadioIndicator(true)
             }, trailing = { Text("150 DA", style = DsTheme.typography.labelStrong, color = DsTheme.colors.primary) })
+        }
+        CatalogSection("Settings rows") {
+            var autoPrint by rememberSaveable { mutableStateOf(true) }
+            DsCard {
+                Column {
+                    DsSettingsRow(
+                        "Compte",
+                        DsSettingsVariant.Navigation {},
+                        supporting = "nom@exemple.fr",
+                        icon = DsIcons.Account,
+                        tone = DsSettingsTone.Primary,
+                    )
+                    DsDivider()
+                    DsSettingsRow(
+                        "Impression auto",
+                        DsSettingsVariant.Toggle(autoPrint) { autoPrint = it },
+                        icon = DsIcons.Print,
+                        tone = DsSettingsTone.Success,
+                    )
+                    DsDivider()
+                    DsSettingsRow("Langue", DsSettingsVariant.Value("Français") {}, icon = DsIcons.Settings)
+                    DsDivider()
+                    DsSettingsRow("Stockage", DsSettingsVariant.Value("42 Go"), icon = DsIcons.Info, tone = DsSettingsTone.Info)
+                    DsDivider()
+                    DsSettingsRow(
+                        "Mode hors ligne",
+                        DsSettingsVariant.Toggle(false) {},
+                        supporting = "Indisponible sur ce terminal",
+                        icon = DsIcons.Offline,
+                        tone = DsSettingsTone.Warning,
+                        enabled = false,
+                    )
+                    DsDivider()
+                    DsSettingsRow("Supprimer le compte", DsSettingsVariant.Destructive {}, icon = DsIcons.Delete)
+                }
+            }
         }
         CatalogSection("Dropdown, tabs, actions") {
             var reason by rememberSaveable { mutableIntStateOf(0) }
