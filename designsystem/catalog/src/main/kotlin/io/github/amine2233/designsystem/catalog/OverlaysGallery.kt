@@ -13,6 +13,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -29,12 +30,16 @@ import io.github.amine2233.designsystem.atoms.DsButtonSize
 import io.github.amine2233.designsystem.atoms.DsButtonVariant
 import io.github.amine2233.designsystem.atoms.DsText
 import io.github.amine2233.designsystem.core.DsIcons
+import io.github.amine2233.designsystem.core.DsMotion
 import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.molecules.DsPopover
 import io.github.amine2233.designsystem.molecules.DsPopoverPlacement
 import io.github.amine2233.designsystem.molecules.DsPopoverSurface
 import io.github.amine2233.designsystem.organisms.DsBottomSheet
 import io.github.amine2233.designsystem.organisms.DsDialog
+import io.github.amine2233.designsystem.organisms.DsLoadingHud
+import io.github.amine2233.designsystem.organisms.DsLoadingHudCard
+import io.github.amine2233.designsystem.organisms.DsLoadingHudState
 import io.github.amine2233.designsystem.organisms.DsModal
 import io.github.amine2233.designsystem.organisms.DsModalSize
 import io.github.amine2233.designsystem.organisms.DsNavItem
@@ -47,7 +52,11 @@ import io.github.amine2233.designsystem.organisms.DsToastStyle
 import io.github.amine2233.designsystem.organisms.rememberDsToastHostState
 import io.github.amine2233.designsystem.organisms.showError
 import io.github.amine2233.designsystem.organisms.showSuccess
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
+// Demo-only pacing: each HUD step lasts a few slow motion beats, long enough to read the card.
+private const val HUD_DEMO_STEPS = 5L
 
 /**
  * The components that only exist while open — dialog, bottom sheet, modal, snackbar host, toast host,
@@ -68,6 +77,8 @@ fun OverlaysGallery(modifier: Modifier = Modifier) {
     var fullModal by remember { mutableStateOf(false) }
     var popoverBelow by remember { mutableStateOf(false) }
     var popoverAbove by remember { mutableStateOf(false) }
+    var hud by remember { mutableStateOf(false) }
+    var hudState by remember { mutableStateOf(DsLoadingHudState.Loading) }
 
     Box(modifier.fillMaxWidth()) {
         Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
@@ -128,6 +139,16 @@ fun OverlaysGallery(modifier: Modifier = Modifier) {
                     }
                 }
             }
+            CatalogSection("Loading HUD") {
+                DsLoadingHudCard(DsLoadingHudState.Loading, message = "Paiement en cours…", animate = false, progress = 1f)
+                DsLoadingHudCard(DsLoadingHudState.Loading, animate = false, progress = 1f)
+                DsLoadingHudCard(DsLoadingHudState.Success, message = "Paiement accepté", animate = false, progress = 1f)
+                DsLoadingHudCard(DsLoadingHudState.Failure, message = "Paiement refusé", animate = false, progress = 1f)
+                DsButton("Afficher le HUD", onClick = {
+                    hudState = DsLoadingHudState.Loading
+                    hud = true
+                }, size = DsButtonSize.Medium)
+            }
             CatalogSection("Snackbar host") {
                 Row(horizontalArrangement = Arrangement.spacedBy(DsTheme.spacing.sm)) {
                     DsButton("Erreur", onClick = {
@@ -177,6 +198,20 @@ fun OverlaysGallery(modifier: Modifier = Modifier) {
         DsSnackbarHost(snackbarHost, Modifier.align(Alignment.BottomCenter))
         DsToastHost(toastHost, Modifier.align(Alignment.TopCenter))
     }
+
+    if (hud) {
+        LaunchedEffect(Unit) {
+            delay(DsMotion.SLOW * HUD_DEMO_STEPS)
+            hudState = DsLoadingHudState.Success
+            delay(DsMotion.SLOW * HUD_DEMO_STEPS)
+            hud = false
+        }
+    }
+    DsLoadingHud(
+        visible = hud,
+        state = hudState,
+        message = if (hudState == DsLoadingHudState.Loading) "Paiement en cours…" else "Paiement accepté",
+    )
 
     if (dialog) {
         DsDialog(
