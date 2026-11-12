@@ -137,6 +137,31 @@ its own `DsNumericKeypad` + `DsAmountDisplay` and writes the result back into `a
 no amount entry. While Custom amounts exceed the total, the over-allocated row shows in the error colour and
 every collect action is disabled.
 
+### Refund selection
+
+```kotlin
+DsRefundSelection(lines: List<DsRefundLine>, selectedQuantities: List<Int>,
+                  onQuantityChange: (index: Int, quantity: Int) -> Unit, unit: String,
+                  refundTotalLabel = "Refund total", refundableLabel = { "$it refundable" },
+                  fullyRefundedLabel = "Fully refunded", emptyLabel = "Select items to refund")
+DsRefundLine(name, unitPriceMinor: Long, quantityBought: Int, quantityRefunded: Int = 0)
+dsRefundableQuantity(line): Int                          // bought - refunded
+dsClampRefundQuantity(line, selected): Int               // capped at refundable, negative throws
+dsRefundLineAmount(line, selected): Long                 // unit price x clamped quantity
+dsRefundTotal(lines, selectedQuantities): Long
+dsHasRefundSelection(lines, selectedQuantities): Boolean // total > 0
+```
+
+`DsRefundSelection` lets staff pick how many units of each line of a past order to refund, with a
+`DsQuantityStepper` per line and a refund total announced politely by TalkBack. Amounts are `Long` minor units and
+the math never uses floating point. `DsRefundLine` rejects a negative price or quantity and `quantityRefunded >
+quantityBought` with `IllegalArgumentException`; a negative selection throws too, while a selection above the
+refundable quantity is clamped. Overflow in a line amount or the total throws `ArithmeticException` instead of
+returning a wrong refund. The caller owns `selectedQuantities`, parallel to `lines`, and receives the 0-based
+index with an already-clamped quantity; fully refunded lines are drawn disabled and never call back. Use
+`dsHasRefundSelection` to enable the caller's confirm button, like `isSufficient` on `DsCashTenderStatus`.
+Order-level discounts and taxes are not split across lines: pass the unit price actually paid.
+
 ## Product grid
 
 ```kotlin

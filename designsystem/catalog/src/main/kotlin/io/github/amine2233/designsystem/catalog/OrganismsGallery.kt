@@ -52,6 +52,8 @@ import io.github.amine2233.designsystem.organisms.DsProductGridItem
 import io.github.amine2233.designsystem.organisms.DsPullToRefresh
 import io.github.amine2233.designsystem.organisms.DsReceipt
 import io.github.amine2233.designsystem.organisms.DsReceiptItem
+import io.github.amine2233.designsystem.organisms.DsRefundLine
+import io.github.amine2233.designsystem.organisms.DsRefundSelection
 import io.github.amine2233.designsystem.organisms.DsResultMark
 import io.github.amine2233.designsystem.organisms.DsSnackbar
 import io.github.amine2233.designsystem.organisms.DsSnackbarTone
@@ -150,6 +152,21 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
                 changeLabel = "Monnaie à rendre",
                 missingLabel = "Reste à payer",
                 keypadRowModifier = Modifier.height(52.dp),
+            )
+        }
+        CatalogSection("Refund selection") {
+            var refundSelection by remember { mutableStateOf(listOf(1, 0, 0)) }
+            DsRefundSelection(
+                lines = refundLines,
+                selectedQuantities = refundSelection,
+                onQuantityChange = { index, quantity ->
+                    refundSelection = refundSelection.mapIndexed { i, selected -> if (i == index) quantity else selected }
+                },
+                unit = "DA",
+                refundTotalLabel = "Total remboursé",
+                refundableLabel = { "$it remboursable(s)" },
+                fullyRefundedLabel = "Déjà remboursé",
+                emptyLabel = "Sélectionnez les articles à rembourser",
             )
         }
         CatalogSection("Staff PIN") {
@@ -381,6 +398,13 @@ private val galleryStaff =
         DsStaffMember("amina", "Amina", "AB"),
         DsStaffMember("karim", "Karim", "KD"),
         DsStaffMember("sonia", "Sonia", "SL"),
+    )
+
+private val refundLines =
+    listOf(
+        DsRefundLine("Cappuccino", unitPriceMinor = 20_000L, quantityBought = 2),
+        DsRefundLine("Croissant", unitPriceMinor = 9_000L, quantityBought = 3, quantityRefunded = 1),
+        DsRefundLine("Espresso", unitPriceMinor = 15_000L, quantityBought = 1, quantityRefunded = 1),
     )
 
 private val productCategories = listOf("Tous", "Chauds", "Froids", "Snacks")
