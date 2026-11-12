@@ -37,6 +37,7 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.PointOfSale
 import androidx.compose.material.icons.filled.Print
+import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Search
@@ -102,6 +103,7 @@ object DsIcons {
     val Store: ImageVector = Icons.Filled.Storefront
     val Coffee: ImageVector = Icons.Filled.LocalCafe
     val Image: ImageVector = Icons.Filled.Image
+    val Scan: ImageVector = Icons.Filled.QrCodeScanner
 
     // Status
     val Info: ImageVector = Icons.Filled.Info
