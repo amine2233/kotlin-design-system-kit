@@ -146,6 +146,33 @@ arithmetic only and treats negative inputs as 0. The kit has no money formatter,
 caller. Tapping "custom" emits `Custom(0)` (or the current amount if already custom): the screen collects the digits,
 for example with a `DsNumericKeypad`, and passes them back in `selection`.
 
+## Discounts and promo codes
+
+```kotlin
+dsDiscount(subtotal: Long, mode: DsDiscountMode, value: Long): DsDiscountResult   // Percent, FixedAmount
+DsDiscountResult(discount: Long, total: Long)
+DsDiscountEntry(mode, onModeChange, value, currencyLabel, discountLabel, discountValue, error = null,
+                percentLabel = "Pourcentage", fixedAmountLabel = "Montant fixe")
+DsPromoCodeField(code, onCodeChange, state: DsPromoCodeState, onApply, onRemove, label = "Code promo",
+                 placeholder = "Saisir un code", applyText = "Appliquer",
+                 appliedDescription = ::dsPromoCodeAppliedDescription, removeDescription = ::dsPromoCodeRemoveDescription)
+DsPromoCodeState.Idle / .Applied(code, description) / .Invalid(message)
+```
+
+`dsDiscount` works in minor units with `Long` maths only — never a `Float` or `Double`. In `Percent`, `value` is
+basis points (`1000` = 10,00 %) and the result rounds half up to the nearest minor unit; in `FixedAmount` it is minor
+units. Negative inputs count as 0 and the discount is clamped to `0..subtotal`, so the total is never negative, and
+it does not overflow for any `Long` subtotal.
+
+`DsDiscountEntry` is presentational: a full-width, 48 dp percent / fixed toggle, the typed `value` in a
+`DsAmountDisplay` (unit `%` or `currencyLabel`) and a `Discount` totals line. The caller formats the value and the
+line (computed with `dsDiscount`) and owns the keypad, which is an organism. `error` is announced politely.
+
+`DsPromoCodeField` never validates a code — the caller sets the state. `Idle` and `Invalid` show a text field with
+an apply button that stays disabled while the code is blank; `Invalid` puts the field in error and announces the
+message. `Applied` replaces the field with the code, its description and a × that calls `onRemove`; TalkBack reads
+the row once ("Code PROMO10 appliqué, −10 %") and announces it when it appears.
+
 ## Rows, cards, sections
 
 ```kotlin
