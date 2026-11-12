@@ -38,8 +38,8 @@ class DsColorThemeTest {
     }
 
     @Test
-    fun `alternative themes reach WCAG AA on the primary pairs`() {
-        for (theme in alternatives) {
+    fun `every theme reaches WCAG AA on the primary pairs`() {
+        for (theme in DsColorTheme.entries) {
             for (dark in modes) {
                 val scheme = theme.colors(dark)
                 val onPrimary = contrast(scheme.onPrimary, scheme.primary)

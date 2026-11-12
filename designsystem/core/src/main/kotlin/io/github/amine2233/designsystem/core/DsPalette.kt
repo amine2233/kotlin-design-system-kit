@@ -4,6 +4,8 @@ import androidx.compose.ui.graphics.Color
 
 /** Raw palette. Never use directly in components — go through [DsColorScheme]. */
 object DsPalette {
+    val Teal975 = Color(0xFF0C221E)
+    val Teal950 = Color(0xFF00332B)
     val Teal900 = Color(0xFF004D40)
     val Teal800 = Color(0xFF00695C)
     val Teal700 = Color(0xFF00796B)
