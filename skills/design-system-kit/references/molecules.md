@@ -179,7 +179,8 @@ the row once ("Code PROMO10 appliqué, −10 %") and announces it when it appear
 DsListItem(headline, supporting, selected = false, onClick, leading, trailing)
 DsSettingsRow(title, variant: DsSettingsVariant, supporting = null, icon = null,
               tone = DsSettingsTone.Neutral, enabled = true)   // flat settings row
-DsProductCard(name, price, onClick, inCartCount = 0, onLongClick, image)
+DsProductCard(name, price, onClick, inCartCount = 0, onLongClick, image, outOfStock = false,
+              outOfStockLabel = "Rupture de stock")
 DsMenuCard(name, price, variant = DsMenuCardVariant.Tile, description, tag, tagTone, selected,
            onClick, media, footer)                       // header/body built for you
 DsMenuCard(variant, selected, onClick, media, footer, header = { … }, body = { … })   // slots
