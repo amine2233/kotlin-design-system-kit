@@ -62,16 +62,22 @@ import io.github.amine2233.designsystem.organisms.DsSnackbarTone
 import io.github.amine2233.designsystem.organisms.DsSplitBill
 import io.github.amine2233.designsystem.organisms.DsSplitMode
 import io.github.amine2233.designsystem.organisms.DsSplitPart
+import io.github.amine2233.designsystem.organisms.DsStaffMember
+import io.github.amine2233.designsystem.organisms.DsStaffPinDefaults
+import io.github.amine2233.designsystem.organisms.DsStaffPinLogin
+import io.github.amine2233.designsystem.organisms.DsStaffPinState
 import io.github.amine2233.designsystem.organisms.DsToast
 import io.github.amine2233.designsystem.organisms.DsToastStyle
 import io.github.amine2233.designsystem.organisms.DsTopBar
 import io.github.amine2233.designsystem.organisms.DsTotalsBlock
 import io.github.amine2233.designsystem.organisms.DsTotalsLine
 import io.github.amine2233.designsystem.organisms.applyKey
+import io.github.amine2233.designsystem.organisms.dsApplyPinKey
 import kotlinx.coroutines.delay
 
 private const val REFRESH_DEMO_MS = 1500L
 private const val CASH_TENDER_DUE = 118_800L
+private const val DEMO_PIN = "1234"
 
 private val SIGNATURE_SAMPLE =
     listOf(
@@ -171,6 +177,44 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
                 exactLabel = "Exact",
                 changeLabel = "Monnaie à rendre",
                 missingLabel = "Reste à payer",
+                keypadRowModifier = Modifier.height(52.dp),
+            )
+        }
+        CatalogSection("Staff PIN") {
+            var staffId by rememberSaveable { mutableStateOf<String?>(null) }
+            var pin by rememberSaveable { mutableStateOf("") }
+            var pinState by remember { mutableStateOf<DsStaffPinState>(DsStaffPinState.Entering) }
+            DsStaffPinLogin(
+                staff = galleryStaff,
+                selectedStaffId = staffId,
+                onSelectStaff = {
+                    staffId = it.id
+                    pin = ""
+                    pinState = DsStaffPinState.Entering
+                },
+                enteredCount = pin.length,
+                onKey = {
+                    pin = dsApplyPinKey(pin, it)
+                    pinState =
+                        when {
+                            pin.length < DsStaffPinDefaults.PinLength -> DsStaffPinState.Entering
+                            pin == DEMO_PIN -> DsStaffPinState.Entering
+                            else -> DsStaffPinState.Error("Code PIN incorrect")
+                        }
+                },
+                state = pinState,
+                pinProgressLabel = { entered, total -> "$entered chiffres sur $total saisis" },
+                keypadRowModifier = Modifier.height(52.dp),
+            )
+            DsDivider()
+            DsStaffPinLogin(
+                staff = galleryStaff,
+                selectedStaffId = "karim",
+                onSelectStaff = {},
+                enteredCount = 0,
+                onKey = {},
+                state = DsStaffPinState.Locked("Trop de tentatives. Réessayez dans 0:45."),
+                pinProgressLabel = { entered, total -> "$entered chiffres sur $total saisis" },
                 keypadRowModifier = Modifier.height(52.dp),
             )
         }
@@ -389,6 +433,13 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
         }
     }
 }
+
+private val galleryStaff =
+    listOf(
+        DsStaffMember("amina", "Amina", "AB"),
+        DsStaffMember("karim", "Karim", "KD"),
+        DsStaffMember("sonia", "Sonia", "SL"),
+    )
 
 private val productCategories = listOf("Tous", "Chauds", "Froids", "Snacks")
 
