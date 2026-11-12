@@ -153,6 +153,21 @@ never pass a color for a total.
 with the footer trailing so a stepper stays under the thumb. `DsProductCard` stays the minimal grid tile when all
 you have is a name and a price.
 
+## Actions
+
+```kotlin
+DsButtonGroup(buttons: List<DsButtonGroupItem>, orientation = DsButtonGroupOrientation.Horizontal,
+              size = DsButtonSize.Large, spacing)
+DsButtonGroupItem(text, onClick, variant = DsButtonVariant.Primary, enabled = true, loading = false, leadingIcon = null)
+```
+
+`DsButtonGroup` lays out two or three related `DsButton`s with one size and one gap (`DsTheme.spacing.sm`). The
+group always fills the width. `Horizontal` shares it equally (`weight(1f)` each), so "Annuler / Valider" never
+makes one action look bigger; `Vertical` stacks full-width buttons, primary action first. It never switches axis by
+itself — pick `Vertical` when the labels are too long to sit side by side. Each item keeps its own variant,
+enabled, loading and icon; an empty list renders nothing. It is a set of actions, not a choice: for a pick-one
+control, use `DsSegmentedControl`.
+
 ## Menus and messages
 
 ```kotlin
