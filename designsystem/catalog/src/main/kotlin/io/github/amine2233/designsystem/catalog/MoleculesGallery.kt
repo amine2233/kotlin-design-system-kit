@@ -38,11 +38,19 @@ import io.github.amine2233.designsystem.molecules.DsAvatarEntry
 import io.github.amine2233.designsystem.molecules.DsAvatarGroup
 import io.github.amine2233.designsystem.molecules.DsBanner
 import io.github.amine2233.designsystem.molecules.DsBannerTone
+import io.github.amine2233.designsystem.molecules.DsBarcodeScanField
+import io.github.amine2233.designsystem.molecules.DsBarcodeScanState
 import io.github.amine2233.designsystem.molecules.DsButtonGroup
 import io.github.amine2233.designsystem.molecules.DsButtonGroupItem
 import io.github.amine2233.designsystem.molecules.DsButtonGroupOrientation
 import io.github.amine2233.designsystem.molecules.DsCheckRow
 import io.github.amine2233.designsystem.molecules.DsDashedActionRow
+import io.github.amine2233.designsystem.molecules.DsDeviceStatus
+import io.github.amine2233.designsystem.molecules.DsDeviceStatusChip
+import io.github.amine2233.designsystem.molecules.DsDeviceStatusEntry
+import io.github.amine2233.designsystem.molecules.DsDeviceStatusRow
+import io.github.amine2233.designsystem.molecules.DsDiscountEntry
+import io.github.amine2233.designsystem.molecules.DsDiscountMode
 import io.github.amine2233.designsystem.molecules.DsDropdown
 import io.github.amine2233.designsystem.molecules.DsEmptyState
 import io.github.amine2233.designsystem.molecules.DsExpandableSection
@@ -54,6 +62,8 @@ import io.github.amine2233.designsystem.molecules.DsKeyTone
 import io.github.amine2233.designsystem.molecules.DsKeypadKey
 import io.github.amine2233.designsystem.molecules.DsListItem
 import io.github.amine2233.designsystem.molecules.DsProductCard
+import io.github.amine2233.designsystem.molecules.DsPromoCodeField
+import io.github.amine2233.designsystem.molecules.DsPromoCodeState
 import io.github.amine2233.designsystem.molecules.DsQuantityStepper
 import io.github.amine2233.designsystem.molecules.DsSearchBar
 import io.github.amine2233.designsystem.molecules.DsSectionLabel
@@ -73,9 +83,12 @@ import io.github.amine2233.designsystem.molecules.DsTabRow
 import io.github.amine2233.designsystem.molecules.DsTagEntry
 import io.github.amine2233.designsystem.molecules.DsTagGroup
 import io.github.amine2233.designsystem.molecules.DsTagLayout
+import io.github.amine2233.designsystem.molecules.DsTipSelection
+import io.github.amine2233.designsystem.molecules.DsTipSelector
 import io.github.amine2233.designsystem.molecules.DsTotalsEmphasis
 import io.github.amine2233.designsystem.molecules.DsTotalsRow
 import io.github.amine2233.designsystem.molecules.DsTrendDirection
+import io.github.amine2233.designsystem.molecules.dsDiscount
 
 @Composable
 fun MoleculesGallery(modifier: Modifier = Modifier) {
@@ -297,6 +310,81 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             DsTotalsRow("Pourboire (10%)", "+ 108 DA", emphasis = DsTotalsEmphasis.Positive)
             DsTotalsRow("Total TTC", "1 080 DA", emphasis = DsTotalsEmphasis.Total)
         }
+        CatalogSection("Discount & promo code") {
+            var discountMode by rememberSaveable { mutableStateOf(DsDiscountMode.Percent) }
+            val discountValue = if (discountMode == DsDiscountMode.Percent) 1000L else 50000L
+            val discount = dsDiscount(DISCOUNT_SUBTOTAL, discountMode, discountValue)
+            DsDiscountEntry(
+                mode = discountMode,
+                onModeChange = { discountMode = it },
+                value = minorUnits(discountValue),
+                currencyLabel = "DA",
+                discountLabel = "Remise sur ${catalogAmount(DISCOUNT_SUBTOTAL)}",
+                discountValue = "− ${catalogAmount(discount.discount)}",
+            )
+            var promo by rememberSaveable { mutableStateOf("") }
+            DsPromoCodeField(promo, { promo = it }, DsPromoCodeState.Idle, onApply = {}, onRemove = {})
+            DsPromoCodeField("PROMO10", {}, DsPromoCodeState.Applied("PROMO10", "−10 %"), onApply = {}, onRemove = {})
+            DsPromoCodeField("NOEL2019", {}, DsPromoCodeState.Invalid("Code expiré"), onApply = {}, onRemove = {})
+        }
+        CatalogSection("Barcode scan") {
+            var barcode by rememberSaveable { mutableStateOf("") }
+            var submitted by rememberSaveable { mutableStateOf("") }
+            DsBarcodeScanField(
+                value = barcode,
+                onValueChange = { barcode = it },
+                state = if (submitted.isEmpty()) DsBarcodeScanState.Idle else DsBarcodeScanState.Found(submitted),
+                onScan = {},
+                onSubmit = { submitted = barcode },
+            )
+            DsBarcodeScanField("3017620422003", {}, DsBarcodeScanState.Scanning, {}, {}, label = "En cours de scan")
+            DsBarcodeScanField("3017620422003", {}, DsBarcodeScanState.Found("Café crème 250 g"), {}, {}, label = "Trouvé")
+            DsBarcodeScanField("0000000000000", {}, DsBarcodeScanState.NotFound(), {}, {}, label = "Introuvable")
+            DsBarcodeScanField("3017620422003", {}, DsBarcodeScanState.Idle, {}, {}, label = "Désactivé", enabled = false)
+        }
+        CatalogSection("Device status") {
+            DsDeviceStatusRow(
+                listOf(
+                    DsDeviceStatusEntry(DsIcons.Print, "Imprimante", DsDeviceStatus.Connected, "Connectée"),
+                    DsDeviceStatusEntry(DsIcons.Card, "Terminal", DsDeviceStatus.Connecting, "Connexion…"),
+                    DsDeviceStatusEntry(DsIcons.CashDrawer, "Tiroir-caisse", DsDeviceStatus.Offline, "Hors ligne"),
+                    DsDeviceStatusEntry(DsIcons.Network, "Réseau", DsDeviceStatus.Attention, "Instable"),
+                ),
+            )
+            DsSectionLabel("Touchable")
+            DsDeviceStatusChip(DsIcons.Print, "Imprimante", DsDeviceStatus.Attention, "Papier épuisé", onClick = {})
+            DsSectionLabel("Libellé long")
+            DsDeviceStatusChip(
+                DsIcons.Card,
+                "Terminal de paiement du comptoir principal, près de l'entrée",
+                DsDeviceStatus.Connected,
+                "Connecté",
+            )
+        }
+        CatalogSection("Tip selector") {
+            var tip by remember { mutableStateOf<DsTipSelection>(DsTipSelection.Preset(10)) }
+            DsTipSelector(
+                subtotalMinor = 108_000L,
+                selection = tip,
+                onSelectionChange = { tip = it },
+                formatAmount = ::catalogAmount,
+                noneLabel = "Aucun",
+                customLabel = "Personnalisé",
+                tipLabel = "Pourboire",
+                totalLabel = "Nouveau total",
+            )
+            DsSectionLabel("Montant personnalisé (exemple fixe)")
+            DsTipSelector(
+                subtotalMinor = 108_000L,
+                selection = DsTipSelection.Custom(25_000L),
+                onSelectionChange = {},
+                formatAmount = ::catalogAmount,
+                noneLabel = "Aucun",
+                customLabel = "Personnalisé",
+                tipLabel = "Pourboire",
+                totalLabel = "Nouveau total",
+            )
+        }
         CatalogSection("Search & list items") {
             var query by rememberSaveable { mutableStateOf("") }
             DsSearchBar(query, { query = it })
@@ -389,7 +477,7 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             DsExpandableSection("Produits", expanded = open, onToggle = {
                 open = !open
             }, summary = "12 produits", trailing = { DsTag("12", tone = DsTagTone.Primary) }) {
-                Text("Contenu de la section", style = DsTheme.typography.body)
+                Text("Contenu de la section", style = DsTheme.typography.body, color = DsTheme.colors.textPrimary)
             }
             DsExpandableSection("Catégories", expanded = false, onToggle = {}, summary = "Chauds · Froids · Snacks") {}
         }
@@ -397,6 +485,7 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 DsProductCard("Espresso", "150 DA", onClick = {}, modifier = Modifier.weight(1f))
                 DsProductCard("Cappuccino", "200 DA", onClick = {}, inCartCount = 2, modifier = Modifier.weight(1f))
+                DsProductCard("Thé menthe", "120 DA", onClick = {}, outOfStock = true, modifier = Modifier.weight(1f))
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 DsKeypadKey("7", onClick = {}, Modifier.weight(1f).height(48.dp))
@@ -412,3 +501,18 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
 @Preview(name = "molecules", device = "spec:width=375dp,height=780dp,dpi=420", showBackground = true)
 @Composable
 private fun MoleculesGalleryPreview() = DsTheme { MoleculesGallery() }
+
+private fun catalogAmount(minor: Long): String = "${minorUnits(minor)} DA"
+
+private const val DISCOUNT_SUBTOTAL = 108000L
+
+private fun minorUnits(amount: Long): String {
+    val units =
+        (amount / 100)
+            .toString()
+            .reversed()
+            .chunked(3)
+            .joinToString(" ")
+            .reversed()
+    return "$units,${(amount % 100).toString().padStart(2, '0')}"
+}

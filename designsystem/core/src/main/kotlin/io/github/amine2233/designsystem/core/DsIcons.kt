@@ -20,9 +20,11 @@ import androidx.compose.material.icons.filled.Contactless
 import androidx.compose.material.icons.filled.CreditCard
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Inventory2
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -37,17 +39,20 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.PointOfSale
 import androidx.compose.material.icons.filled.Print
+import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Sms
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material.icons.filled.Storefront
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material.icons.filled.WifiOff
 import androidx.compose.material.icons.outlined.Savings
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -78,6 +83,8 @@ object DsIcons {
     val Backspace: ImageVector = Icons.Filled.Backspace
     val Hold: ImageVector = Icons.Filled.PauseCircle
     val Print: ImageVector = Icons.Filled.Print
+    val Email: ImageVector = Icons.Filled.Email
+    val Sms: ImageVector = Icons.Filled.Sms
 
     // Forms
     val Lock: ImageVector = Icons.Filled.Lock
@@ -102,6 +109,8 @@ object DsIcons {
     val Store: ImageVector = Icons.Filled.Storefront
     val Coffee: ImageVector = Icons.Filled.LocalCafe
     val Image: ImageVector = Icons.Filled.Image
+    val Scan: ImageVector = Icons.Filled.QrCodeScanner
+    val CashDrawer: ImageVector = Icons.Filled.Inbox
 
     // Status
     val Info: ImageVector = Icons.Filled.Info
@@ -109,6 +118,7 @@ object DsIcons {
     val Warning: ImageVector = Icons.Filled.Warning
     val Error: ImageVector = Icons.Filled.Error
     val Offline: ImageVector = Icons.Filled.WifiOff
+    val Network: ImageVector = Icons.Filled.Wifi
     val TrendUp: ImageVector = Icons.AutoMirrored.Filled.TrendingUp
     val TrendDown: ImageVector = Icons.AutoMirrored.Filled.TrendingDown
     val TrendFlat: ImageVector = Icons.AutoMirrored.Filled.TrendingFlat
