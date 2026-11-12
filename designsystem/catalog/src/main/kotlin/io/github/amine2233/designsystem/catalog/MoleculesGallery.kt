@@ -46,6 +46,8 @@ import io.github.amine2233.designsystem.molecules.DsQuantityStepper
 import io.github.amine2233.designsystem.molecules.DsSearchBar
 import io.github.amine2233.designsystem.molecules.DsSectionLabel
 import io.github.amine2233.designsystem.molecules.DsSegmentedControl
+import io.github.amine2233.designsystem.molecules.DsStatisticTile
+import io.github.amine2233.designsystem.molecules.DsStatisticTrend
 import io.github.amine2233.designsystem.molecules.DsStepIndicator
 import io.github.amine2233.designsystem.molecules.DsTabItem
 import io.github.amine2233.designsystem.molecules.DsTabRow
@@ -54,6 +56,7 @@ import io.github.amine2233.designsystem.molecules.DsTagGroup
 import io.github.amine2233.designsystem.molecules.DsTagLayout
 import io.github.amine2233.designsystem.molecules.DsTotalsEmphasis
 import io.github.amine2233.designsystem.molecules.DsTotalsRow
+import io.github.amine2233.designsystem.molecules.DsTrendDirection
 
 @Composable
 fun MoleculesGallery(modifier: Modifier = Modifier) {
@@ -159,6 +162,43 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             DsAmountDisplay("1 500,00", "DA")
             DsAmountDisplay("10,00", "%", label = "Valeur saisie")
             DsAmountDisplay("108,00", "DA", label = "10% de 1 080 DA", prefix = "+")
+        }
+        CatalogSection("Statistic tiles") {
+            DsSectionLabel("Valeur et libellé")
+            DsStatisticTile("48", "Commandes")
+            DsSectionLabel("Icône et hausse")
+            DsStatisticTile(
+                "1 250 DA",
+                "Ventes",
+                icon = DsIcons.Receipt,
+                trend = DsStatisticTrend(DsTrendDirection.Up, "+12 %"),
+            )
+            DsSectionLabel("Baisse favorable")
+            DsStatisticTile(
+                "3",
+                "Remboursements",
+                trend = DsStatisticTrend(DsTrendDirection.Down, "−2", upIsGood = false),
+            )
+            DsSectionLabel("Stable")
+            DsStatisticTile("820 DA", "Panier moyen", trend = DsStatisticTrend(DsTrendDirection.Flat, "0 %"))
+            DsSectionLabel("Cliquable")
+            DsStatisticTile("12 min", "Attente moyenne", onClick = {})
+            DsSectionLabel("Côte à côte")
+            Row(horizontalArrangement = Arrangement.spacedBy(DsTheme.spacing.sm)) {
+                DsStatisticTile(
+                    "1 234 567 890,00 DA",
+                    "Chiffre d'affaires cumulé",
+                    modifier = Modifier.weight(1f),
+                    trend = DsStatisticTrend(DsTrendDirection.Up, "+8 %"),
+                )
+                DsStatisticTile("36", "Clients", modifier = Modifier.weight(1f))
+                DsStatisticTile(
+                    "92 %",
+                    "Satisfaction",
+                    modifier = Modifier.weight(1f),
+                    trend = DsStatisticTrend(DsTrendDirection.Down, "−1 %"),
+                )
+            }
         }
         CatalogSection("Totals rows") {
             DsTotalsRow("Sous-total HT", "1 025 DA")

@@ -136,6 +136,7 @@ DsTotalsRow(label, value, emphasis = DsTotalsEmphasis.Normal, valueColor = null)
 DsAllocationBar(parts: List<DsAllocation>)
 DsTagGroup(tags: List<DsTagEntry>, layout = DsTagLayout.Grid, max = null, overflowLabel, spacing)
 DsAvatarGroup(avatars: List<DsAvatarEntry>, maxVisible = 3, size = 36.dp, overflowLabel, contentDescription)
+DsStatisticTile(value, label, trend: DsStatisticTrend? = null, icon = null, onClick = null, contentDescription)
 ```
 
 `DsTagGroup` holds read-only tags. `Grid` wraps onto as many lines as it needs and never scrolls — a detail panel
@@ -150,6 +151,14 @@ for a set the user picks from, use the filter group.
 readable. Past `maxVisible` (at least 1) the rest collapse into one neutral "+n" bubble (`dsVisibleAvatars` is
 that rule, unit-tested). TalkBack reads the whole group once, e.g. "Amine Kacem, Bob et 2 autres"
 (`dsAvatarGroupDescription`, overridable through `contentDescription`). Initials only — no photos, not clickable.
+
+`DsStatisticTile` is one dashboard figure in a `DsCard`: a prominent value, its label, and an optional trend row
+(`DsStatisticTrend(direction, delta, upIsGood = true)` — arrow plus caller-formatted delta) and leading icon. The
+trend colour comes only from `dsTrendTone` (unit-tested): `Flat` is neutral, otherwise `upIsGood` decides — set it
+to false for metrics where a rise is bad, so a fall shows in `success`. TalkBack reads the tile once, e.g.
+"Ventes, 1 250 DA, en hausse +12 %" (`dsStatisticTileDescription`, overridable through `contentDescription`), and
+a clickable tile stays one element. The tile fills its width; value, label and delta each ellipsize on one line,
+so lay several out in a `Row` with `Modifier.weight(1f)`.
 
 `DsTotalsEmphasis`: `Muted`, `Normal`, `Discount`, `Positive`, `Total` — the row picks weight and color, callers
 never pass a color for a total.
