@@ -7,7 +7,7 @@ Atomic-design modules, phone + tablet adaptive layouts, screenshot-tested.
 
 ```
 designsystem/
-  core        tokens (DsPalette, DsColorScheme light/dark, DsTypography, DsSpacing, DsShapes, DsMotion), DsTheme, DsWindowSize,
+  core        tokens (DsPalette, DsColorScheme light/dark, DsTypography, DsSpacing, DsShapes, DsMotion), DsTheme, DsColorTheme (Teal / Blue / Purple), DsWindowSize,
               DsIcons (curated icon set), DsImages (logo, product placeholder, illustrations — vector drawables in res/)
   atoms       DsText, DsFormField (label/supporting/error frame), DsButton (loading state) / DsIconButton / DsOAuthButton, DsChip, DsTag, DsBadge, DsAvatar / DsStatusDot, DsIconTile, DsCard, DsContainer (DsContainerStyle: Neutral/Info/Success/Warning/Danger/Primary), DsDivider,
               DsTextField / DsPasswordField / DsTextArea / DsPhoneField, DsPickerField, DsErrorText, DsSwitch / DsCheckbox / DsRadioButton, DsSlider, DsRating, DsProgress / DsProgressRing, DsSpinner (DsSpinnerSize / DsSpinnerStyle), DsSkeleton, DsImage / DsImageSlot / DsIllustration / DsLogo
@@ -37,7 +37,8 @@ DsTheme.typography.title
 DsTheme.windowSize.isExpanded          // ≥ 600dp → tablet layout
 ```
 
-Change the brand color in one place: `DsPalette.Teal*` / `DsLightColors.primary`.
+Pick a color theme with `DsTheme(colorTheme = DsColorTheme.Blue) { … }` — `Teal` (the default), `Blue` or `Purple`.
+Themes only swap the primary family; the raw hues live in `DsPalette` and each theme's schemes in `DsColorTheme.kt`.
 
 ## Forms
 
