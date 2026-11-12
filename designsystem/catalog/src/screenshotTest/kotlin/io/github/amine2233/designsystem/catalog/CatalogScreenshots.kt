@@ -25,6 +25,7 @@ private const val FORM_PAGE = "spec:width=375dp,height=2400dp,dpi=320"
 private const val ATOMS_PAGE = "spec:width=375dp,height=4000dp,dpi=320"
 private const val MOLECULES_PAGE = "spec:width=375dp,height=6400dp,dpi=320"
 private const val ORGANISMS_PAGE = "spec:width=375dp,height=3600dp,dpi=320"
+private const val FOUNDATIONS_PAGE = "spec:width=375dp,height=2400dp,dpi=320"
 
 @Composable
 private fun Snapshot(
@@ -127,9 +128,14 @@ fun OverlaysGalleryPhone() = Snapshot { OverlaysGallery() }
 fun OverlaysGalleryPhoneDark() = Snapshot(dark = true) { OverlaysGallery() }
 
 @PreviewTest
-@Preview(name = "foundations", device = PHONE, showBackground = true)
+@Preview(name = "foundations", device = FOUNDATIONS_PAGE, showBackground = true)
 @Composable
 fun FoundationsGalleryPhone() = Snapshot { FoundationsGallery() }
+
+@PreviewTest
+@Preview(name = "foundations_dark", device = FOUNDATIONS_PAGE, showBackground = true)
+@Composable
+fun FoundationsGalleryPhoneDark() = Snapshot(dark = true) { FoundationsGallery() }
 
 // ── Screens: phone vs tablet ────────────────────────────────────
 

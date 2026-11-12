@@ -14,8 +14,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,8 +25,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.atoms.DsChip
 import io.github.amine2233.designsystem.atoms.DsIconButton
 import io.github.amine2233.designsystem.catalog.AboutScreen
 import io.github.amine2233.designsystem.catalog.AppShellScreen
@@ -49,6 +57,7 @@ import io.github.amine2233.designsystem.catalog.PaymentScreen
 import io.github.amine2233.designsystem.catalog.PickersGallery
 import io.github.amine2233.designsystem.catalog.RegisterScreen
 import io.github.amine2233.designsystem.catalog.TipsScreen
+import io.github.amine2233.designsystem.core.DsColorTheme
 import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.molecules.DsListItem
@@ -90,11 +99,14 @@ private enum class Page(
 
 // ponytail: enum-backed state instead of Navigation Compose; switch when deep links are needed.
 @Composable
-fun SampleApp() {
+fun SampleApp(
+    colorTheme: DsColorTheme,
+    onColorThemeChange: (DsColorTheme) -> Unit,
+) {
     var page by rememberSaveable { mutableStateOf<Page?>(null) }
     val current = page
     if (current == null) {
-        Home(onOpen = { page = it })
+        Home(colorTheme, onColorThemeChange, onOpen = { page = it })
     } else {
         BackHandler { page = null }
         val back: () -> Unit = { page = null }
@@ -150,9 +162,15 @@ private fun RegisterPage() {
 }
 
 @Composable
-private fun Home(onOpen: (Page) -> Unit) {
+private fun Home(
+    colorTheme: DsColorTheme,
+    onColorThemeChange: (DsColorTheme) -> Unit,
+    onOpen: (Page) -> Unit,
+) {
     DsScreenScaffold(topBar = { DsTopBar("DS Kit · ${DsTheme.windowSize}") }) {
         LazyColumn(contentPadding = PaddingValues(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            item { DsSectionLabel("Color theme", Modifier.fillMaxWidth()) }
+            item { ColorThemeSwitcher(colorTheme, onColorThemeChange) }
             Page.entries.groupBy { it.group }.forEach { (group, pages) ->
                 item { DsSectionLabel(group, Modifier.fillMaxWidth()) }
                 items(pages) { p ->
@@ -166,12 +184,35 @@ private fun Home(onOpen: (Page) -> Unit) {
 }
 
 @Composable
+private fun ColorThemeSwitcher(
+    selected: DsColorTheme,
+    onSelect: (DsColorTheme) -> Unit,
+) {
+    Row(Modifier.selectableGroup(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        DsColorTheme.entries.forEach { theme ->
+            val isSelected = theme == selected
+            DsChip(
+                label = theme.name,
+                selected = isSelected,
+                onClick = { onSelect(theme) },
+                modifier =
+                    Modifier.minimumInteractiveComponentSize().semantics {
+                        this.selected = isSelected
+                        role = Role.RadioButton
+                        contentDescription = "Color theme ${theme.name}"
+                    },
+            )
+        }
+    }
+}
+
+@Composable
 private fun WithReturnBar(
     title: String,
     onBack: () -> Unit,
     content: @Composable () -> Unit,
 ) {
-    // Edge-to-edge: the bar (and the status bar behind it) is teal-tinted; insets are consumed here
+    // Edge-to-edge: the bar (and the status bar behind it) is primary-tinted; insets are consumed here
     // so the nested screen Scaffolds don't pad for the status bar a second time.
     Column(Modifier.fillMaxSize().background(DsTheme.colors.primaryContainer).statusBarsPadding()) {
         Row(
