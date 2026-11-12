@@ -155,13 +155,13 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             DsSelectionList(
                 categories,
                 selected = draft.selected,
-                onSelectedChange = { next -> draft = draft.copy(selected = next) },
+                onSelectedChange = { next -> draft = DsSelectionDraft(draft.mode, next) },
                 mode = DsSelectionListMode.Multiple,
             )
             Row(horizontalArrangement = Arrangement.spacedBy(DsTheme.spacing.sm)) {
                 DsButton(
                     "Annuler",
-                    onClick = { draft = DsSelectionDraft.from(committed, DsSelectionListMode.Multiple) },
+                    onClick = { draft = DsSelectionDraft.from(committed, draft.mode) },
                     modifier = Modifier.weight(1f),
                     variant = DsButtonVariant.Outlined,
                     size = DsButtonSize.Medium,
