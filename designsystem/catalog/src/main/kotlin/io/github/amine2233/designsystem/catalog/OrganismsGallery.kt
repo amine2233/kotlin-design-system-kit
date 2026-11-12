@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -34,6 +35,7 @@ import io.github.amine2233.designsystem.molecules.DsTotalsEmphasis
 import io.github.amine2233.designsystem.organisms.DsBottomCartBar
 import io.github.amine2233.designsystem.organisms.DsBottomNavBar
 import io.github.amine2233.designsystem.organisms.DsCartLineItem
+import io.github.amine2233.designsystem.organisms.DsCashTender
 import io.github.amine2233.designsystem.organisms.DsChipRow
 import io.github.amine2233.designsystem.organisms.DsChipRowLayout
 import io.github.amine2233.designsystem.organisms.DsCircleMenu
@@ -60,6 +62,7 @@ import io.github.amine2233.designsystem.organisms.applyKey
 import kotlinx.coroutines.delay
 
 private const val REFRESH_DEMO_MS = 1500L
+private const val CASH_TENDER_DUE = 118_800L
 
 @Composable
 fun OrganismsGallery(modifier: Modifier = Modifier) {
@@ -112,6 +115,30 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
                 onKey = { amount = amount.applyKey(it) },
                 rowModifier = Modifier.height(52.dp),
                 modifier = Modifier.padding(top = 8.dp),
+            )
+        }
+        CatalogSection("Cash tender") {
+            var tendered by rememberSaveable { mutableLongStateOf(0L) }
+            var selectedBill by rememberSaveable { mutableStateOf<Long?>(null) }
+            DsCashTender(
+                amountDue = CASH_TENDER_DUE,
+                tendered = tendered,
+                onKey = {
+                    tendered = tendered.applyKey(it)
+                    selectedBill = null
+                },
+                onQuickTender = {
+                    tendered = it
+                    selectedBill = it
+                },
+                unit = "DA",
+                selectedQuickTender = selectedBill,
+                amountDueLabel = "À encaisser",
+                tenderedLabel = "Reçu du client",
+                exactLabel = "Exact",
+                changeLabel = "Monnaie à rendre",
+                missingLabel = "Reste à payer",
+                keypadRowModifier = Modifier.height(52.dp),
             )
         }
         CatalogSection("Payment methods") {
