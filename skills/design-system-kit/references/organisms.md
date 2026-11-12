@@ -67,7 +67,7 @@ tapping an action calls its `onClick` then `onExpandedChange(false)`.
 ```kotlin
 DsCartLineItem(name, quantity, onQuantityChange, lineTotal, unitPrice, tvaLabel, note,
                originalTotal, discountLabel, onTvaClick, onDiscountClick, onRemove)
-DsTotalsBlock(lines: List<DsTotalsLine>, total: DsTotalsLine)
+DsTotalsBlock(lines: List<DsTotalsLine>, total: DsTotalsLine, rowModifier = Modifier)
 DsPaymentMethodRow(icon, title, subtitle, selected, onClick)
 DsNumericKeypad(onKey: (DsKey) -> Unit, rowModifier, gap = 7.dp)
 String.applyKey(key: DsKey): String
@@ -81,6 +81,19 @@ component with these two behaviours.
 `DsNumericKeypad` emits `DsKey` events; `applyKey` is the pure amount-editing rule (digits fill cents right to
 left with French grouping, backspace drops one, comma is a no-op) and is unit-tested — use it instead of
 re-implementing amount entry.
+
+```kotlin
+DsReceipt(merchantName, items: List<DsReceiptItem>, totals: List<DsTotalsLine>, total: DsTotalsLine,
+          paymentIcon, paymentLabel, timestamp, reference, merchantDetails = emptyList(),
+          onPrint = null, onEmail = null, onSms = null, onNoReceipt = null,
+          printLabel = "Print", emailLabel = "Email", smsLabel = "SMS", noReceiptLabel = "No receipt")
+DsReceiptItem(quantity: String, name: String, total: String, detail = null, originalTotal = null)
+```
+
+`DsReceipt` takes preformatted strings only and does no money math: discount, tax and tip lines exist only if the
+caller passes them in `totals`. A null callback hides that action; with no callbacks the receipt is read-only and
+no action area is drawn. It is not scrollable by itself — put it in the caller's scroll container. Its totals
+reuse `DsTotalsBlock` with a merging `rowModifier`, so TalkBack reads each row as one phrase.
 
 ```kotlin
 DsSplitBill(totalMinor, mode: DsSplitMode, onModeChange, parts: List<DsSplitPart>, onPartCountChange, maxParts,
