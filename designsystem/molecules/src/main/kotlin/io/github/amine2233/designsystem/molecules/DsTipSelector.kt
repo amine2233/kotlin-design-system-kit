@@ -1,6 +1,7 @@
 package io.github.amine2233.designsystem.molecules
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.Role
@@ -109,16 +111,16 @@ fun DsTipSelector(
             verticalArrangement = Arrangement.spacedBy(DsTheme.spacing.xs),
         ) {
             options.forEach { (label, isSelected, option) ->
-                DsChip(
-                    label,
+                Box(
                     modifier =
                         Modifier
                             .heightIn(min = DsTheme.spacing.minTouchTarget)
                             .clip(DsTheme.shapes.chip)
                             .selectable(selected = isSelected, role = Role.RadioButton, onClick = { onSelectionChange(option) }),
-                    selected = isSelected,
-                    onClick = null,
-                )
+                    contentAlignment = Alignment.Center,
+                ) {
+                    DsChip(label, selected = isSelected, onClick = null)
+                }
             }
         }
         DsTotalsRow(

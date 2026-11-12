@@ -311,7 +311,7 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
                 tipLabel = "Pourboire",
                 totalLabel = "Nouveau total",
             )
-            DsSectionLabel("Montant personnalisé")
+            DsSectionLabel("Montant personnalisé (exemple fixe)")
             DsTipSelector(
                 subtotalMinor = 108_000L,
                 selection = DsTipSelection.Custom(25_000L),
