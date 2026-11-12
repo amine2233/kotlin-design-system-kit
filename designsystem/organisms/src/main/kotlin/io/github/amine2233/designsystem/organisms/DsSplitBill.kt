@@ -196,6 +196,7 @@ fun DsSplitBill(
             formatAmount(paid),
             modifier = Modifier.semantics(mergeDescendants = true) {},
             emphasis = DsTotalsEmphasis.Positive,
+            valueColor = c.success,
         )
         DsTotalsRow(
             remainingLabel,
@@ -219,25 +220,30 @@ private fun SplitPartRow(
 ) {
     val c = DsTheme.colors
     Row(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .heightIn(min = DsTheme.spacing.minTouchTarget)
-                .clip(DsTheme.shapes.sm)
-                .then(if (onClick != null) Modifier.clickable(role = Role.Button, onClick = onClick) else Modifier)
-                .semantics(mergeDescendants = true) {}
-                .padding(vertical = DsTheme.spacing.xs),
+        modifier = Modifier.fillMaxWidth().padding(vertical = DsTheme.spacing.xs),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(DsTheme.spacing.smd),
     ) {
-        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(DsTheme.spacing.xs)) {
-            Text(label, style = DsTheme.typography.bodyStrong, color = c.textPrimary, maxLines = 1)
-            DsTag(
-                if (paid) paidLabel else remainingLabel,
-                tone = if (paid) DsTagTone.Success else DsTagTone.Neutral,
-            )
+        Row(
+            modifier =
+                Modifier
+                    .weight(1f)
+                    .heightIn(min = DsTheme.spacing.minTouchTarget)
+                    .clip(DsTheme.shapes.sm)
+                    .then(if (onClick != null) Modifier.clickable(role = Role.Button, onClick = onClick) else Modifier)
+                    .semantics(mergeDescendants = true) {},
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(DsTheme.spacing.smd),
+        ) {
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(DsTheme.spacing.xs)) {
+                Text(label, style = DsTheme.typography.bodyStrong, color = c.textPrimary, maxLines = 1)
+                DsTag(
+                    if (paid) paidLabel else remainingLabel,
+                    tone = if (paid) DsTagTone.Success else DsTagTone.Neutral,
+                )
+            }
+            Text(amount, style = DsTheme.typography.title, color = c.textPrimary)
         }
-        Text(amount, style = DsTheme.typography.title, color = c.textPrimary)
         if (!paid) {
             DsButton(
                 collectLabel,
