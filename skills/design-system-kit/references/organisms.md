@@ -186,6 +186,29 @@ index with an already-clamped quantity; fully refunded lines are drawn disabled 
 `dsHasRefundSelection` to enable the caller's confirm button, like `isSufficient` on `DsCashTenderStatus`.
 Order-level discounts and taxes are not split across lines: pass the unit price actually paid.
 
+### Signature pad
+
+```kotlin
+DsSignaturePad(strokes: List<DsSignatureStroke>, onStrokesChange: (List<DsSignatureStroke>) -> Unit, onConfirm,
+               modifier = Modifier, enabled = true, hint = "Sign here", clearLabel = "Clear",
+               confirmLabel = "Confirm", description = "Signature pad", emptyStateDescription = "Empty",
+               signedStateDescription = "Signed")
+DsSignatureStroke(points: List<DsSignaturePoint>)
+DsSignaturePoint(x: Float, y: Float)                            // fractions of the pad, 0..1
+dsSignaturePoint(x, y, width, height): DsSignaturePoint         // px -> fraction, clamped; zero size throws
+List<DsSignatureStroke>.startStroke(point) / .addPoint(point)   // new list, input untouched
+List<DsSignatureStroke>.isSigned: Boolean                       // at least one point
+```
+
+`DsSignaturePad` captures a customer signature: a `DsSignaturePadDefaults.ASPECT_RATIO` (3:1) drawing area with a
+baseline and a start-aligned hint, above Clear and Confirm buttons. It is stateless: the caller stores every list
+passed to `onStrokesChange` (Clear passes an empty list). Points are kept as fractions of the pad, so a saved
+signature renders at any size. Ink is drawn at `DsStroke.signature` and a tap leaves a dot. The pad consumes its
+drag, so a parent `verticalScroll` does not move while signing, and strokes are never mirrored in RTL. Both buttons
+are enabled only when `enabled && strokes.isSigned`; a disabled pad ignores input. TalkBack reads `description`
+with `emptyStateDescription` / `signedStateDescription` as its state. Rasterising or uploading the signature is the
+caller's job.
+
 ## Product grid
 
 ```kotlin
