@@ -4,6 +4,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.filled.ReceiptLong
+import androidx.compose.material.icons.automirrored.filled.StarHalf
+import androidx.compose.material.icons.automirrored.filled.TrendingDown
+import androidx.compose.material.icons.automirrored.filled.TrendingFlat
+import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Backspace
 import androidx.compose.material.icons.filled.CalendarMonth
@@ -38,6 +42,8 @@ import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material.icons.filled.Storefront
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -103,4 +109,12 @@ object DsIcons {
     val Warning: ImageVector = Icons.Filled.Warning
     val Error: ImageVector = Icons.Filled.Error
     val Offline: ImageVector = Icons.Filled.WifiOff
+    val TrendUp: ImageVector = Icons.AutoMirrored.Filled.TrendingUp
+    val TrendDown: ImageVector = Icons.AutoMirrored.Filled.TrendingDown
+    val TrendFlat: ImageVector = Icons.AutoMirrored.Filled.TrendingFlat
+
+    // Rating
+    val StarFilled: ImageVector = Icons.Filled.Star
+    val StarHalf: ImageVector = Icons.AutoMirrored.Filled.StarHalf
+    val StarOutline: ImageVector = Icons.Filled.StarBorder
 }

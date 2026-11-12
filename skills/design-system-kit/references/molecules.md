@@ -17,6 +17,10 @@ DsTabRow(tabs: List<String>, selectedIndex, onSelect)
 DsTabRow(items: List<DsTabItem>, selectedIndex, onSelect, layout = DsTabLayout…)  // badge, icon
 DsFilterGroup(options, selected: Set<Int>, onSelectedChange, selection = DsFilterSelection.Multiple,
               layout = DsFilterLayout.Inline, allLabel = null, tone, enabled, spacing)
+DsSelectionList(options, selected: Set<Int>, onSelectedChange, mode = DsSelectionListMode.Single,
+                indicatorPlacement = DsSelectionIndicatorPlacement.Start, enabled)
+DsSelectionDraft.from(committed: Set<Int>, mode): DsSelectionDraft
+draft.choose(index): DsSelectionDraft   // draft.selected, draft.mode
 ```
 
 `DsFilterGroup` is the chip bar a list is filtered with. `Single` replaces the selection and never empties it on a
@@ -25,6 +29,14 @@ always has one chip lit. `Multiple` toggles. `dsToggleFilter` is the rule alone,
 (organisms) is the older single-select row that predates this. `Inline` is one scrolling line — the bar above a
 list; `Grid` wraps and never scrolls — a filter panel. Chips keep their own label width in both. Each component declares its own layout enum rather than
 sharing one, so gaining a layout here never forces it on tags.
+
+`DsSelectionList` is a short, always-visible list of text options — radios in `Single`, checkboxes in `Multiple`,
+at the `Start` or `End` of each row (mirrored in RTL). The rule is `dsChooseOption`, which delegates to
+`dsToggleFilter`, so it never disagrees with `DsFilterGroup`: `Single` never empties on a re-tap. The whole row is
+the single touch target and focus stop; the indicator only draws state. The list draws no title, buttons, sheet or
+dialog. For apply/cancel, the caller holds a `DsSelectionDraft` next to the committed selection: `choose` returns a
+new draft, applying copies `draft.selected` into the committed state, cancelling drops the draft. `from` in
+`Single` keeps only the lowest index.
 
 - Selection crosses the boundary as indices into `options`, so the caller keeps its own option type.
 - `DsMultiSelectField` keeps the menu open while ticking; the closed box shows `dsSummarizeSelection` —
@@ -138,6 +150,7 @@ DsTotalsRow(label, value, emphasis = DsTotalsEmphasis.Normal, valueColor = null)
 DsAllocationBar(parts: List<DsAllocation>)
 DsTagGroup(tags: List<DsTagEntry>, layout = DsTagLayout.Grid, max = null, overflowLabel, spacing)
 DsAvatarGroup(avatars: List<DsAvatarEntry>, maxVisible = 3, size = 36.dp, overflowLabel, contentDescription)
+DsStatisticTile(value, label, trend: DsStatisticTrend? = null, icon = null, onClick = null, contentDescription)
 ```
 
 `DsSettingsRow` is one flat settings line, with no card or border of its own: group several in a `DsCard`,
@@ -162,6 +175,15 @@ readable. Past `maxVisible` (at least 1) the rest collapse into one neutral "+n"
 that rule, unit-tested). TalkBack reads the whole group once, e.g. "Amine Kacem, Bob et 2 autres"
 (`dsAvatarGroupDescription`, overridable through `contentDescription`). Initials only — no photos, not clickable.
 
+`DsStatisticTile` is one dashboard figure in a `DsCard`: a prominent value, its label, and an optional trend row
+(`DsStatisticTrend(direction, delta, upIsGood = true)` — arrow plus caller-formatted delta) and leading icon. The
+trend colour comes only from `dsTrendTone` (unit-tested): `Flat` is neutral, otherwise `upIsGood` decides — set it
+to false for metrics where a rise is bad, so a fall shows in `success`. TalkBack reads the tile once, e.g.
+"Ventes, 1 250 DA, en hausse +12 %" (`dsStatisticTileDescription`, overridable through `contentDescription`), and
+a clickable tile stays one element. The tile fills its width; value, label and delta each ellipsize on one line,
+so lay several out in a `Row` with `Modifier.weight(1f)` — give the row `Modifier.height(IntrinsicSize.Min)` and
+each tile `fillMaxHeight()` so tiles with and without a trend share a height.
+
 `DsTotalsEmphasis`: `Muted`, `Normal`, `Discount`, `Positive`, `Total` — the row picks weight and color, callers
 never pass a color for a total.
 
@@ -169,6 +191,21 @@ never pass a color for a total.
 `DsMenuCardVariant.Tile` is the product grid (media on top); `.Row` is a list — order review, search results —
 with the footer trailing so a stepper stays under the thumb. `DsProductCard` stays the minimal grid tile when all
 you have is a name and a price.
+
+## Actions
+
+```kotlin
+DsButtonGroup(buttons: List<DsButtonGroupItem>, orientation = DsButtonGroupOrientation.Horizontal,
+              size = DsButtonSize.Large, spacing)
+DsButtonGroupItem(text, onClick, variant = DsButtonVariant.Primary, enabled = true, loading = false, leadingIcon = null)
+```
+
+`DsButtonGroup` lays out two or three related `DsButton`s with one size and one gap (`DsTheme.spacing.sm`). The
+group always fills the width. `Horizontal` shares it equally (`weight(1f)` each), so "Annuler / Valider" never
+makes one action look bigger; `Vertical` stacks full-width buttons, primary action first. It never switches axis by
+itself — pick `Vertical` when the labels are too long to sit side by side. Each item keeps its own variant,
+enabled, loading and icon; an empty list renders nothing. It is a set of actions, not a choice: for a pick-one
+control, use `DsSegmentedControl`.
 
 ## Menus and messages
 
