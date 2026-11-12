@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.Contactless
 import androidx.compose.material.icons.filled.CreditCard
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Image
@@ -43,6 +44,7 @@ import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Sms
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material.icons.filled.Storefront
@@ -79,6 +81,8 @@ object DsIcons {
     val Backspace: ImageVector = Icons.Filled.Backspace
     val Hold: ImageVector = Icons.Filled.PauseCircle
     val Print: ImageVector = Icons.Filled.Print
+    val Email: ImageVector = Icons.Filled.Email
+    val Sms: ImageVector = Icons.Filled.Sms
 
     // Forms
     val Lock: ImageVector = Icons.Filled.Lock

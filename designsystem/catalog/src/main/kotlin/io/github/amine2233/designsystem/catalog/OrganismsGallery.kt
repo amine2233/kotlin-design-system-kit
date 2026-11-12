@@ -26,6 +26,7 @@ import io.github.amine2233.designsystem.atoms.DsAvatar
 import io.github.amine2233.designsystem.atoms.DsButton
 import io.github.amine2233.designsystem.atoms.DsButtonSize
 import io.github.amine2233.designsystem.atoms.DsButtonVariant
+import io.github.amine2233.designsystem.atoms.DsDivider
 import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsSpacing
 import io.github.amine2233.designsystem.core.DsTheme
@@ -49,6 +50,8 @@ import io.github.amine2233.designsystem.organisms.DsProcessingState
 import io.github.amine2233.designsystem.organisms.DsProductGrid
 import io.github.amine2233.designsystem.organisms.DsProductGridItem
 import io.github.amine2233.designsystem.organisms.DsPullToRefresh
+import io.github.amine2233.designsystem.organisms.DsReceipt
+import io.github.amine2233.designsystem.organisms.DsReceiptItem
 import io.github.amine2233.designsystem.organisms.DsResultMark
 import io.github.amine2233.designsystem.organisms.DsSnackbar
 import io.github.amine2233.designsystem.organisms.DsSnackbarTone
@@ -280,6 +283,50 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
                     DsSplitPart(amountMinor = 70_000L, label = "Karim"),
                     DsSplitPart(amountMinor = 45_000L, label = "Sonia"),
                 ),
+            )
+        }
+        CatalogSection("Receipt") {
+            DsReceipt(
+                merchantName = "Café Central",
+                merchantDetails = listOf("12 rue Didouche Mourad, Alger", "NIF 000123456789"),
+                items =
+                    listOf(
+                        DsReceiptItem("2×", "Cappuccino", "400 DA", detail = "Lait d'avoine"),
+                        DsReceiptItem("1×", "Formule Déjeuner", "441 DA", originalTotal = "490 DA"),
+                        DsReceiptItem("1×", "Part de gâteau pistache et fleur d'oranger de saison", "292 DA"),
+                    ),
+                totals =
+                    listOf(
+                        DsTotalsLine("Sous-total HT", "1 025 DA"),
+                        DsTotalsLine("Remise totale", "−49 DA", DsTotalsEmphasis.Discount),
+                        DsTotalsLine("TVA 10%", "92 DA", DsTotalsEmphasis.Muted),
+                        DsTotalsLine("TVA 5,5%", "4 DA", DsTotalsEmphasis.Muted),
+                        DsTotalsLine("Pourboire", "+ 108 DA", DsTotalsEmphasis.Positive),
+                    ),
+                total = DsTotalsLine("Total TTC", "1 180 DA"),
+                paymentIcon = DsIcons.Card,
+                paymentLabel = "Carte bancaire •••• 4242",
+                timestamp = "12 nov. 2026, 14:32",
+                reference = "Ticket n° A-10423",
+                onPrint = {},
+                onEmail = {},
+                onSms = {},
+                onNoReceipt = {},
+                printLabel = "Imprimer",
+                emailLabel = "E-mail",
+                smsLabel = "SMS",
+                noReceiptLabel = "Pas de ticket",
+            )
+            DsDivider()
+            DsReceipt(
+                merchantName = "Café Central",
+                items = listOf(DsReceiptItem("1×", "Espresso", "150 DA")),
+                totals = listOf(DsTotalsLine("Sous-total HT", "136 DA"), DsTotalsLine("TVA 10%", "14 DA", DsTotalsEmphasis.Muted)),
+                total = DsTotalsLine("Total TTC", "150 DA"),
+                paymentIcon = DsIcons.Cash,
+                paymentLabel = "Espèces",
+                timestamp = "12 nov. 2026, 14:35",
+                reference = "Ticket n° A-10424",
             )
         }
     }
