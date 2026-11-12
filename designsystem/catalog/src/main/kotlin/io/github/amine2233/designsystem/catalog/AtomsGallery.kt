@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -44,6 +45,7 @@ import io.github.amine2233.designsystem.atoms.DsIconTile
 import io.github.amine2233.designsystem.atoms.DsLinearProgress
 import io.github.amine2233.designsystem.atoms.DsRadioButton
 import io.github.amine2233.designsystem.atoms.DsRadioIndicator
+import io.github.amine2233.designsystem.atoms.DsRating
 import io.github.amine2233.designsystem.atoms.DsSkeleton
 import io.github.amine2233.designsystem.atoms.DsSwitch
 import io.github.amine2233.designsystem.atoms.DsTag
@@ -137,6 +139,15 @@ fun AtomsGallery(modifier: Modifier = Modifier) {
                 DsRadioButton(selected = true, onClick = {}, label = "Espèces")
                 DsRadioButton(selected = false, onClick = {}, label = "Carte")
             }
+        }
+        CatalogSection("Rating") {
+            var rating by rememberSaveable { mutableFloatStateOf(3.5f) }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                DsRating(rating, onValueChange = { rating = it }, allowHalf = true, stateDescription = "$rating / 5")
+                Text("$rating / 5", style = DsTheme.typography.bodyStrong)
+            }
+            DsRating(4.5f, stateDescription = "4.5 / 5")
+            DsRating(2f, onValueChange = {}, enabled = false)
         }
         CatalogSection("Tags, tiles, errors") {
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
