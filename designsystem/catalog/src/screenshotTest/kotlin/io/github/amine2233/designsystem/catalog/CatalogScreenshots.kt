@@ -258,6 +258,16 @@ fun RegisterSubmittingPhone() =
     }
 
 @PreviewTest
+@Preview(name = "about_phone", device = PHONE)
+@Composable
+fun AboutPhone() = Snapshot { AboutScreen() }
+
+@PreviewTest
+@Preview(name = "about_phone_dark", device = PHONE)
+@Composable
+fun AboutPhoneDark() = Snapshot(dark = true) { AboutScreen() }
+
+@PreviewTest
 @Preview(name = "auth_loading_phone", device = PHONE)
 @Composable
 fun AuthLoadingPhone() = Snapshot { AuthLoadingScreen() }
