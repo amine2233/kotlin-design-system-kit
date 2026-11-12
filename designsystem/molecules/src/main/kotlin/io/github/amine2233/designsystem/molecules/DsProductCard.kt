@@ -58,11 +58,11 @@ fun DsProductCard(
                     Text(
                         name,
                         style = DsTheme.typography.bodyStrong,
-                        color = if (outOfStock) c.textTertiary else c.textPrimary,
+                        color = if (outOfStock) c.textSecondary else c.textPrimary,
                         maxLines = 1,
                     )
                     if (outOfStock) {
-                        Text(outOfStockLabel, style = DsTheme.typography.labelStrong, color = c.textTertiary, maxLines = 2)
+                        Text(outOfStockLabel, style = DsTheme.typography.labelStrong, color = c.textSecondary, maxLines = 2)
                     } else {
                         Text(price, style = DsTheme.typography.labelStrong, color = c.primary, maxLines = 1)
                     }
