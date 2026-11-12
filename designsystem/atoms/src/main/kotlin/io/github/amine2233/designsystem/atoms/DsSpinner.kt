@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.core.DsComponentPreview
 import io.github.amine2233.designsystem.core.DsPreview
+import io.github.amine2233.designsystem.core.DsSpacing
 import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.core.animationsEnabled
 
@@ -82,13 +83,13 @@ fun DsSpinner(
 @Composable
 private fun DsSpinnerPreview() =
     DsPreview {
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(horizontalArrangement = Arrangement.spacedBy(DsSpacing.smd), verticalAlignment = Alignment.CenterVertically) {
             DsSpinnerSize.entries.forEach { DsSpinner(size = it) }
         }
-        Spacer(Modifier.height(12.dp))
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Spacer(Modifier.height(DsSpacing.smd))
+        Row(horizontalArrangement = Arrangement.spacedBy(DsSpacing.smd)) {
             DsSpinnerStyle.entries.forEach { DsSpinner(style = it) }
         }
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(DsSpacing.smd))
         DsSpinner(animate = false)
     }
