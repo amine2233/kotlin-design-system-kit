@@ -16,7 +16,7 @@ designsystem/
               DsTipSelector (+ DsTipSelection, dsTipAmount / dsTipTotal)
   organisms   DsTopBar, DsNumericKeypad (+ String.applyKey), DsCashTender (+ dsQuickTenders / dsCashTenderStatus, minor units), DsStaffPinLogin (+ dsApplyPinKey), DsTotalsBlock (rowModifier), DsReceipt (+ DsReceiptItem), DsCartLineItem, DsBottomCartBar, DsChipRow (Inline / Grid), DsPaymentMethodRow,
               DsBottomSheet, DsModal (Half / Full, dialog on tablet), DsDialog, DsSnackbar (+ showError/showSuccess), DsToast (+ DsToastHost, DsToastHostState), DsBottomNavBar, DsNavigationRail, DsProcessingState, DsPullToRefresh,
-              DsNfcPulse / DsNfcWaiting (contactless animation), DsResultMark / DsPaymentResult (success / failure animation), DsCircleMenu (radial action menu),
+              DsNfcPulse / DsNfcWaiting (contactless animation), DsResultMark / DsPaymentResult (success / failure animation), DsCircleMenu (radial action menu), DsLoadingHud / DsLoadingHudCard (blocking loading overlay),
               DsSplitBill (Equal / Custom, + DsSplitPart, dsEqualSplit / dsSplitUnallocated), DsProductGrid (+ DsProductGridItem, dsProductGridColumns),
               DsRefundSelection (+ DsRefundLine, dsRefundableQuantity / dsRefundTotal, minor units)
               DsProductModifier (+ dsModifierTotal / dsModifierGroupError / dsIsModifierSelectionValid / dsToggleModifierOption, minor units)
