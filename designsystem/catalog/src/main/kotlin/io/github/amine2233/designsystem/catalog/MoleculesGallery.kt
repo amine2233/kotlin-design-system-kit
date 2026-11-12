@@ -43,6 +43,8 @@ import io.github.amine2233.designsystem.molecules.DsButtonGroupItem
 import io.github.amine2233.designsystem.molecules.DsButtonGroupOrientation
 import io.github.amine2233.designsystem.molecules.DsCheckRow
 import io.github.amine2233.designsystem.molecules.DsDashedActionRow
+import io.github.amine2233.designsystem.molecules.DsDiscountEntry
+import io.github.amine2233.designsystem.molecules.DsDiscountMode
 import io.github.amine2233.designsystem.molecules.DsDropdown
 import io.github.amine2233.designsystem.molecules.DsEmptyState
 import io.github.amine2233.designsystem.molecules.DsExpandableSection
@@ -54,6 +56,8 @@ import io.github.amine2233.designsystem.molecules.DsKeyTone
 import io.github.amine2233.designsystem.molecules.DsKeypadKey
 import io.github.amine2233.designsystem.molecules.DsListItem
 import io.github.amine2233.designsystem.molecules.DsProductCard
+import io.github.amine2233.designsystem.molecules.DsPromoCodeField
+import io.github.amine2233.designsystem.molecules.DsPromoCodeState
 import io.github.amine2233.designsystem.molecules.DsQuantityStepper
 import io.github.amine2233.designsystem.molecules.DsSearchBar
 import io.github.amine2233.designsystem.molecules.DsSectionLabel
@@ -76,6 +80,7 @@ import io.github.amine2233.designsystem.molecules.DsTagLayout
 import io.github.amine2233.designsystem.molecules.DsTotalsEmphasis
 import io.github.amine2233.designsystem.molecules.DsTotalsRow
 import io.github.amine2233.designsystem.molecules.DsTrendDirection
+import io.github.amine2233.designsystem.molecules.dsDiscount
 
 @Composable
 fun MoleculesGallery(modifier: Modifier = Modifier) {
@@ -297,6 +302,23 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             DsTotalsRow("Pourboire (10%)", "+ 108 DA", emphasis = DsTotalsEmphasis.Positive)
             DsTotalsRow("Total TTC", "1 080 DA", emphasis = DsTotalsEmphasis.Total)
         }
+        CatalogSection("Discount & promo code") {
+            var discountMode by rememberSaveable { mutableStateOf(DsDiscountMode.Percent) }
+            val discountValue = if (discountMode == DsDiscountMode.Percent) 1000L else 50000L
+            val discount = dsDiscount(DISCOUNT_SUBTOTAL, discountMode, discountValue)
+            DsDiscountEntry(
+                mode = discountMode,
+                onModeChange = { discountMode = it },
+                value = minorUnits(discountValue),
+                currencyLabel = "DA",
+                discountLabel = "Remise sur ${minorUnits(DISCOUNT_SUBTOTAL)} DA",
+                discountValue = "− ${minorUnits(discount.discount)} DA",
+            )
+            var promo by rememberSaveable { mutableStateOf("") }
+            DsPromoCodeField(promo, { promo = it }, DsPromoCodeState.Idle, onApply = {}, onRemove = {})
+            DsPromoCodeField("PROMO10", {}, DsPromoCodeState.Applied("PROMO10", "−10 %"), onApply = {}, onRemove = {})
+            DsPromoCodeField("NOEL2019", {}, DsPromoCodeState.Invalid("Code expiré"), onApply = {}, onRemove = {})
+        }
         CatalogSection("Search & list items") {
             var query by rememberSaveable { mutableStateOf("") }
             DsSearchBar(query, { query = it })
@@ -407,6 +429,19 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             DsCheckRow("TVA multi-taux, remises et pourboires", filled = false)
         }
     }
+}
+
+private const val DISCOUNT_SUBTOTAL = 108000L
+
+private fun minorUnits(amount: Long): String {
+    val units =
+        (amount / 100)
+            .toString()
+            .reversed()
+            .chunked(3)
+            .joinToString(" ")
+            .reversed()
+    return "$units,${(amount % 100).toString().padStart(2, '0')}"
 }
 
 @Preview(name = "molecules", device = "spec:width=375dp,height=780dp,dpi=420", showBackground = true)
