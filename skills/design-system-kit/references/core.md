@@ -74,7 +74,8 @@ The curated set — product code uses these names, not `Icons.Filled.*`, so the 
 - Actions: `Add`, `Remove`, `Edit`, `Delete`, `Check`, `Backspace`, `Hold`, `Print`
 - Forms: `Lock`, `Reveal`, `Hide`, `Calendar`, `Phone`, `Clock`, `Palette`
 - POS: `Cart`, `Card`, `Cash`, `Contactless`, `Split`, `Discount`, `Tip`, `Receipt`, `Register`, `Catalogue`, `Store`, `Coffee`, `Image`
-- Status: `Info`, `Success`, `Warning`, `Error`, `Offline`
+- Status: `Info`, `Success`, `Warning`, `Error`, `Offline`, `TrendUp`, `TrendDown`, `TrendFlat`
+- Rating: `StarFilled`, `StarHalf`, `StarOutline`
 
 Need an icon that is not here? Add it to `DsIcons` rather than importing a Material icon in a screen.
 

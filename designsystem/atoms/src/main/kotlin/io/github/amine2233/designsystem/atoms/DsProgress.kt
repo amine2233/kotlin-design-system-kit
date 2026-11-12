@@ -10,6 +10,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -55,21 +56,49 @@ fun DsCircularProgress(
     size: Dp = 52.dp,
     strokeWidth: Dp = 4.dp,
 ) {
+    DsCircularIndicator(
+        progress = progress,
+        animate = DsTheme.animationsEnabled,
+        color = DsTheme.colors.primary,
+        trackColor = DsTheme.colors.border,
+        fixedTrackColor = DsTheme.colors.primaryContainerBorder,
+        size = size,
+        strokeWidth = strokeWidth,
+        strokeCap = StrokeCap.Round,
+        modifier = modifier,
+    )
+}
+
+/** Spins when [progress] is null and [animate] is true; otherwise draws [progress], or a fixed arc when null. */
+@Composable
+internal fun DsCircularIndicator(
+    progress: Float?,
+    animate: Boolean,
+    color: Color,
+    trackColor: Color,
+    fixedTrackColor: Color,
+    size: Dp,
+    strokeWidth: Dp,
+    strokeCap: StrokeCap,
+    modifier: Modifier = Modifier,
+) {
     val m = modifier.size(size)
-    if (progress == null && DsTheme.animationsEnabled) {
+    if (progress == null && animate) {
         CircularProgressIndicator(
             modifier = m,
-            color = DsTheme.colors.primary,
-            trackColor = DsTheme.colors.border,
+            color = color,
+            trackColor = trackColor,
             strokeWidth = strokeWidth,
+            strokeCap = strokeCap,
         )
     } else {
         CircularProgressIndicator(
             progress = { (progress ?: INSPECTION_PROGRESS).coerceIn(0f, 1f) },
             modifier = m,
-            color = DsTheme.colors.primary,
-            trackColor = DsTheme.colors.primaryContainerBorder,
+            color = color,
+            trackColor = fixedTrackColor,
             strokeWidth = strokeWidth,
+            strokeCap = strokeCap,
         )
     }
 }
