@@ -73,7 +73,7 @@ The curated set — product code uses these names, not `Icons.Filled.*`, so the 
 - Navigation: `Back`, `Close`, `ChevronRight`, `ChevronDown`, `ChevronUp`, `More`, `Home`, `Settings`, `Search`, `Account`
 - Actions: `Add`, `Remove`, `Edit`, `Delete`, `Check`, `Backspace`, `Hold`, `Print`
 - Forms: `Lock`, `Reveal`, `Hide`, `Calendar`, `Phone`, `Clock`, `Palette`
-- POS: `Cart`, `Card`, `Cash`, `Contactless`, `Split`, `Discount`, `Tip`, `Receipt`, `Register`, `Catalogue`, `Store`, `Coffee`, `Image`
+- POS: `Cart`, `Card`, `Cash`, `Contactless`, `Split`, `Discount`, `Tip`, `Receipt`, `Register`, `Catalogue`, `Store`, `Coffee`, `Image`, `Scan`
 - Status: `Info`, `Success`, `Warning`, `Error`, `Offline`, `TrendUp`, `TrendDown`, `TrendFlat`
 - Rating: `StarFilled`, `StarHalf`, `StarOutline`
 
