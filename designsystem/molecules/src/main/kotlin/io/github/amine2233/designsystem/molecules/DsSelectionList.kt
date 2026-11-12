@@ -182,7 +182,7 @@ fun DsSelectionList(
 
 @DsComponentPreview
 @Composable
-private fun DsSelectionListPreview() =
+private fun SelectionListStatesPreview() =
     DsPreview {
         DsSelectionList(
             listOf("Nom", "Prix croissant", "Prix décroissant"),
