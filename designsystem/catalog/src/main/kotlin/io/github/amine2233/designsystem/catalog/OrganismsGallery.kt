@@ -1,8 +1,11 @@
 package io.github.amine2233.designsystem.catalog
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,9 +25,11 @@ import io.github.amine2233.designsystem.atoms.DsAvatar
 import io.github.amine2233.designsystem.atoms.DsButton
 import io.github.amine2233.designsystem.atoms.DsButtonSize
 import io.github.amine2233.designsystem.atoms.DsButtonVariant
+import io.github.amine2233.designsystem.atoms.DsText
 import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.molecules.DsAmountDisplay
+import io.github.amine2233.designsystem.molecules.DsTabItem
 import io.github.amine2233.designsystem.molecules.DsTotalsEmphasis
 import io.github.amine2233.designsystem.organisms.DsBottomCartBar
 import io.github.amine2233.designsystem.organisms.DsBottomNavBar
@@ -40,6 +45,7 @@ import io.github.amine2233.designsystem.organisms.DsProcessingState
 import io.github.amine2233.designsystem.organisms.DsResultMark
 import io.github.amine2233.designsystem.organisms.DsSnackbar
 import io.github.amine2233.designsystem.organisms.DsSnackbarTone
+import io.github.amine2233.designsystem.organisms.DsTabPager
 import io.github.amine2233.designsystem.organisms.DsToast
 import io.github.amine2233.designsystem.organisms.DsToastStyle
 import io.github.amine2233.designsystem.organisms.DsTopBar
@@ -62,6 +68,20 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
             DsChipRow(listOf("Tous", "Chauds", "Froids", "Snacks", "Pâtisserie", "Extras"), cat, { cat = it })
             var tva by rememberSaveable { mutableIntStateOf(1) }
             DsChipRow(listOf("20%", "10%", "5,5%", "0%"), tva, { tva = it }, layout = DsChipRowLayout.Grid)
+        }
+        CatalogSection("Tab pager") {
+            var tab by rememberSaveable { mutableIntStateOf(0) }
+            val tabs =
+                listOf(
+                    DsTabItem("En cours", badge = "3"),
+                    DsTabItem("Prêtes", badge = "12"),
+                    DsTabItem("Servies"),
+                )
+            DsTabPager(tabs, tab, { tab = it }, Modifier.fillMaxWidth().height(DsTheme.spacing.xxxl * 3)) { page ->
+                Box(Modifier.fillMaxSize().background(DsTheme.colors.surfaceMuted), contentAlignment = Alignment.Center) {
+                    DsText("Commandes ${tabs[page].label.lowercase()}", style = DsTheme.typography.title)
+                }
+            }
         }
         CatalogSection("Cart line items") {
             var q1 by rememberSaveable { mutableIntStateOf(2) }

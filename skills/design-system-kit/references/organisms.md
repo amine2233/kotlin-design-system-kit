@@ -11,10 +11,20 @@ DsBottomNavBar(items: List<DsNavItem>, selectedIndex, onSelect)
 DsNavigationRail(topItems, selectedIndex, onSelect, bottomItems = emptyList(), header = null)
 DsNavItem(label, icon, badge?)
 DsBottomCartBar(itemCount, total, onExpand, onPay)
+DsTabPager(tabs: List<String>, selectedIndex, onSelect, modifier, animate = DsTheme.animationsEnabled) { page -> }
+DsTabPager(items: List<DsTabItem>, selectedIndex, onSelect, modifier, layout = Inline if > 4 else Grid, animate) { page -> }
+dsTabPagerPage(selectedIndex, pageCount): Int                 // clamped; 0 when there are no pages
+dsTabPagerSettledSelection(settledPage, selectedIndex): Int?  // null when nothing changed
 ```
 
 Do not choose between the bar and the rail by hand — `DsNavigationScaffold` (templates) picks per window size and
 handles the RTL start edge. `DsTopBar.actions` is the slot for `DsIconButton` / `DsOverflowMenu`.
+
+`DsTabPager` is a `DsTabRow` over a `HorizontalPager`, one page per tab. The caller owns `selectedIndex`: a tap
+reports through `onSelect`, and a swipe reports once, on the page it settles on. The indicator moves on settle and
+does not follow the finger. `animate` only affects programmatic moves (a tap or a new `selectedIndex`); swiping
+always follows the finger. An empty list renders nothing. Give it a bounded height — the pages take what the header
+leaves.
 
 ## Overlays
 
