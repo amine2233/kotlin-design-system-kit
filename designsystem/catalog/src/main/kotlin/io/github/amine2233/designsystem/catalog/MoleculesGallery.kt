@@ -12,11 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.atoms.DsButton
+import io.github.amine2233.designsystem.atoms.DsButtonSize
+import io.github.amine2233.designsystem.atoms.DsButtonVariant
 import io.github.amine2233.designsystem.atoms.DsIconButton
 import io.github.amine2233.designsystem.atoms.DsRadioIndicator
 import io.github.amine2233.designsystem.atoms.DsTag
@@ -46,6 +50,10 @@ import io.github.amine2233.designsystem.molecules.DsQuantityStepper
 import io.github.amine2233.designsystem.molecules.DsSearchBar
 import io.github.amine2233.designsystem.molecules.DsSectionLabel
 import io.github.amine2233.designsystem.molecules.DsSegmentedControl
+import io.github.amine2233.designsystem.molecules.DsSelectionDraft
+import io.github.amine2233.designsystem.molecules.DsSelectionIndicatorPlacement
+import io.github.amine2233.designsystem.molecules.DsSelectionList
+import io.github.amine2233.designsystem.molecules.DsSelectionListMode
 import io.github.amine2233.designsystem.molecules.DsStepIndicator
 import io.github.amine2233.designsystem.molecules.DsTabItem
 import io.github.amine2233.designsystem.molecules.DsTabRow
@@ -137,6 +145,50 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
                 selected = methods,
                 onSelectedChange = { methods = it },
                 layout = DsFilterLayout.Grid,
+            )
+        }
+        CatalogSection("Selection list") {
+            val categories = listOf("Chauds", "Froids", "Snacks", "Desserts")
+            var committed by rememberSaveable { mutableStateOf(setOf(0)) }
+            var draft by remember(committed) { mutableStateOf(DsSelectionDraft.from(committed, DsSelectionListMode.Multiple)) }
+            DsSectionLabel("Plusieurs choix, brouillon à appliquer ou annuler")
+            DsSelectionList(
+                categories,
+                selected = draft.selected,
+                onSelectedChange = { next -> draft = draft.copy(selected = next) },
+                mode = DsSelectionListMode.Multiple,
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(DsTheme.spacing.sm)) {
+                DsButton(
+                    "Annuler",
+                    onClick = { draft = DsSelectionDraft.from(committed, DsSelectionListMode.Multiple) },
+                    modifier = Modifier.weight(1f),
+                    variant = DsButtonVariant.Outlined,
+                    size = DsButtonSize.Medium,
+                )
+                DsButton(
+                    "Appliquer",
+                    onClick = { committed = draft.selected },
+                    modifier = Modifier.weight(1f),
+                    size = DsButtonSize.Medium,
+                )
+            }
+            val applied = committed.sorted().joinToString(" · ") { categories[it] }.ifEmpty { "aucune" }
+            DsSectionLabel("Appliqué : $applied")
+            DsSectionLabel("Un seul choix, indicateur en fin de ligne")
+            var sort by rememberSaveable { mutableStateOf(setOf(0)) }
+            DsSelectionList(
+                listOf("Nom", "Prix croissant", "Prix décroissant"),
+                selected = sort,
+                onSelectedChange = { sort = it },
+                indicatorPlacement = DsSelectionIndicatorPlacement.End,
+            )
+            DsSectionLabel("Désactivée")
+            DsSelectionList(
+                listOf("Carte", "Espèces"),
+                selected = setOf(1),
+                onSelectedChange = {},
+                enabled = false,
             )
         }
         CatalogSection("Step indicator") {
