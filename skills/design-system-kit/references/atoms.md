@@ -114,6 +114,10 @@ DsProgressRing(progress: Float, size = DsProgressRingSize.Medium, style = DsProg
                showValue = true, label: String? = null, enabled = true, animate = DsTheme.animationsEnabled)
 // DsProgressRingSize: Small (40/4 dp, caption) · Medium (64/6 dp, labelStrong) · Large (96/10 dp, title)
 // DsProgressRingStyle: Primary · Success · Warning · Danger (error) · Info
+DsSpinner(size = DsSpinnerSize.Medium, style = DsSpinnerStyle.Primary,
+          contentDescription = "Chargement", animate = DsTheme.animationsEnabled)
+// DsSpinnerSize: Tiny 14 / Small 18 / Medium 22 / Large 26 / ExtraLarge 30 dp, stroke = diameter / 8
+// DsSpinnerStyle: Primary / Success / Warning / Danger (error) / Info
 DsSkeleton(shape = DsShapes.sm, animate = DsTheme.animationsEnabled)
 ```
 

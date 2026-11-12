@@ -53,6 +53,9 @@ import io.github.amine2233.designsystem.atoms.DsRadioButton
 import io.github.amine2233.designsystem.atoms.DsRadioIndicator
 import io.github.amine2233.designsystem.atoms.DsRating
 import io.github.amine2233.designsystem.atoms.DsSkeleton
+import io.github.amine2233.designsystem.atoms.DsSpinner
+import io.github.amine2233.designsystem.atoms.DsSpinnerSize
+import io.github.amine2233.designsystem.atoms.DsSpinnerStyle
 import io.github.amine2233.designsystem.atoms.DsStatusDot
 import io.github.amine2233.designsystem.atoms.DsSwitch
 import io.github.amine2233.designsystem.atoms.DsTag
@@ -63,6 +66,7 @@ import io.github.amine2233.designsystem.atoms.accent
 import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsPalette
 import io.github.amine2233.designsystem.core.DsShapes
+import io.github.amine2233.designsystem.core.DsSpacing
 import io.github.amine2233.designsystem.core.DsTheme
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -226,6 +230,14 @@ fun AtomsGallery(modifier: Modifier = Modifier) {
                 DsProgressRing(1f, style = DsProgressRingStyle.Success)
                 DsProgressRing(0f)
                 DsProgressRing(0.4f, enabled = false)
+            }
+        }
+        CatalogSection("Spinner") {
+            Row(horizontalArrangement = Arrangement.spacedBy(DsSpacing.smd), verticalAlignment = Alignment.CenterVertically) {
+                DsSpinnerSize.entries.forEach { DsSpinner(size = it) }
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(DsSpacing.smd)) {
+                DsSpinnerStyle.entries.forEach { DsSpinner(style = it) }
             }
         }
     }
