@@ -23,7 +23,7 @@ private const val FORM_PAGE = "spec:width=375dp,height=2400dp,dpi=320"
 
 // The atoms and molecules galleries are the longest pages in the catalog; they need a taller canvas.
 private const val ATOMS_PAGE = "spec:width=375dp,height=4000dp,dpi=320"
-private const val MOLECULES_PAGE = "spec:width=375dp,height=4800dp,dpi=320"
+private const val MOLECULES_PAGE = "spec:width=375dp,height=5600dp,dpi=320"
 
 @Composable
 private fun Snapshot(
