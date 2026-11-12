@@ -7,7 +7,7 @@ Atomic-design modules, phone + tablet adaptive layouts, screenshot-tested.
 
 ```
 designsystem/
-  core        tokens (DsPalette, DsColorScheme light/dark, DsTypography, DsSpacing, DsShapes, DsMotion), DsTheme, DsColorTheme (Teal / Blue / Purple), DsWindowSize,
+  core        tokens (DsPalette, DsColorScheme light/dark, DsTypography, DsSpacing, DsShapes, DsMotion, DsStroke), DsTheme, DsColorTheme (Teal / Blue / Purple), DsWindowSize,
               DsIcons (curated icon set), DsImages (logo, product placeholder, illustrations — vector drawables in res/)
   atoms       DsText, DsFormField (label/supporting/error frame), DsButton (loading state) / DsIconButton / DsOAuthButton, DsChip, DsTag, DsBadge, DsAvatar / DsStatusDot, DsIconTile, DsCard, DsContainer (DsContainerStyle: Neutral/Info/Success/Warning/Danger/Primary), DsDivider,
               DsTextField / DsPasswordField / DsTextArea / DsPhoneField, DsPickerField, DsErrorText, DsSwitch / DsCheckbox / DsRadioButton, DsSlider, DsRating, DsProgress / DsProgressRing, DsSpinner (DsSpinnerSize / DsSpinnerStyle), DsSkeleton, DsImage / DsImageSlot / DsIllustration / DsLogo
@@ -17,7 +17,8 @@ designsystem/
   organisms   DsTopBar, DsNumericKeypad (+ String.applyKey), DsCashTender (+ dsQuickTenders / dsCashTenderStatus, minor units), DsTotalsBlock (rowModifier), DsReceipt (+ DsReceiptItem), DsCartLineItem, DsBottomCartBar, DsChipRow (Inline / Grid), DsPaymentMethodRow,
               DsBottomSheet, DsModal (Half / Full, dialog on tablet), DsDialog, DsSnackbar (+ showError/showSuccess), DsToast (+ DsToastHost, DsToastHostState), DsBottomNavBar, DsNavigationRail, DsProcessingState, DsPullToRefresh,
               DsNfcPulse / DsNfcWaiting (contactless animation), DsResultMark / DsPaymentResult (success / failure animation), DsCircleMenu (radial action menu),
-              DsSplitBill (Equal / Custom, + DsSplitPart, dsEqualSplit / dsSplitUnallocated), DsProductGrid (+ DsProductGridItem, dsProductGridColumns)
+              DsSplitBill (Equal / Custom, + DsSplitPart, dsEqualSplit / dsSplitUnallocated), DsProductGrid (+ DsProductGridItem, dsProductGridColumns),
+              DsSignaturePad (+ DsSignatureStroke, startStroke / addPoint / isSigned)
   templates   DsScreenScaffold, DsTwoPaneLayout, DsCenteredLayout, DsNavigationScaffold (rail on tablet at the start edge — left LTR / right RTL — tab bar on phone)
   catalog     galleries (atoms, molecules, organisms, forms, choices, pickers, overlays, calendars, menu cards) + reference screens (Shell LTR/RTL, Main Sales, Cart, Tips, Discount, Payment, NFC, Result, Onboarding, Login OAuth, Register, About) and the screenshot tests
 sample/       app: browse galleries and screens, rotate / use a tablet to see the Expanded layout
