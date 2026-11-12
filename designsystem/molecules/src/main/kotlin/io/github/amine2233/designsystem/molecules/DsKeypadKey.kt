@@ -29,6 +29,7 @@ fun DsKeypadKey(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     tone: DsKeyTone = DsKeyTone.Default,
+    enabled: Boolean = true,
 ) {
     val c = DsTheme.colors
     val (bg, fg, border) =
@@ -44,10 +45,10 @@ fun DsKeypadKey(
                 .clip(DsShapes.key)
                 .background(bg)
                 .border(1.dp, border, DsShapes.key)
-                .clickable(onClick = onClick),
+                .clickable(enabled = enabled, onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
-        Text(label, fontSize = 22.sp, fontWeight = FontWeight.Medium, color = fg)
+        Text(label, fontSize = 22.sp, fontWeight = FontWeight.Medium, color = if (enabled) fg else c.textDisabled)
     }
 }
 

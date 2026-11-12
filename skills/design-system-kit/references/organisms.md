@@ -69,7 +69,7 @@ DsCartLineItem(name, quantity, onQuantityChange, lineTotal, unitPrice, tvaLabel,
                originalTotal, discountLabel, onTvaClick, onDiscountClick, onRemove)
 DsTotalsBlock(lines: List<DsTotalsLine>, total: DsTotalsLine, rowModifier = Modifier)
 DsPaymentMethodRow(icon, title, subtitle, selected, onClick)
-DsNumericKeypad(onKey: (DsKey) -> Unit, rowModifier, gap = 7.dp)
+DsNumericKeypad(onKey: (DsKey) -> Unit, rowModifier, gap = 7.dp, showComma = true, enabled = true)
 String.applyKey(key: DsKey): String
 DsChipRow(options, selectedIndex, onSelect, layout = DsChipRowLayout.Inline)
 ```
@@ -80,7 +80,28 @@ component with these two behaviours.
 
 `DsNumericKeypad` emits `DsKey` events; `applyKey` is the pure amount-editing rule (digits fill cents right to
 left with French grouping, backspace drops one, comma is a no-op) and is unit-tested — use it instead of
-re-implementing amount entry.
+re-implementing amount entry. `showComma = false` leaves the comma slot empty so `0` and backspace keep their
+columns; `enabled = false` greys every key (`DsKeypadKey(enabled = false)`) and ignores taps.
+
+### Staff PIN
+
+```kotlin
+DsStaffPinLogin(staff: List<DsStaffMember>, selectedStaffId: String?, onSelectStaff, enteredCount: Int, onKey,
+                state: DsStaffPinState = DsStaffPinState.Entering, pinLength = DsStaffPinDefaults.PinLength,
+                animate = DsTheme.animationsEnabled, emptyStaffLabel = "No staff members",
+                pinProgressLabel = { e, t -> "$e of $t digits entered" }, keypadRowModifier = Modifier)
+DsStaffMember(id, name, initials)
+DsStaffPinState.Entering | Error(message) | Locked(message)
+dsApplyPinKey(pin: String, key: DsKey, length = DsStaffPinDefaults.PinLength): String
+```
+
+`DsStaffPinLogin` signs a staff member in on a shared terminal: a wrapping row of avatar radio items, masked PIN
+dots and a comma-less keypad. It never sees the PIN, only `enteredCount`; keep the PIN in the caller and apply keys
+with `dsApplyPinKey` (digits append up to the length, backspace drops one, comma is a no-op). Verification, attempt
+counting and the lockout timer belong to the caller, which reports the outcome through `state`: `Error` colours the
+dots red, shows its message and shakes the dots when `animate` is on; `Locked` shows its message and disables both
+the keypad and staff selection. The keypad is also disabled until `selectedStaffId` names a member of `staff`.
+TalkBack reads the dots as `pinProgressLabel(count, total)`, never the digits.
 
 ```kotlin
 DsReceipt(merchantName, items: List<DsReceiptItem>, totals: List<DsTotalsLine>, total: DsTotalsLine,
