@@ -72,6 +72,15 @@ DsRadioIndicator(selected, size = 20.dp)     // the dot alone, for list rows
 DsCheckBullet(size = 20.dp, filled = true)   // static check bullet, for feature lists
 ```
 
+```kotlin
+DsRating(value, onValueChange = null, max = 5, allowHalf = false, enabled = true,
+         starSize = DsTheme.spacing.lg, stateDescription = null, animate)
+```
+
+`DsRating` is read-only when `onValueChange` is null, otherwise each star is a 48dp tap cell (leading half = `.5` with
+`allowHalf`) and the row is one adjustable accessibility element. `dsRatingClamp`, `dsRatingStars` and
+`dsRatingValueForTap` are the pure rules behind it.
+
 `DsSwitch` with a label fills the width and pushes the switch to the end; without one it is just the control.
 
 ## Chips, tags, badges, avatars, tiles
@@ -105,6 +114,10 @@ DsProgressRing(progress: Float, size = DsProgressRingSize.Medium, style = DsProg
                showValue = true, label: String? = null, enabled = true, animate = DsTheme.animationsEnabled)
 // DsProgressRingSize: Small (40/4 dp, caption) · Medium (64/6 dp, labelStrong) · Large (96/10 dp, title)
 // DsProgressRingStyle: Primary · Success · Warning · Danger (error) · Info
+DsSpinner(size = DsSpinnerSize.Medium, style = DsSpinnerStyle.Primary,
+          contentDescription = "Chargement", animate = DsTheme.animationsEnabled)
+// DsSpinnerSize: Tiny 14 / Small 18 / Medium 22 / Large 26 / ExtraLarge 30 dp, stroke = diameter / 8
+// DsSpinnerStyle: Primary / Success / Warning / Danger (error) / Info
 DsSkeleton(shape = DsShapes.sm, animate = DsTheme.animationsEnabled)
 ```
 

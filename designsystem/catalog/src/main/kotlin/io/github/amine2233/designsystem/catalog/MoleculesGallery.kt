@@ -14,11 +14,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.github.amine2233.designsystem.atoms.DsButton
+import io.github.amine2233.designsystem.atoms.DsButtonSize
+import io.github.amine2233.designsystem.atoms.DsButtonVariant
+import io.github.amine2233.designsystem.atoms.DsCard
+import io.github.amine2233.designsystem.atoms.DsDivider
 import io.github.amine2233.designsystem.atoms.DsIconButton
 import io.github.amine2233.designsystem.atoms.DsRadioIndicator
 import io.github.amine2233.designsystem.atoms.DsTag
@@ -32,6 +38,9 @@ import io.github.amine2233.designsystem.molecules.DsAvatarEntry
 import io.github.amine2233.designsystem.molecules.DsAvatarGroup
 import io.github.amine2233.designsystem.molecules.DsBanner
 import io.github.amine2233.designsystem.molecules.DsBannerTone
+import io.github.amine2233.designsystem.molecules.DsButtonGroup
+import io.github.amine2233.designsystem.molecules.DsButtonGroupItem
+import io.github.amine2233.designsystem.molecules.DsButtonGroupOrientation
 import io.github.amine2233.designsystem.molecules.DsCheckRow
 import io.github.amine2233.designsystem.molecules.DsDashedActionRow
 import io.github.amine2233.designsystem.molecules.DsDropdown
@@ -49,6 +58,13 @@ import io.github.amine2233.designsystem.molecules.DsQuantityStepper
 import io.github.amine2233.designsystem.molecules.DsSearchBar
 import io.github.amine2233.designsystem.molecules.DsSectionLabel
 import io.github.amine2233.designsystem.molecules.DsSegmentedControl
+import io.github.amine2233.designsystem.molecules.DsSelectionDraft
+import io.github.amine2233.designsystem.molecules.DsSelectionIndicatorPlacement
+import io.github.amine2233.designsystem.molecules.DsSelectionList
+import io.github.amine2233.designsystem.molecules.DsSelectionListMode
+import io.github.amine2233.designsystem.molecules.DsSettingsRow
+import io.github.amine2233.designsystem.molecules.DsSettingsTone
+import io.github.amine2233.designsystem.molecules.DsSettingsVariant
 import io.github.amine2233.designsystem.molecules.DsStatisticTile
 import io.github.amine2233.designsystem.molecules.DsStatisticTrend
 import io.github.amine2233.designsystem.molecules.DsStepIndicator
@@ -145,6 +161,77 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
                 layout = DsFilterLayout.Grid,
             )
         }
+        CatalogSection("Button groups") {
+            DsSectionLabel("Horizontal — largeurs égales")
+            DsButtonGroup(
+                listOf(
+                    DsButtonGroupItem("Annuler", {}, variant = DsButtonVariant.Ghost),
+                    DsButtonGroupItem("Valider", {}),
+                ),
+            )
+            DsSectionLabel("Trois actions, une désactivée")
+            DsButtonGroup(
+                listOf(
+                    DsButtonGroupItem("Supprimer", {}, variant = DsButtonVariant.Danger),
+                    DsButtonGroupItem("Brouillon", {}, variant = DsButtonVariant.Outlined, enabled = false),
+                    DsButtonGroupItem("Publier", {}),
+                ),
+                size = DsButtonSize.Medium,
+            )
+            DsSectionLabel("Vertical — action principale en premier")
+            DsButtonGroup(
+                listOf(
+                    DsButtonGroupItem("Payer", {}, loading = true),
+                    DsButtonGroupItem("Imprimer le ticket", {}, variant = DsButtonVariant.Outlined, leadingIcon = DsIcons.Print),
+                    DsButtonGroupItem("Annuler", {}, variant = DsButtonVariant.Ghost),
+                ),
+                orientation = DsButtonGroupOrientation.Vertical,
+            )
+        }
+        CatalogSection("Selection list") {
+            val categories = listOf("Chauds", "Froids", "Snacks", "Desserts")
+            var committed by rememberSaveable { mutableStateOf(setOf(0)) }
+            var draft by remember(committed) { mutableStateOf(DsSelectionDraft.from(committed, DsSelectionListMode.Multiple)) }
+            DsSectionLabel("Plusieurs choix, brouillon à appliquer ou annuler")
+            DsSelectionList(
+                categories,
+                selected = draft.selected,
+                onSelectedChange = { next -> draft = DsSelectionDraft(draft.mode, next) },
+                mode = DsSelectionListMode.Multiple,
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(DsTheme.spacing.sm)) {
+                DsButton(
+                    "Annuler",
+                    onClick = { draft = DsSelectionDraft.from(committed, draft.mode) },
+                    modifier = Modifier.weight(1f),
+                    variant = DsButtonVariant.Outlined,
+                    size = DsButtonSize.Medium,
+                )
+                DsButton(
+                    "Appliquer",
+                    onClick = { committed = draft.selected },
+                    modifier = Modifier.weight(1f),
+                    size = DsButtonSize.Medium,
+                )
+            }
+            val applied = committed.sorted().joinToString(" · ") { categories[it] }.ifEmpty { "aucune" }
+            DsSectionLabel("Appliqué : $applied")
+            DsSectionLabel("Un seul choix, indicateur en fin de ligne")
+            var sort by rememberSaveable { mutableStateOf(setOf(0)) }
+            DsSelectionList(
+                listOf("Nom", "Prix croissant", "Prix décroissant"),
+                selected = sort,
+                onSelectedChange = { sort = it },
+                indicatorPlacement = DsSelectionIndicatorPlacement.End,
+            )
+            DsSectionLabel("Désactivée")
+            DsSelectionList(
+                listOf("Carte", "Espèces"),
+                selected = setOf(1),
+                onSelectedChange = {},
+                enabled = false,
+            )
+        }
         CatalogSection("Step indicator") {
             DsStepIndicator(listOf("Panier", "Pourboire", "Paiement"), currentStep = 0)
             DsStepIndicator(listOf("Panier", "Pourboire", "Paiement"), currentStep = 1)
@@ -227,6 +314,42 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             DsListItem("Espresso", supporting = "×1 · 150 DA/u. · TVA 10%", selected = true, leading = {
                 DsRadioIndicator(true)
             }, trailing = { Text("150 DA", style = DsTheme.typography.labelStrong, color = DsTheme.colors.primary) })
+        }
+        CatalogSection("Settings rows") {
+            var autoPrint by rememberSaveable { mutableStateOf(true) }
+            DsCard {
+                Column {
+                    DsSettingsRow(
+                        "Compte",
+                        DsSettingsVariant.Navigation {},
+                        supporting = "nom@exemple.fr",
+                        icon = DsIcons.Account,
+                        tone = DsSettingsTone.Primary,
+                    )
+                    DsDivider()
+                    DsSettingsRow(
+                        "Impression auto",
+                        DsSettingsVariant.Toggle(autoPrint) { autoPrint = it },
+                        icon = DsIcons.Print,
+                        tone = DsSettingsTone.Success,
+                    )
+                    DsDivider()
+                    DsSettingsRow("Langue", DsSettingsVariant.Value("Français") {}, icon = DsIcons.Settings)
+                    DsDivider()
+                    DsSettingsRow("Stockage", DsSettingsVariant.Value("42 Go"), icon = DsIcons.Info, tone = DsSettingsTone.Info)
+                    DsDivider()
+                    DsSettingsRow(
+                        "Mode hors ligne",
+                        DsSettingsVariant.Toggle(false) {},
+                        supporting = "Indisponible sur ce terminal",
+                        icon = DsIcons.Offline,
+                        tone = DsSettingsTone.Warning,
+                        enabled = false,
+                    )
+                    DsDivider()
+                    DsSettingsRow("Supprimer le compte", DsSettingsVariant.Destructive {}, icon = DsIcons.Delete)
+                }
+            }
         }
         CatalogSection("Dropdown, tabs, actions") {
             var reason by rememberSaveable { mutableIntStateOf(0) }

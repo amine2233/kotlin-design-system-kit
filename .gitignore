@@ -7,3 +7,5 @@ local.properties
 .kotlin/
 .env.local
 node_modules/
+/factory/jobs/
+/.worktrees/
