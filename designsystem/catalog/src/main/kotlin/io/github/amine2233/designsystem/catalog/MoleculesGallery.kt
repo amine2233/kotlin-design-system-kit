@@ -477,7 +477,7 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             DsExpandableSection("Produits", expanded = open, onToggle = {
                 open = !open
             }, summary = "12 produits", trailing = { DsTag("12", tone = DsTagTone.Primary) }) {
-                Text("Contenu de la section", style = DsTheme.typography.body)
+                Text("Contenu de la section", style = DsTheme.typography.body, color = DsTheme.colors.textPrimary)
             }
             DsExpandableSection("Catégories", expanded = false, onToggle = {}, summary = "Chauds · Froids · Snacks") {}
         }
