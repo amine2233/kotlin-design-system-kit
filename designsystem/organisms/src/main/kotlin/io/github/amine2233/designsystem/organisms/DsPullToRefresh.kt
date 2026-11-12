@@ -1,6 +1,7 @@
 package io.github.amine2233.designsystem.organisms
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -66,12 +67,13 @@ fun DsPullToRefresh(
                         animate = animate,
                     )
                 } else {
-                    DsCircularProgress(
-                        progress = state.distanceFraction.coerceIn(0f, 1f),
-                        modifier = Modifier.clearAndSetSemantics {},
-                        size = DsSpinnerSize.Medium.diameter,
-                        strokeWidth = DsSpinnerSize.Medium.strokeWidth,
-                    )
+                    Box(Modifier.clearAndSetSemantics {}) {
+                        DsCircularProgress(
+                            progress = state.distanceFraction.coerceIn(0f, 1f),
+                            size = DsSpinnerSize.Medium.diameter,
+                            strokeWidth = DsSpinnerSize.Medium.strokeWidth,
+                        )
+                    }
                 }
             }
         },
