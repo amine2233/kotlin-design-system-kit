@@ -82,6 +82,27 @@ component with these two behaviours.
 left with French grouping, backspace drops one, comma is a no-op) and is unit-tested — use it instead of
 re-implementing amount entry.
 
+```kotlin
+DsSplitBill(totalMinor, mode: DsSplitMode, onModeChange, parts: List<DsSplitPart>, onPartCountChange, maxParts,
+            onPartClick, onCollect, formatAmount: (Long) -> String, equalModeLabel, customModeLabel, partCountLabel,
+            totalLabel, paidLabel, remainingLabel, unallocatedLabel, overAllocatedLabel, collectLabel,
+            partLabel = { "Part ${it + 1}" })
+DsSplitPart(paid = false, amountMinor = 0L, label = null)
+dsEqualSplit(totalMinor, parts): List<Long>
+dsSplitAmounts(totalMinor, mode, parts): List<Long>
+dsSplitUnallocated(totalMinor, amountsMinor): Long   // > 0 unallocated, < 0 over-allocated
+dsSplitPaid(amountsMinor, parts): Long
+```
+
+`DsSplitBill` splits a bill into `Equal` shares or `Custom` amounts and shows each part as paid or remaining.
+Amounts are minor units and the math is integer-only: `dsEqualSplit` gives every part `total / parts` and hands
+the remainder out one unit at a time to the first parts, so the shares always sum to the total. `formatAmount`
+comes from the caller, so currency stays the app's. The caller owns `parts`: it resizes the list on
+`onPartCountChange` and marks a part paid on `onCollect`. In Custom mode, `onPartClick` is where the caller opens
+its own `DsNumericKeypad` + `DsAmountDisplay` and writes the result back into `amountMinor`; the organism embeds
+no amount entry. While Custom amounts exceed the total, the over-allocated row shows in the error colour and
+every collect action is disabled.
+
 ## States
 
 ```kotlin
