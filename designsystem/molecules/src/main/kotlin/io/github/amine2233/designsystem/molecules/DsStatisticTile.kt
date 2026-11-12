@@ -2,8 +2,11 @@ package io.github.amine2233.designsystem.molecules
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -76,9 +79,10 @@ fun dsStatisticTileDescription(
 /**
  * One figure on a dashboard: a prominent value, its label, and optionally how it moved.
  *
- * The tile fills the width it is given so several sit side by side with `Modifier.weight(1f)`; long
- * values ellipsize on one line rather than growing the tile. The trend colour comes from
- * [dsTrendTone], never from the caller.
+ * The tile fills the width it is given so several sit side by side with `Modifier.weight(1f)`; give
+ * that row `Modifier.height(IntrinsicSize.Min)` and each tile `fillMaxHeight()` so tiles with and
+ * without a trend line up. Long values ellipsize on one line rather than growing the tile. The trend
+ * colour comes from [dsTrendTone], never from the caller.
  *
  * TalkBack reads the tile once, as a single description built by [contentDescription]. With
  * [onClick] it stays one clickable element.
@@ -153,17 +157,17 @@ private fun DsStatisticTilePreview() =
                 trend = DsStatisticTrend(DsTrendDirection.Down, "−2", upIsGood = false),
             )
             DsStatisticTile("12 min", "Attente moyenne", onClick = {})
-            Row(horizontalArrangement = Arrangement.spacedBy(DsTheme.spacing.sm)) {
+            Row(Modifier.height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(DsTheme.spacing.sm)) {
                 DsStatisticTile(
                     "1 234 567 890,00 DA",
                     "Chiffre d'affaires cumulé de l'exercice",
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
                 )
-                DsStatisticTile("48", "Commandes", modifier = Modifier.weight(1f))
+                DsStatisticTile("48", "Commandes", modifier = Modifier.weight(1f).fillMaxHeight())
                 DsStatisticTile(
                     "92 %",
                     "Satisfaction",
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
                     trend = DsStatisticTrend(DsTrendDirection.Up, "+3 %"),
                 )
             }

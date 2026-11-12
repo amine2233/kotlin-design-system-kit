@@ -2,7 +2,9 @@ package io.github.amine2233.designsystem.catalog
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
@@ -184,18 +186,18 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             DsSectionLabel("Cliquable")
             DsStatisticTile("12 min", "Attente moyenne", onClick = {})
             DsSectionLabel("Côte à côte")
-            Row(horizontalArrangement = Arrangement.spacedBy(DsTheme.spacing.sm)) {
+            Row(Modifier.height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(DsTheme.spacing.sm)) {
                 DsStatisticTile(
                     "1 234 567 890,00 DA",
                     "Chiffre d'affaires cumulé",
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
                     trend = DsStatisticTrend(DsTrendDirection.Up, "+8 %"),
                 )
-                DsStatisticTile("36", "Clients", modifier = Modifier.weight(1f))
+                DsStatisticTile("36", "Clients", modifier = Modifier.weight(1f).fillMaxHeight())
                 DsStatisticTile(
                     "92 %",
                     "Satisfaction",
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
                     trend = DsStatisticTrend(DsTrendDirection.Down, "−1 %"),
                 )
             }

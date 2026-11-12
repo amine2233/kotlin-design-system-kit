@@ -158,7 +158,8 @@ trend colour comes only from `dsTrendTone` (unit-tested): `Flat` is neutral, oth
 to false for metrics where a rise is bad, so a fall shows in `success`. TalkBack reads the tile once, e.g.
 "Ventes, 1 250 DA, en hausse +12 %" (`dsStatisticTileDescription`, overridable through `contentDescription`), and
 a clickable tile stays one element. The tile fills its width; value, label and delta each ellipsize on one line,
-so lay several out in a `Row` with `Modifier.weight(1f)`.
+so lay several out in a `Row` with `Modifier.weight(1f)` — give the row `Modifier.height(IntrinsicSize.Min)` and
+each tile `fillMaxHeight()` so tiles with and without a trend share a height.
 
 `DsTotalsEmphasis`: `Muted`, `Normal`, `Discount`, `Positive`, `Total` — the row picks weight and color, callers
 never pass a color for a total.
