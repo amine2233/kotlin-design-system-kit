@@ -40,12 +40,16 @@ import io.github.amine2233.designsystem.organisms.DsChipRow
 import io.github.amine2233.designsystem.organisms.DsChipRowLayout
 import io.github.amine2233.designsystem.organisms.DsCircleMenu
 import io.github.amine2233.designsystem.organisms.DsCircleMenuAction
+import io.github.amine2233.designsystem.organisms.DsModifierGroup
+import io.github.amine2233.designsystem.organisms.DsModifierGroupType
+import io.github.amine2233.designsystem.organisms.DsModifierOption
 import io.github.amine2233.designsystem.organisms.DsNavItem
 import io.github.amine2233.designsystem.organisms.DsNfcPulse
 import io.github.amine2233.designsystem.organisms.DsNumericKeypad
 import io.github.amine2233.designsystem.organisms.DsPaymentMethodRow
 import io.github.amine2233.designsystem.organisms.DsPaymentOutcome
 import io.github.amine2233.designsystem.organisms.DsProcessingState
+import io.github.amine2233.designsystem.organisms.DsProductModifier
 import io.github.amine2233.designsystem.organisms.DsPullToRefresh
 import io.github.amine2233.designsystem.organisms.DsResultMark
 import io.github.amine2233.designsystem.organisms.DsSnackbar
@@ -63,6 +67,40 @@ import kotlinx.coroutines.delay
 
 private const val REFRESH_DEMO_MS = 1500L
 private const val CASH_TENDER_DUE = 118_800L
+private const val PRODUCT_MODIFIER_BASE = 25_000L
+
+private val PRODUCT_MODIFIER_GROUPS =
+    listOf(
+        DsModifierGroup(
+            id = "size",
+            title = "Taille",
+            options =
+                listOf(
+                    DsModifierOption("size-s", "Petit"),
+                    DsModifierOption("size-m", "Moyen", 5_000L),
+                    DsModifierOption("size-l", "Grand", 10_000L),
+                ),
+        ),
+        DsModifierGroup(
+            id = "extras",
+            title = "Suppléments",
+            options =
+                listOf(
+                    DsModifierOption("extra-cheese", "Fromage", 2_500L),
+                    DsModifierOption("extra-bacon", "Bacon", 4_000L),
+                    DsModifierOption("extra-egg", "Œuf", 1_500L),
+                ),
+            type = DsModifierGroupType.Multiple,
+            minSelections = 0,
+            maxSelections = 2,
+        ),
+        DsModifierGroup(
+            id = "sauce",
+            title = "Sauce",
+            options = listOf(DsModifierOption("sauce-none", "Sans sauce"), DsModifierOption("sauce-bbq", "Barbecue", 1_000L)),
+            minSelections = 0,
+        ),
+    )
 
 @Composable
 fun OrganismsGallery(modifier: Modifier = Modifier) {
@@ -139,6 +177,33 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
                 changeLabel = "Monnaie à rendre",
                 missingLabel = "Reste à payer",
                 keypadRowModifier = Modifier.height(52.dp),
+            )
+        }
+        CatalogSection("Product modifier") {
+            var selection by rememberSaveable { mutableStateOf(setOf<String>()) }
+            var notes by rememberSaveable { mutableStateOf("") }
+            var quantity by rememberSaveable { mutableIntStateOf(1) }
+            DsProductModifier(
+                groups = PRODUCT_MODIFIER_GROUPS,
+                selectedOptionIds = selection,
+                onSelectionChange = { selection = it },
+                notes = notes,
+                onNotesChange = { notes = it },
+                quantity = quantity,
+                onQuantityChange = { quantity = it },
+                basePriceMinor = PRODUCT_MODIFIER_BASE,
+                unit = "DA",
+                requiredLabel = "Obligatoire",
+                optionalLabel = "Facultatif",
+                upToLabel = { "Jusqu'à $it" },
+                rangeLabel = { min, max -> "Choisir de $min à $max" },
+                missingRequiredLabel = "Choisissez une option",
+                belowMinimumLabel = { "Choisissez au moins $it" },
+                aboveMaximumLabel = { "Choisissez au plus $it" },
+                notesLabel = "Note pour la cuisine",
+                notesPlaceholder = "Sans oignons, bien cuit…",
+                quantityLabel = "Quantité",
+                totalLabel = "Total",
             )
         }
         CatalogSection("Payment methods") {
