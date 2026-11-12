@@ -67,9 +67,9 @@ tapping an action calls its `onClick` then `onExpandedChange(false)`.
 ```kotlin
 DsCartLineItem(name, quantity, onQuantityChange, lineTotal, unitPrice, tvaLabel, note,
                originalTotal, discountLabel, onTvaClick, onDiscountClick, onRemove)
-DsTotalsBlock(lines: List<DsTotalsLine>, total: DsTotalsLine)
+DsTotalsBlock(lines: List<DsTotalsLine>, total: DsTotalsLine, rowModifier = Modifier)
 DsPaymentMethodRow(icon, title, subtitle, selected, onClick)
-DsNumericKeypad(onKey: (DsKey) -> Unit, rowModifier, gap = 7.dp)
+DsNumericKeypad(onKey: (DsKey) -> Unit, rowModifier, gap = 7.dp, showComma = true, enabled = true)
 String.applyKey(key: DsKey): String
 DsChipRow(options, selectedIndex, onSelect, layout = DsChipRowLayout.Inline)
 ```
@@ -80,7 +80,41 @@ component with these two behaviours.
 
 `DsNumericKeypad` emits `DsKey` events; `applyKey` is the pure amount-editing rule (digits fill cents right to
 left with French grouping, backspace drops one, comma is a no-op) and is unit-tested — use it instead of
-re-implementing amount entry.
+re-implementing amount entry. `showComma = false` leaves the comma slot empty so `0` and backspace keep their
+columns; `enabled = false` greys every key (`DsKeypadKey(enabled = false)`) and ignores taps.
+
+### Staff PIN
+
+```kotlin
+DsStaffPinLogin(staff: List<DsStaffMember>, selectedStaffId: String?, onSelectStaff, enteredCount: Int, onKey,
+                state: DsStaffPinState = DsStaffPinState.Entering, pinLength = DsStaffPinDefaults.PinLength,
+                animate = DsTheme.animationsEnabled, emptyStaffLabel = "No staff members",
+                pinProgressLabel = { e, t -> "$e of $t digits entered" }, keypadRowModifier = Modifier)
+DsStaffMember(id, name, initials)
+DsStaffPinState.Entering | Error(message) | Locked(message)
+dsApplyPinKey(pin: String, key: DsKey, length = DsStaffPinDefaults.PinLength): String
+```
+
+`DsStaffPinLogin` signs a staff member in on a shared terminal: a wrapping row of avatar radio items, masked PIN
+dots and a comma-less keypad. It never sees the PIN, only `enteredCount`; keep the PIN in the caller and apply keys
+with `dsApplyPinKey` (digits append up to the length, backspace drops one, comma is a no-op). Verification, attempt
+counting and the lockout timer belong to the caller, which reports the outcome through `state`: `Error` colours the
+dots red, shows its message and shakes the dots when `animate` is on; `Locked` shows its message and disables both
+the keypad and staff selection. The keypad is also disabled until `selectedStaffId` names a member of `staff`.
+TalkBack reads the dots as `pinProgressLabel(count, total)`, never the digits.
+
+```kotlin
+DsReceipt(merchantName, items: List<DsReceiptItem>, totals: List<DsTotalsLine>, total: DsTotalsLine,
+          paymentIcon, paymentLabel, timestamp, reference, merchantDetails = emptyList(),
+          onPrint = null, onEmail = null, onSms = null, onNoReceipt = null,
+          printLabel = "Print", emailLabel = "Email", smsLabel = "SMS", noReceiptLabel = "No receipt")
+DsReceiptItem(quantity: String, name: String, total: String, detail = null, originalTotal = null)
+```
+
+`DsReceipt` takes preformatted strings only and does no money math: discount, tax and tip lines exist only if the
+caller passes them in `totals`. A null callback hides that action; with no callbacks the receipt is read-only and
+no action area is drawn. It is not scrollable by itself — put it in the caller's scroll container. Its totals
+reuse `DsTotalsBlock` with a merging `rowModifier`, so TalkBack reads each row as one phrase.
 
 ```kotlin
 DsSplitBill(totalMinor, mode: DsSplitMode, onModeChange, parts: List<DsSplitPart>, onPartCountChange, maxParts,
@@ -126,6 +160,50 @@ feeds each tap through `dsToggleModifierOption` in `onSelectionChange`. `showErr
 when the cashier tries to confirm an invalid selection, and each invalid group shows its message under the title.
 The surrounding sheet or dialog and the "add to cart" button are the caller's too; `dsIsModifierSelectionValid` is
 what enables that confirm button.
+
+### Refund selection
+
+```kotlin
+DsRefundSelection(lines: List<DsRefundLine>, selectedQuantities: List<Int>,
+                  onQuantityChange: (index: Int, quantity: Int) -> Unit, unit: String,
+                  refundTotalLabel = "Refund total", refundableLabel = { "$it refundable" },
+                  fullyRefundedLabel = "Fully refunded", emptyLabel = "Select items to refund")
+DsRefundLine(name, unitPriceMinor: Long, quantityBought: Int, quantityRefunded: Int = 0)
+dsRefundableQuantity(line): Int                          // bought - refunded
+dsClampRefundQuantity(line, selected): Int               // capped at refundable, negative throws
+dsRefundLineAmount(line, selected): Long                 // unit price x clamped quantity
+dsRefundTotal(lines, selectedQuantities): Long
+dsHasRefundSelection(lines, selectedQuantities): Boolean // total > 0
+```
+
+`DsRefundSelection` lets staff pick how many units of each line of a past order to refund, with a
+`DsQuantityStepper` per line and a refund total announced politely by TalkBack. Amounts are `Long` minor units and
+the math never uses floating point. `DsRefundLine` rejects a negative price or quantity and `quantityRefunded >
+quantityBought` with `IllegalArgumentException`; a negative selection throws too, while a selection above the
+refundable quantity is clamped. Overflow in a line amount or the total throws `ArithmeticException` instead of
+returning a wrong refund. The caller owns `selectedQuantities`, parallel to `lines`, and receives the 0-based
+index with an already-clamped quantity; fully refunded lines are drawn disabled and never call back. Use
+`dsHasRefundSelection` to enable the caller's confirm button, like `isSufficient` on `DsCashTenderStatus`.
+Order-level discounts and taxes are not split across lines: pass the unit price actually paid.
+
+## Product grid
+
+```kotlin
+DsProductGrid(products: List<DsProductGridItem>, onProductClick, emptyTitle, categories = emptyList(),
+              selectedCategory = null, onCategorySelect = {}, query = null, onQueryChange = {},
+              searchPlaceholder = "Rechercher...", onProductLongClick = null, emptyDescription, emptyIcon,
+              emptyActionLabel, onEmptyAction, outOfStockLabel = "Rupture de stock",
+              windowSize = DsTheme.windowSize)
+DsProductGridItem(id, name, price, inCartCount = 0, outOfStock = false, image = null)
+dsProductGridColumns(windowSize): Int   // Compact 2, Expanded 4
+```
+
+`DsProductGrid` is the register catalogue: an optional `DsSearchBar` (shown when `query` is not null), optional
+`DsChipRow` categories (shown when `categories` is not empty), then a lazy grid of `DsProductCard` keyed by `id`.
+It is stateless and never filters: the caller applies the query and the category and passes the result as
+`products`, rendered in order. The column count comes from `DsWindowSize` through `dsProductGridColumns`. An empty
+list shows `DsEmptyState` in place of the grid, under the search bar and chips. Out-of-stock items render muted,
+labelled and not clickable. The grid is lazy, so give it a bounded height.
 
 ## States
 

@@ -26,6 +26,7 @@ import io.github.amine2233.designsystem.atoms.DsAvatar
 import io.github.amine2233.designsystem.atoms.DsButton
 import io.github.amine2233.designsystem.atoms.DsButtonSize
 import io.github.amine2233.designsystem.atoms.DsButtonVariant
+import io.github.amine2233.designsystem.atoms.DsDivider
 import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsSpacing
 import io.github.amine2233.designsystem.core.DsTheme
@@ -49,20 +50,31 @@ import io.github.amine2233.designsystem.organisms.DsNumericKeypad
 import io.github.amine2233.designsystem.organisms.DsPaymentMethodRow
 import io.github.amine2233.designsystem.organisms.DsPaymentOutcome
 import io.github.amine2233.designsystem.organisms.DsProcessingState
+import io.github.amine2233.designsystem.organisms.DsProductGrid
+import io.github.amine2233.designsystem.organisms.DsProductGridItem
 import io.github.amine2233.designsystem.organisms.DsProductModifier
 import io.github.amine2233.designsystem.organisms.DsPullToRefresh
+import io.github.amine2233.designsystem.organisms.DsReceipt
+import io.github.amine2233.designsystem.organisms.DsReceiptItem
+import io.github.amine2233.designsystem.organisms.DsRefundLine
+import io.github.amine2233.designsystem.organisms.DsRefundSelection
 import io.github.amine2233.designsystem.organisms.DsResultMark
 import io.github.amine2233.designsystem.organisms.DsSnackbar
 import io.github.amine2233.designsystem.organisms.DsSnackbarTone
 import io.github.amine2233.designsystem.organisms.DsSplitBill
 import io.github.amine2233.designsystem.organisms.DsSplitMode
 import io.github.amine2233.designsystem.organisms.DsSplitPart
+import io.github.amine2233.designsystem.organisms.DsStaffMember
+import io.github.amine2233.designsystem.organisms.DsStaffPinDefaults
+import io.github.amine2233.designsystem.organisms.DsStaffPinLogin
+import io.github.amine2233.designsystem.organisms.DsStaffPinState
 import io.github.amine2233.designsystem.organisms.DsToast
 import io.github.amine2233.designsystem.organisms.DsToastStyle
 import io.github.amine2233.designsystem.organisms.DsTopBar
 import io.github.amine2233.designsystem.organisms.DsTotalsBlock
 import io.github.amine2233.designsystem.organisms.DsTotalsLine
 import io.github.amine2233.designsystem.organisms.applyKey
+import io.github.amine2233.designsystem.organisms.dsApplyPinKey
 import kotlinx.coroutines.delay
 
 private const val REFRESH_DEMO_MS = 1500L
@@ -101,6 +113,7 @@ private val PRODUCT_MODIFIER_GROUPS =
             minSelections = 0,
         ),
     )
+private const val DEMO_PIN = "1234"
 
 @Composable
 fun OrganismsGallery(modifier: Modifier = Modifier) {
@@ -206,6 +219,59 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
                 totalLabel = "Total",
             )
         }
+        CatalogSection("Refund selection") {
+            var refundSelection by remember { mutableStateOf(listOf(1, 0, 0)) }
+            DsRefundSelection(
+                lines = refundLines,
+                selectedQuantities = refundSelection,
+                onQuantityChange = { index, quantity ->
+                    refundSelection = refundSelection.mapIndexed { i, selected -> if (i == index) quantity else selected }
+                },
+                unit = "DA",
+                refundTotalLabel = "Total remboursé",
+                refundableLabel = { "$it remboursable(s)" },
+                fullyRefundedLabel = "Déjà remboursé",
+                emptyLabel = "Sélectionnez les articles à rembourser",
+            )
+        }
+        CatalogSection("Staff PIN") {
+            var staffId by rememberSaveable { mutableStateOf<String?>(null) }
+            var pin by rememberSaveable { mutableStateOf("") }
+            var pinState by remember { mutableStateOf<DsStaffPinState>(DsStaffPinState.Entering) }
+            DsStaffPinLogin(
+                staff = galleryStaff,
+                selectedStaffId = staffId,
+                onSelectStaff = {
+                    staffId = it.id
+                    pin = ""
+                    pinState = DsStaffPinState.Entering
+                },
+                enteredCount = pin.length,
+                onKey = {
+                    pin = dsApplyPinKey(pin, it)
+                    pinState =
+                        when {
+                            pin.length < DsStaffPinDefaults.PinLength -> DsStaffPinState.Entering
+                            pin == DEMO_PIN -> DsStaffPinState.Entering
+                            else -> DsStaffPinState.Error("Code PIN incorrect")
+                        }
+                },
+                state = pinState,
+                pinProgressLabel = { entered, total -> "$entered chiffres sur $total saisis" },
+                keypadRowModifier = Modifier.height(52.dp),
+            )
+            DsDivider()
+            DsStaffPinLogin(
+                staff = galleryStaff,
+                selectedStaffId = "karim",
+                onSelectStaff = {},
+                enteredCount = 0,
+                onKey = {},
+                state = DsStaffPinState.Locked("Trop de tentatives. Réessayez dans 0:45."),
+                pinProgressLabel = { entered, total -> "$entered chiffres sur $total saisis" },
+                keypadRowModifier = Modifier.height(52.dp),
+            )
+        }
         CatalogSection("Payment methods") {
             var method by rememberSaveable { mutableIntStateOf(0) }
             DsPaymentMethodRow(DsIcons.Card, "Carte bancaire", "Terminal connecté", selected = method == 0, onClick = { method = 0 })
@@ -290,6 +356,38 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
                 DsCircleMenu(ticketMenuOpen, { ticketMenuOpen = it }, actions, "Actions du ticket")
             }
         }
+        CatalogSection("Product grid") {
+            var query by rememberSaveable { mutableStateOf("") }
+            var category by rememberSaveable { mutableIntStateOf(0) }
+            val visible =
+                galleryProducts.filter { (product, productCategory) ->
+                    (category == 0 || productCategory == category) && product.name.contains(query.trim(), ignoreCase = true)
+                }
+            DsProductGrid(
+                products = visible.map { it.first },
+                onProductClick = {},
+                emptyTitle = "Aucun résultat",
+                modifier = Modifier.height(460.dp),
+                categories = productCategories,
+                selectedCategory = category,
+                onCategorySelect = { category = it },
+                query = query,
+                onQueryChange = { query = it },
+                emptyDescription = "Essayez une autre recherche ou catégorie.",
+                emptyIcon = DsIcons.Search,
+            )
+            DsProductGrid(
+                products = emptyList(),
+                onProductClick = {},
+                emptyTitle = "Aucun résultat",
+                modifier = Modifier.height(280.dp),
+                categories = productCategories,
+                selectedCategory = 3,
+                query = "Mocha",
+                emptyDescription = "Essayez une autre recherche ou catégorie.",
+                emptyIcon = DsIcons.Search,
+            )
+        }
         CatalogSection("Split bill") {
             var equalParts by remember { mutableStateOf(List(3) { DsSplitPart() }) }
             SplitBillExample(
@@ -313,8 +411,78 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
                 ),
             )
         }
+        CatalogSection("Receipt") {
+            DsReceipt(
+                merchantName = "Café Central",
+                merchantDetails = listOf("12 rue Didouche Mourad, Alger", "NIF 000123456789"),
+                items =
+                    listOf(
+                        DsReceiptItem("2×", "Cappuccino", "400 DA", detail = "Lait d'avoine"),
+                        DsReceiptItem("1×", "Formule Déjeuner", "441 DA", originalTotal = "490 DA"),
+                        DsReceiptItem("1×", "Part de gâteau pistache et fleur d'oranger de saison", "292 DA"),
+                    ),
+                totals =
+                    listOf(
+                        DsTotalsLine("Sous-total HT", "1 025 DA"),
+                        DsTotalsLine("Remise totale", "−49 DA", DsTotalsEmphasis.Discount),
+                        DsTotalsLine("TVA 10%", "92 DA", DsTotalsEmphasis.Muted),
+                        DsTotalsLine("TVA 5,5%", "4 DA", DsTotalsEmphasis.Muted),
+                        DsTotalsLine("Pourboire", "+ 108 DA", DsTotalsEmphasis.Positive),
+                    ),
+                total = DsTotalsLine("Total TTC", "1 180 DA"),
+                paymentIcon = DsIcons.Card,
+                paymentLabel = "Carte bancaire •••• 4242",
+                timestamp = "12 nov. 2026, 14:32",
+                reference = "Ticket n° A-10423",
+                onPrint = {},
+                onEmail = {},
+                onSms = {},
+                onNoReceipt = {},
+                printLabel = "Imprimer",
+                emailLabel = "E-mail",
+                smsLabel = "SMS",
+                noReceiptLabel = "Pas de ticket",
+            )
+            DsDivider()
+            DsReceipt(
+                merchantName = "Café Central",
+                items = listOf(DsReceiptItem("1×", "Espresso", "150 DA")),
+                totals = listOf(DsTotalsLine("Sous-total HT", "136 DA"), DsTotalsLine("TVA 10%", "14 DA", DsTotalsEmphasis.Muted)),
+                total = DsTotalsLine("Total TTC", "150 DA"),
+                paymentIcon = DsIcons.Cash,
+                paymentLabel = "Espèces",
+                timestamp = "12 nov. 2026, 14:35",
+                reference = "Ticket n° A-10424",
+            )
+        }
     }
 }
+
+private val galleryStaff =
+    listOf(
+        DsStaffMember("amina", "Amina", "AB"),
+        DsStaffMember("karim", "Karim", "KD"),
+        DsStaffMember("sonia", "Sonia", "SL"),
+    )
+
+private val refundLines =
+    listOf(
+        DsRefundLine("Cappuccino", unitPriceMinor = 20_000L, quantityBought = 2),
+        DsRefundLine("Croissant", unitPriceMinor = 9_000L, quantityBought = 3, quantityRefunded = 1),
+        DsRefundLine("Espresso", unitPriceMinor = 15_000L, quantityBought = 1, quantityRefunded = 1),
+    )
+
+private val productCategories = listOf("Tous", "Chauds", "Froids", "Snacks")
+
+private val galleryProducts =
+    listOf(
+        DsProductGridItem(1, "Espresso", "150 DA") to 1,
+        DsProductGridItem(2, "Cappuccino", "200 DA", inCartCount = 2) to 1,
+        DsProductGridItem(3, "Thé menthe", "120 DA", outOfStock = true) to 1,
+        DsProductGridItem(4, "Jus d'orange", "180 DA") to 2,
+        DsProductGridItem(5, "Limonade", "160 DA", inCartCount = 1) to 2,
+        DsProductGridItem(6, "Croissant", "90 DA") to 3,
+    )
 
 private fun splitAmount(minor: Long): String = "${minor / 100},${(minor % 100).toString().padStart(2, '0')} DA"
 

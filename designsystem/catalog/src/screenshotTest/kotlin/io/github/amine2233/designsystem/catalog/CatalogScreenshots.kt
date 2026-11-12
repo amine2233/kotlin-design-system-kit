@@ -1,6 +1,10 @@
 package io.github.amine2233.designsystem.catalog
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
@@ -23,8 +27,8 @@ private const val FORM_PAGE = "spec:width=375dp,height=2400dp,dpi=320"
 
 // The atoms, molecules and organisms galleries are the longest pages in the catalog; they need a taller canvas.
 private const val ATOMS_PAGE = "spec:width=375dp,height=4000dp,dpi=320"
-private const val MOLECULES_PAGE = "spec:width=375dp,height=7600dp,dpi=320"
-private const val ORGANISMS_PAGE = "spec:width=375dp,height=6400dp,dpi=320"
+private const val MOLECULES_PAGE = "spec:width=375dp,height=8000dp,dpi=320"
+private const val ORGANISMS_PAGE = "spec:width=375dp,height=9400dp,dpi=320"
 private const val FOUNDATIONS_PAGE = "spec:width=375dp,height=2400dp,dpi=320"
 
 @Composable
@@ -32,7 +36,13 @@ private fun Snapshot(
     dark: Boolean = false,
     content: @Composable () -> Unit,
 ) {
-    DsTheme(darkTheme = dark, animationsEnabled = false, content = content)
+    DsTheme(darkTheme = dark, animationsEnabled = false) {
+        if (dark) {
+            Box(Modifier.fillMaxSize().background(DsTheme.colors.background)) { content() }
+        } else {
+            content()
+        }
+    }
 }
 
 // ── Galleries (phone, light + dark) ─────────────────────────────

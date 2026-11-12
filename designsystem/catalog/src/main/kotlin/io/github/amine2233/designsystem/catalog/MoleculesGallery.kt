@@ -38,11 +38,17 @@ import io.github.amine2233.designsystem.molecules.DsAvatarEntry
 import io.github.amine2233.designsystem.molecules.DsAvatarGroup
 import io.github.amine2233.designsystem.molecules.DsBanner
 import io.github.amine2233.designsystem.molecules.DsBannerTone
+import io.github.amine2233.designsystem.molecules.DsBarcodeScanField
+import io.github.amine2233.designsystem.molecules.DsBarcodeScanState
 import io.github.amine2233.designsystem.molecules.DsButtonGroup
 import io.github.amine2233.designsystem.molecules.DsButtonGroupItem
 import io.github.amine2233.designsystem.molecules.DsButtonGroupOrientation
 import io.github.amine2233.designsystem.molecules.DsCheckRow
 import io.github.amine2233.designsystem.molecules.DsDashedActionRow
+import io.github.amine2233.designsystem.molecules.DsDeviceStatus
+import io.github.amine2233.designsystem.molecules.DsDeviceStatusChip
+import io.github.amine2233.designsystem.molecules.DsDeviceStatusEntry
+import io.github.amine2233.designsystem.molecules.DsDeviceStatusRow
 import io.github.amine2233.designsystem.molecules.DsDiscountEntry
 import io.github.amine2233.designsystem.molecules.DsDiscountMode
 import io.github.amine2233.designsystem.molecules.DsDropdown
@@ -321,6 +327,40 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             DsPromoCodeField("PROMO10", {}, DsPromoCodeState.Applied("PROMO10", "−10 %"), onApply = {}, onRemove = {})
             DsPromoCodeField("NOEL2019", {}, DsPromoCodeState.Invalid("Code expiré"), onApply = {}, onRemove = {})
         }
+        CatalogSection("Barcode scan") {
+            var barcode by rememberSaveable { mutableStateOf("") }
+            var submitted by rememberSaveable { mutableStateOf("") }
+            DsBarcodeScanField(
+                value = barcode,
+                onValueChange = { barcode = it },
+                state = if (submitted.isEmpty()) DsBarcodeScanState.Idle else DsBarcodeScanState.Found(submitted),
+                onScan = {},
+                onSubmit = { submitted = barcode },
+            )
+            DsBarcodeScanField("3017620422003", {}, DsBarcodeScanState.Scanning, {}, {}, label = "En cours de scan")
+            DsBarcodeScanField("3017620422003", {}, DsBarcodeScanState.Found("Café crème 250 g"), {}, {}, label = "Trouvé")
+            DsBarcodeScanField("0000000000000", {}, DsBarcodeScanState.NotFound(), {}, {}, label = "Introuvable")
+            DsBarcodeScanField("3017620422003", {}, DsBarcodeScanState.Idle, {}, {}, label = "Désactivé", enabled = false)
+        }
+        CatalogSection("Device status") {
+            DsDeviceStatusRow(
+                listOf(
+                    DsDeviceStatusEntry(DsIcons.Print, "Imprimante", DsDeviceStatus.Connected, "Connectée"),
+                    DsDeviceStatusEntry(DsIcons.Card, "Terminal", DsDeviceStatus.Connecting, "Connexion…"),
+                    DsDeviceStatusEntry(DsIcons.CashDrawer, "Tiroir-caisse", DsDeviceStatus.Offline, "Hors ligne"),
+                    DsDeviceStatusEntry(DsIcons.Network, "Réseau", DsDeviceStatus.Attention, "Instable"),
+                ),
+            )
+            DsSectionLabel("Touchable")
+            DsDeviceStatusChip(DsIcons.Print, "Imprimante", DsDeviceStatus.Attention, "Papier épuisé", onClick = {})
+            DsSectionLabel("Libellé long")
+            DsDeviceStatusChip(
+                DsIcons.Card,
+                "Terminal de paiement du comptoir principal, près de l'entrée",
+                DsDeviceStatus.Connected,
+                "Connecté",
+            )
+        }
         CatalogSection("Tip selector") {
             var tip by remember { mutableStateOf<DsTipSelection>(DsTipSelection.Preset(10)) }
             DsTipSelector(
@@ -437,7 +477,7 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             DsExpandableSection("Produits", expanded = open, onToggle = {
                 open = !open
             }, summary = "12 produits", trailing = { DsTag("12", tone = DsTagTone.Primary) }) {
-                Text("Contenu de la section", style = DsTheme.typography.body)
+                Text("Contenu de la section", style = DsTheme.typography.body, color = DsTheme.colors.textPrimary)
             }
             DsExpandableSection("Catégories", expanded = false, onToggle = {}, summary = "Chauds · Froids · Snacks") {}
         }
@@ -445,6 +485,7 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 DsProductCard("Espresso", "150 DA", onClick = {}, modifier = Modifier.weight(1f))
                 DsProductCard("Cappuccino", "200 DA", onClick = {}, inCartCount = 2, modifier = Modifier.weight(1f))
+                DsProductCard("Thé menthe", "120 DA", onClick = {}, outOfStock = true, modifier = Modifier.weight(1f))
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 DsKeypadKey("7", onClick = {}, Modifier.weight(1f).height(48.dp))
