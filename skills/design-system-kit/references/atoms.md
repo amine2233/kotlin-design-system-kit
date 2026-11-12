@@ -99,8 +99,14 @@ DsDivider(thickness = 1.dp) / DsVerticalDivider(thickness = 1.dp)
 DsErrorText(message)                                  // icon + short message, error color
 DsLinearProgress(progress: Float?)                    // null = indeterminate
 DsCircularProgress(progress: Float?, size = 52.dp, strokeWidth = 4.dp)
+DsProgressRing(progress: Float, size = DsProgressRingSize.Medium, style = DsProgressRingStyle.Primary,
+               showValue = true, label: String? = null, enabled = true, animate = DsTheme.animationsEnabled)
+// DsProgressRingSize: Small (40/4 dp, caption) · Medium (64/6 dp, labelStrong) · Large (96/10 dp, title)
+// DsProgressRingStyle: Primary · Success · Warning · Danger (error) · Info
 DsSkeleton(shape = DsShapes.sm, animate = DsTheme.animationsEnabled)
 ```
+
+Choose `DsProgressRing` over `DsCircularProgress` when the user should read the value — a determinate ring with the percentage centred and an optional label; keep `DsCircularProgress` for indeterminate or bare indicators.
 
 `selected = true` on `DsCard` switches to the primary container + border, the system-wide selected look.
 
