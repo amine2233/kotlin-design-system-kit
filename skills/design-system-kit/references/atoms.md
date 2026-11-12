@@ -72,6 +72,15 @@ DsRadioIndicator(selected, size = 20.dp)     // the dot alone, for list rows
 DsCheckBullet(size = 20.dp, filled = true)   // static check bullet, for feature lists
 ```
 
+```kotlin
+DsRating(value, onValueChange = null, max = 5, allowHalf = false, enabled = true,
+         starSize = DsTheme.spacing.lg, stateDescription = null, animate)
+```
+
+`DsRating` is read-only when `onValueChange` is null, otherwise each star is a 48dp tap cell (leading half = `.5` with
+`allowHalf`) and the row is one adjustable accessibility element. `dsRatingClamp`, `dsRatingStars` and
+`dsRatingValueForTap` are the pure rules behind it.
+
 `DsSwitch` with a label fills the width and pushes the switch to the end; without one it is just the control.
 
 ## Chips, tags, badges, avatars, tiles
