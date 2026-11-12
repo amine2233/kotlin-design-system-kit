@@ -1,5 +1,6 @@
 package io.github.amine2233.designsystem.organisms
 
+import androidx.compose.foundation.interaction.DragInteraction
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +11,10 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,11 +37,15 @@ fun dsTabPagerPage(
     pageCount: Int,
 ): Int = if (pageCount <= 0) 0 else selectedIndex.coerceIn(0, pageCount - 1)
 
-/** The page to report after a swipe settles, or null when the caller already has it selected. */
+/**
+ * The page to report after the pager settles, or null when the caller already has it selected or the move
+ * was not a user drag (a tap interrupting an animated move can settle on an intermediate page).
+ */
 fun dsTabPagerSettledSelection(
     settledPage: Int,
     selectedIndex: Int,
-): Int? = settledPage.takeIf { it != selectedIndex }
+    userDragged: Boolean,
+): Int? = settledPage.takeIf { userDragged && it != selectedIndex }
 
 /** A [DsTabRow] of plain labels over swipeable pages, one page per tab. */
 @Composable
@@ -71,15 +79,20 @@ fun DsTabPager(
     val pagerState = rememberPagerState(initialPage = target) { items.size }
     val currentTarget by rememberUpdatedState(target)
     val currentOnSelect by rememberUpdatedState(onSelect)
+    var userDragged by remember { mutableStateOf(false) }
 
+    LaunchedEffect(pagerState) {
+        pagerState.interactionSource.interactions.collect { if (it is DragInteraction.Start) userDragged = true }
+    }
     LaunchedEffect(target) {
+        userDragged = false
         if (pagerState.currentPage != target) {
             if (animate) pagerState.animateScrollToPage(target) else pagerState.scrollToPage(target)
         }
     }
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.settledPage }.collect { page ->
-            dsTabPagerSettledSelection(page, currentTarget)?.let(currentOnSelect)
+            dsTabPagerSettledSelection(page, currentTarget, userDragged)?.let(currentOnSelect)
         }
     }
 

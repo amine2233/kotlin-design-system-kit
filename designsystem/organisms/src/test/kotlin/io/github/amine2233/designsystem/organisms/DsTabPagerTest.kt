@@ -29,17 +29,22 @@ class DsTabPagerTest {
 
     @Test
     fun `settling on another page reports it`() {
-        assertEquals(2, dsTabPagerSettledSelection(settledPage = 2, selectedIndex = 0))
+        assertEquals(2, dsTabPagerSettledSelection(settledPage = 2, selectedIndex = 0, userDragged = true))
     }
 
     @Test
     fun `settling on the selected page reports nothing`() {
-        assertNull(dsTabPagerSettledSelection(settledPage = 1, selectedIndex = 1))
+        assertNull(dsTabPagerSettledSelection(settledPage = 1, selectedIndex = 1, userDragged = true))
     }
 
     @Test
     fun `settling on the clamped page of an out-of-range index reports nothing`() {
-        assertNull(dsTabPagerSettledSelection(settledPage = 2, selectedIndex = dsTabPagerPage(7, pageCount = 3)))
-        assertNull(dsTabPagerSettledSelection(settledPage = 0, selectedIndex = dsTabPagerPage(-1, pageCount = 3)))
+        assertNull(dsTabPagerSettledSelection(settledPage = 2, selectedIndex = dsTabPagerPage(7, pageCount = 3), userDragged = true))
+        assertNull(dsTabPagerSettledSelection(settledPage = 0, selectedIndex = dsTabPagerPage(-1, pageCount = 3), userDragged = true))
+    }
+
+    @Test
+    fun `settling on an intermediate page after a programmatic move reports nothing`() {
+        assertNull(dsTabPagerSettledSelection(settledPage = 1, selectedIndex = 2, userDragged = false))
     }
 }
