@@ -116,6 +116,25 @@ its own `DsNumericKeypad` + `DsAmountDisplay` and writes the result back into `a
 no amount entry. While Custom amounts exceed the total, the over-allocated row shows in the error colour and
 every collect action is disabled.
 
+## Product grid
+
+```kotlin
+DsProductGrid(products: List<DsProductGridItem>, onProductClick, emptyTitle, categories = emptyList(),
+              selectedCategory = null, onCategorySelect = {}, query = null, onQueryChange = {},
+              searchPlaceholder = "Rechercher...", onProductLongClick = null, emptyDescription, emptyIcon,
+              emptyActionLabel, onEmptyAction, outOfStockLabel = "Rupture de stock",
+              windowSize = DsTheme.windowSize)
+DsProductGridItem(id, name, price, inCartCount = 0, outOfStock = false, image = null)
+dsProductGridColumns(windowSize): Int   // Compact 2, Expanded 4
+```
+
+`DsProductGrid` is the register catalogue: an optional `DsSearchBar` (shown when `query` is not null), optional
+`DsChipRow` categories (shown when `categories` is not empty), then a lazy grid of `DsProductCard` keyed by `id`.
+It is stateless and never filters: the caller applies the query and the category and passes the result as
+`products`, rendered in order. The column count comes from `DsWindowSize` through `dsProductGridColumns`. An empty
+list shows `DsEmptyState` in place of the grid, under the search bar and chips. Out-of-stock items render muted,
+labelled and not clickable. The grid is lazy, so give it a bounded height.
+
 ## States
 
 ```kotlin
