@@ -55,6 +55,10 @@ Named: `screen` 16, `card` 16, `minTouchTarget` 48 — every tappable row uses a
 `xs` 4, `sm` 8, `md` 12, `lg` 16, `xl` 24, `pill`, `sheet` (top corners only).
 Named: `button` = pill, `chip` = pill, `card` = md, `input` = lg, `key` = md.
 
+## DsStroke
+
+`hairline` 1dp (outlines, dividers, guide lines) and `signature` 3dp (pen ink drawn by the user).
+
 ## DsAlpha
 
 `TINT` 0.12 and `BORDER` 0.35 — the two opacities a tone is drawn at when a surface is tinted rather than filled
