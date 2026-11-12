@@ -76,8 +76,14 @@ DsPaymentResult(outcome, title, amount, description, primaryAction, onPrimary,
                 secondaryAction, onSecondary, progress = if (animationsEnabled) null else 1f)
 DsResultMark(outcome, size = 120.dp, progress = …, onFinished = {})
 DsPaymentOutcome.Success / .Failure
+DsPullToRefresh(isRefreshing, onRefresh, modifier, contentDescription = "Chargement",
+                animate = DsTheme.animationsEnabled) { content }
 ```
 
 Every animated organism takes an `animate` or `progress` override so a snapshot can freeze it: leave the default
 in the app, pass the override in tests. `DsResultMark.onFinished` fires when the draw-in completes — that is where
 an auto-dismiss belongs.
+
+`DsPullToRefresh` is stateless: the caller owns `isRefreshing` and the work started in `onRefresh`, and sets the flag
+back to false when it finishes. Snapshots pass `animate = false` to freeze the refreshing frame (indicator at rest,
+fixed spinner arc).

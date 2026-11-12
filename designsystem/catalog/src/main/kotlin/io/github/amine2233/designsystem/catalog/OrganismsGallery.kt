@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -23,8 +25,10 @@ import io.github.amine2233.designsystem.atoms.DsButton
 import io.github.amine2233.designsystem.atoms.DsButtonSize
 import io.github.amine2233.designsystem.atoms.DsButtonVariant
 import io.github.amine2233.designsystem.core.DsIcons
+import io.github.amine2233.designsystem.core.DsSpacing
 import io.github.amine2233.designsystem.core.DsTheme
 import io.github.amine2233.designsystem.molecules.DsAmountDisplay
+import io.github.amine2233.designsystem.molecules.DsListItem
 import io.github.amine2233.designsystem.molecules.DsTotalsEmphasis
 import io.github.amine2233.designsystem.organisms.DsBottomCartBar
 import io.github.amine2233.designsystem.organisms.DsBottomNavBar
@@ -37,6 +41,7 @@ import io.github.amine2233.designsystem.organisms.DsNumericKeypad
 import io.github.amine2233.designsystem.organisms.DsPaymentMethodRow
 import io.github.amine2233.designsystem.organisms.DsPaymentOutcome
 import io.github.amine2233.designsystem.organisms.DsProcessingState
+import io.github.amine2233.designsystem.organisms.DsPullToRefresh
 import io.github.amine2233.designsystem.organisms.DsResultMark
 import io.github.amine2233.designsystem.organisms.DsSnackbar
 import io.github.amine2233.designsystem.organisms.DsSnackbarTone
@@ -46,6 +51,9 @@ import io.github.amine2233.designsystem.organisms.DsTopBar
 import io.github.amine2233.designsystem.organisms.DsTotalsBlock
 import io.github.amine2233.designsystem.organisms.DsTotalsLine
 import io.github.amine2233.designsystem.organisms.applyKey
+import kotlinx.coroutines.delay
+
+private const val REFRESH_DEMO_MS = 1500L
 
 @Composable
 fun OrganismsGallery(modifier: Modifier = Modifier) {
@@ -139,6 +147,21 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
                 DsNfcPulse(size = 120.dp, animate = false)
             }
         }
+        CatalogSection("Pull to refresh") {
+            var refreshing by rememberSaveable { mutableStateOf(false) }
+            LaunchedEffect(refreshing) {
+                if (refreshing) {
+                    delay(REFRESH_DEMO_MS)
+                    refreshing = false
+                }
+            }
+            DsPullToRefresh(isRefreshing = refreshing, onRefresh = { refreshing = true }, modifier = Modifier.height(200.dp)) {
+                RefreshRows()
+            }
+            DsPullToRefresh(isRefreshing = true, onRefresh = {}, modifier = Modifier.height(200.dp), animate = false) {
+                RefreshRows()
+            }
+        }
         CatalogSection("Bottom navigation") {
             var nav by rememberSaveable { mutableIntStateOf(0) }
             DsBottomNavBar(
@@ -155,6 +178,13 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
         CatalogSection("Bottom cart bar") {
             DsBottomCartBar(itemCount = 3, total = "737 DA", onExpand = {}, onPay = {})
         }
+    }
+}
+
+@Composable
+private fun RefreshRows() {
+    LazyColumn(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(DsSpacing.sm)) {
+        items(6) { DsListItem("Commande #${it + 101}", supporting = "Table ${it + 1}") }
     }
 }
 
