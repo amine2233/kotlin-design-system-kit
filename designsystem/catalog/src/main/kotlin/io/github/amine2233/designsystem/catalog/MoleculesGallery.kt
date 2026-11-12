@@ -38,6 +38,8 @@ import io.github.amine2233.designsystem.molecules.DsAvatarEntry
 import io.github.amine2233.designsystem.molecules.DsAvatarGroup
 import io.github.amine2233.designsystem.molecules.DsBanner
 import io.github.amine2233.designsystem.molecules.DsBannerTone
+import io.github.amine2233.designsystem.molecules.DsBarcodeScanField
+import io.github.amine2233.designsystem.molecules.DsBarcodeScanState
 import io.github.amine2233.designsystem.molecules.DsButtonGroup
 import io.github.amine2233.designsystem.molecules.DsButtonGroupItem
 import io.github.amine2233.designsystem.molecules.DsButtonGroupOrientation
@@ -320,6 +322,21 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             DsPromoCodeField(promo, { promo = it }, DsPromoCodeState.Idle, onApply = {}, onRemove = {})
             DsPromoCodeField("PROMO10", {}, DsPromoCodeState.Applied("PROMO10", "−10 %"), onApply = {}, onRemove = {})
             DsPromoCodeField("NOEL2019", {}, DsPromoCodeState.Invalid("Code expiré"), onApply = {}, onRemove = {})
+        }
+        CatalogSection("Barcode scan") {
+            var barcode by rememberSaveable { mutableStateOf("") }
+            var submitted by rememberSaveable { mutableStateOf("") }
+            DsBarcodeScanField(
+                value = barcode,
+                onValueChange = { barcode = it },
+                state = if (submitted.isEmpty()) DsBarcodeScanState.Idle else DsBarcodeScanState.Found(submitted),
+                onScan = {},
+                onSubmit = { submitted = barcode },
+            )
+            DsBarcodeScanField("3017620422003", {}, DsBarcodeScanState.Scanning, {}, {}, label = "En cours de scan")
+            DsBarcodeScanField("3017620422003", {}, DsBarcodeScanState.Found("Café crème 250 g"), {}, {}, label = "Trouvé")
+            DsBarcodeScanField("0000000000000", {}, DsBarcodeScanState.NotFound(), {}, {}, label = "Introuvable")
+            DsBarcodeScanField("3017620422003", {}, DsBarcodeScanState.Idle, {}, {}, label = "Désactivé", enabled = false)
         }
         CatalogSection("Tip selector") {
             var tip by remember { mutableStateOf<DsTipSelection>(DsTipSelection.Preset(10)) }

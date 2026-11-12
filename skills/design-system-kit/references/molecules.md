@@ -121,11 +121,23 @@ DsQuantityStepper(quantity, onQuantityChange, min = 0, max = Int.MAX_VALUE)
 DsSearchBar(value, onValueChange, placeholder, enabled, showClear = true, onSearch = null,
             height = 36.dp, trailing = null)
 DsKeypadKey(label, onClick, tone = DsKeyTone.Default)     // Default, Secondary, Destructive
+DsBarcodeScanField(value, onValueChange, state: DsBarcodeScanState, onScan, onSubmit, label = "Code-barres",
+                   placeholder = "Scanner ou saisir un code", enabled = true,
+                   scanContentDescription = "Scanner un code-barres", scanningContentDescription = "Scan en cours",
+                   foundText = "Article trouvé", notFoundText = "Article introuvable")
+// state: DsBarcodeScanState.Idle, Scanning, Found(message = null), NotFound(message = null)
+dsBarcodeScanStatusText(state, foundText, notFoundText): String?
 ```
 
 `DsSearchBar` clears through `onValueChange("")`, so the query has one owner; the × only appears once there is
 something to clear. `onSearch` switches the keyboard's action key to Search — leave it out for a live filter,
 which is what most POS lists want. Give it `height = DsTheme.spacing.minTouchTarget` on a touch-first screen.
+
+`DsBarcodeScanField` has no camera code: `onScan` is a lambda the caller wires to whatever scanner it has. The IME
+Search key and a hardware Enter both call `onSubmit` once, without inserting a newline, so keyboard-wedge scanners
+(code then Enter) work as they are. The caller sets the state: `Scanning` swaps the scan button for a spinner of the
+same footprint, `Found` draws a success border with a check and its message, `NotFound` an error border with an
+error icon and its message. The status line is announced politely and read as one node.
 
 `DsOtpField` drives its boxes from one hidden text field, so keyboard, paste and one-time-code autofill keep
 working; non-digits are dropped and `onFilled` fires on the last digit — submit there.
