@@ -103,6 +103,30 @@ its own `DsNumericKeypad` + `DsAmountDisplay` and writes the result back into `a
 no amount entry. While Custom amounts exceed the total, the over-allocated row shows in the error colour and
 every collect action is disabled.
 
+```kotlin
+DsProductModifier(groups: List<DsModifierGroup>, selectedOptionIds: Set<String>, onSelectionChange: (Set<String>) -> Unit,
+                  notes, onNotesChange, quantity, onQuantityChange, basePriceMinor, unit, modifier,
+                  showErrors = false, maxQuantity = 99, notesMaxLength = 200,
+                  requiredLabel, optionalLabel, upToLabel: (Int) -> String, rangeLabel: (Int, Int) -> String,
+                  missingRequiredLabel, belowMinimumLabel: (Int) -> String, aboveMaximumLabel: (Int) -> String,
+                  notesLabel, notesPlaceholder = null, quantityLabel, totalLabel)   // English label defaults
+DsModifierGroup(id, title, options: List<DsModifierOption>, type = DsModifierGroupType.Single,
+                minSelections = 1, maxSelections = 1)
+DsModifierOption(id, name, priceDeltaMinor = 0L)
+dsModifierTotal(basePriceMinor, groups, selectedOptionIds, quantity): Long   // (base + deltas) * quantity
+dsModifierGroupError(group, selectedOptionIds): DsModifierGroupError?       // MissingRequired / BelowMinimum / AboveMaximum
+dsIsModifierSelectionValid(groups, selectedOptionIds): Boolean
+dsToggleModifierOption(group, optionId, selectedOptionIds): Set<String>
+```
+
+`DsProductModifier` configures a product before it goes to the cart: Single groups as radio rows, Multiple groups
+as checkbox rows that disable the unselected options at the max, then notes, quantity and a running total in minor
+units. The caller owns the selection (one flat set of option ids across all groups), `notes` and `quantity`, and
+feeds each tap through `dsToggleModifierOption` in `onSelectionChange`. `showErrors` is the caller's flag: set it
+when the cashier tries to confirm an invalid selection, and each invalid group shows its message under the title.
+The surrounding sheet or dialog and the "add to cart" button are the caller's too; `dsIsModifierSelectionValid` is
+what enables that confirm button.
+
 ## States
 
 ```kotlin
