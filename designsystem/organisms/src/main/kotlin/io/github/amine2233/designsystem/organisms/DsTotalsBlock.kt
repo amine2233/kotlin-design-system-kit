@@ -29,13 +29,14 @@ fun DsTotalsBlock(
     lines: List<DsTotalsLine>,
     total: DsTotalsLine,
     modifier: Modifier = Modifier,
+    rowModifier: Modifier = Modifier,
 ) {
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        lines.forEach { DsTotalsRow(it.label, it.value, emphasis = it.emphasis) }
+        lines.forEach { DsTotalsRow(it.label, it.value, rowModifier, emphasis = it.emphasis) }
         Spacer(Modifier.height(4.dp))
         DsDivider()
         Spacer(Modifier.height(4.dp))
-        DsTotalsRow(total.label, total.value, emphasis = DsTotalsEmphasis.Total, valueColor = null)
+        DsTotalsRow(total.label, total.value, rowModifier, emphasis = DsTotalsEmphasis.Total, valueColor = null)
     }
 }
 
