@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -42,6 +44,9 @@ import io.github.amine2233.designsystem.atoms.DsErrorText
 import io.github.amine2233.designsystem.atoms.DsIconButton
 import io.github.amine2233.designsystem.atoms.DsIconTile
 import io.github.amine2233.designsystem.atoms.DsLinearProgress
+import io.github.amine2233.designsystem.atoms.DsProgressRing
+import io.github.amine2233.designsystem.atoms.DsProgressRingSize
+import io.github.amine2233.designsystem.atoms.DsProgressRingStyle
 import io.github.amine2233.designsystem.atoms.DsRadioButton
 import io.github.amine2233.designsystem.atoms.DsRadioIndicator
 import io.github.amine2233.designsystem.atoms.DsSkeleton
@@ -56,6 +61,7 @@ import io.github.amine2233.designsystem.core.DsPalette
 import io.github.amine2233.designsystem.core.DsShapes
 import io.github.amine2233.designsystem.core.DsTheme
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AtomsGallery(modifier: Modifier = Modifier) {
     Column(modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
@@ -185,6 +191,18 @@ fun AtomsGallery(modifier: Modifier = Modifier) {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 DsCircularProgress(0.65f)
                 DsCircularProgress(0.3f, size = 32.dp, strokeWidth = 3.dp)
+            }
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                DsProgressRing(0.25f, size = DsProgressRingSize.Small)
+                DsProgressRing(0.5f)
+                DsProgressRing(0.75f, size = DsProgressRingSize.Large)
+                DsProgressRing(0.7f, label = "Upload")
+                DsProgressRing(1f, style = DsProgressRingStyle.Success)
+                DsProgressRing(0f)
+                DsProgressRing(0.4f, enabled = false)
             }
         }
     }
