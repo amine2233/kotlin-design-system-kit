@@ -46,6 +46,8 @@ import io.github.amine2233.designsystem.organisms.DsNumericKeypad
 import io.github.amine2233.designsystem.organisms.DsPaymentMethodRow
 import io.github.amine2233.designsystem.organisms.DsPaymentOutcome
 import io.github.amine2233.designsystem.organisms.DsProcessingState
+import io.github.amine2233.designsystem.organisms.DsProductGrid
+import io.github.amine2233.designsystem.organisms.DsProductGridItem
 import io.github.amine2233.designsystem.organisms.DsPullToRefresh
 import io.github.amine2233.designsystem.organisms.DsResultMark
 import io.github.amine2233.designsystem.organisms.DsSnackbar
@@ -225,6 +227,38 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
                 DsCircleMenu(ticketMenuOpen, { ticketMenuOpen = it }, actions, "Actions du ticket")
             }
         }
+        CatalogSection("Product grid") {
+            var query by rememberSaveable { mutableStateOf("") }
+            var category by rememberSaveable { mutableIntStateOf(0) }
+            val visible =
+                galleryProducts.filter { (product, productCategory) ->
+                    (category == 0 || productCategory == category) && product.name.contains(query.trim(), ignoreCase = true)
+                }
+            DsProductGrid(
+                products = visible.map { it.first },
+                onProductClick = {},
+                emptyTitle = "Aucun résultat",
+                modifier = Modifier.height(460.dp),
+                categories = productCategories,
+                selectedCategory = category,
+                onCategorySelect = { category = it },
+                query = query,
+                onQueryChange = { query = it },
+                emptyDescription = "Essayez une autre recherche ou catégorie.",
+                emptyIcon = DsIcons.Search,
+            )
+            DsProductGrid(
+                products = emptyList(),
+                onProductClick = {},
+                emptyTitle = "Aucun résultat",
+                modifier = Modifier.height(280.dp),
+                categories = productCategories,
+                selectedCategory = 3,
+                query = "Mocha",
+                emptyDescription = "Essayez une autre recherche ou catégorie.",
+                emptyIcon = DsIcons.Search,
+            )
+        }
         CatalogSection("Split bill") {
             var equalParts by remember { mutableStateOf(List(3) { DsSplitPart() }) }
             SplitBillExample(
@@ -250,6 +284,18 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
         }
     }
 }
+
+private val productCategories = listOf("Tous", "Chauds", "Froids", "Snacks")
+
+private val galleryProducts =
+    listOf(
+        DsProductGridItem(1, "Espresso", "150 DA") to 1,
+        DsProductGridItem(2, "Cappuccino", "200 DA", inCartCount = 2) to 1,
+        DsProductGridItem(3, "Thé menthe", "120 DA", outOfStock = true) to 1,
+        DsProductGridItem(4, "Jus d'orange", "180 DA") to 2,
+        DsProductGridItem(5, "Limonade", "160 DA", inCartCount = 1) to 2,
+        DsProductGridItem(6, "Croissant", "90 DA") to 3,
+    )
 
 private fun splitAmount(minor: Long): String = "${minor / 100},${(minor % 100).toString().padStart(2, '0')} DA"
 

@@ -445,6 +445,7 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 DsProductCard("Espresso", "150 DA", onClick = {}, modifier = Modifier.weight(1f))
                 DsProductCard("Cappuccino", "200 DA", onClick = {}, inCartCount = 2, modifier = Modifier.weight(1f))
+                DsProductCard("Thé menthe", "120 DA", onClick = {}, outOfStock = true, modifier = Modifier.weight(1f))
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 DsKeypadKey("7", onClick = {}, Modifier.weight(1f).height(48.dp))
