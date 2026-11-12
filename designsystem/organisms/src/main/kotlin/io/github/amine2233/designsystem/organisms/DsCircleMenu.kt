@@ -172,11 +172,13 @@ private fun CircleMenuActionButton(
             .border(BorderStroke(Dp.Hairline, c.border), DsShapes.pill)
             .then(
                 if (interactive) {
-                    Modifier.semantics { contentDescription = action.contentDescription }
+                    Modifier
+                        .semantics { contentDescription = action.contentDescription }
+                        .clickable(enabled = action.enabled, role = Role.Button, onClick = onClick)
                 } else {
                     Modifier.clearAndSetSemantics {}
                 },
-            ).clickable(enabled = interactive && action.enabled, role = Role.Button, onClick = onClick),
+            ),
         contentAlignment = Alignment.Center,
     ) {
         Icon(action.icon, contentDescription = null, tint = if (action.enabled) c.textPrimary else c.textDisabled)
