@@ -6,7 +6,7 @@ Layers: `core ← atoms ← molecules ← organisms ← templates ← catalog �
 - `designsystem/core` — every token: `DsTheme`, `DsColorScheme`/`DsPalette`, `DsTypography`, `DsSpacing`, `DsShapes`, `DsElevation`, `DsMotion`, `DsIcons`, `DsImages`, `DsWindowSize`, preview annotations.
 - `designsystem/atoms` — one-thing components: `DsText`, `DsButton`/`DsIconButton`/`DsOAuthButton`, `DsTextField`/`DsTextArea`/`DsPasswordField`/`DsPhoneField`, `DsFormField`/`DsFieldBox`/`DsPickerField`, `DsSwitch`/`DsCheckbox`/`DsRadioButton`, `DsSlider`, `DsChip`, `DsTag`, `DsBadge`, `DsAvatar`/`DsStatusDot`, `DsCard`, `DsDivider`, progress, skeleton, images.
 - `designsystem/molecules` — a few atoms doing one job: `DsDropdown`/`DsMultiSelectField`/`DsSearchableDropdown`, the pickers (date, range, time, color, image, file), `DsOtpField`, `DsMenu`, `DsListItem`, `DsSettingsRow`, `DsSearchBar`, `DsQuantityStepper`, `DsSegmentedControl`, `DsTabRow`, `DsBanner`, `DsEmptyState`, `DsButtonGroup`.
-- `designsystem/organisms` — screen regions: `DsTopBar`, `DsBottomNavBar`/`DsNavigationRail`, `DsBottomSheet`, `DsDialog`, `DsSnackbar`, `DsToast`, `DsNumericKeypad`, `DsCartLineItem`, `DsTotalsBlock`, `DsPaymentResult`, `DsNfcWaiting`.
+- `designsystem/organisms` — screen regions: `DsTopBar`, `DsBottomNavBar`/`DsNavigationRail`, `DsBottomSheet`, `DsDialog`, `DsSnackbar`, `DsToast`, `DsNumericKeypad`, `DsCartLineItem`, `DsTotalsBlock`, `DsPaymentResult`, `DsNfcWaiting`, `DsCircleMenu`.
 - `designsystem/templates` — page skeletons: `DsScreenScaffold`, `DsNavigationScaffold`, `DsTwoPaneLayout`, `DsCenteredLayout`.
 - `designsystem/catalog` — galleries, reference screens, screenshot tests. `sample/` — the app that browses them.
 
