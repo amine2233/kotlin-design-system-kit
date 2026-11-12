@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,6 +19,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -42,12 +45,18 @@ import io.github.amine2233.designsystem.atoms.DsErrorText
 import io.github.amine2233.designsystem.atoms.DsIconButton
 import io.github.amine2233.designsystem.atoms.DsIconTile
 import io.github.amine2233.designsystem.atoms.DsLinearProgress
+import io.github.amine2233.designsystem.atoms.DsPresence
+import io.github.amine2233.designsystem.atoms.DsProgressRing
+import io.github.amine2233.designsystem.atoms.DsProgressRingSize
+import io.github.amine2233.designsystem.atoms.DsProgressRingStyle
 import io.github.amine2233.designsystem.atoms.DsRadioButton
 import io.github.amine2233.designsystem.atoms.DsRadioIndicator
+import io.github.amine2233.designsystem.atoms.DsRating
 import io.github.amine2233.designsystem.atoms.DsSkeleton
 import io.github.amine2233.designsystem.atoms.DsSpinner
 import io.github.amine2233.designsystem.atoms.DsSpinnerSize
 import io.github.amine2233.designsystem.atoms.DsSpinnerStyle
+import io.github.amine2233.designsystem.atoms.DsStatusDot
 import io.github.amine2233.designsystem.atoms.DsSwitch
 import io.github.amine2233.designsystem.atoms.DsTag
 import io.github.amine2233.designsystem.atoms.DsTagTone
@@ -57,8 +66,10 @@ import io.github.amine2233.designsystem.atoms.accent
 import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsPalette
 import io.github.amine2233.designsystem.core.DsShapes
+import io.github.amine2233.designsystem.core.DsSpacing
 import io.github.amine2233.designsystem.core.DsTheme
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AtomsGallery(modifier: Modifier = Modifier) {
     Column(modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
@@ -125,6 +136,16 @@ fun AtomsGallery(modifier: Modifier = Modifier) {
                 DsCheckBullet()
                 DsCheckBullet(filled = false)
             }
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                DsStatusDot(DsPresence.Online, contentDescription = "Online")
+                DsStatusDot(DsPresence.Away, contentDescription = "Away")
+                DsStatusDot(DsPresence.Busy, contentDescription = "Busy")
+                DsStatusDot(DsPresence.Offline, contentDescription = "Offline")
+                DsAvatar("AK", status = DsPresence.Online, statusContentDescription = "Online")
+            }
         }
         CatalogSection("Inputs") {
             var value by rememberSaveable { mutableStateOf("") }
@@ -140,6 +161,15 @@ fun AtomsGallery(modifier: Modifier = Modifier) {
                 DsRadioButton(selected = true, onClick = {}, label = "Espèces")
                 DsRadioButton(selected = false, onClick = {}, label = "Carte")
             }
+        }
+        CatalogSection("Rating") {
+            var rating by rememberSaveable { mutableFloatStateOf(3.5f) }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                DsRating(rating, onValueChange = { rating = it }, allowHalf = true, stateDescription = "$rating / 5")
+                Text("$rating / 5", style = DsTheme.typography.bodyStrong)
+            }
+            DsRating(4.5f, stateDescription = "4.5 / 5")
+            DsRating(2f, onValueChange = {}, enabled = false)
         }
         CatalogSection("Tags, tiles, errors") {
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -189,12 +219,24 @@ fun AtomsGallery(modifier: Modifier = Modifier) {
                 DsCircularProgress(0.65f)
                 DsCircularProgress(0.3f, size = 32.dp, strokeWidth = 3.dp)
             }
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                DsProgressRing(0.25f, size = DsProgressRingSize.Small)
+                DsProgressRing(0.5f)
+                DsProgressRing(0.75f, size = DsProgressRingSize.Large)
+                DsProgressRing(0.7f, label = "Upload")
+                DsProgressRing(1f, style = DsProgressRingStyle.Success)
+                DsProgressRing(0f)
+                DsProgressRing(0.4f, enabled = false)
+            }
         }
         CatalogSection("Spinner") {
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
+            Row(horizontalArrangement = Arrangement.spacedBy(DsSpacing.smd), verticalAlignment = Alignment.CenterVertically) {
                 DsSpinnerSize.entries.forEach { DsSpinner(size = it) }
             }
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(DsSpacing.smd)) {
                 DsSpinnerStyle.entries.forEach { DsSpinner(style = it) }
             }
         }

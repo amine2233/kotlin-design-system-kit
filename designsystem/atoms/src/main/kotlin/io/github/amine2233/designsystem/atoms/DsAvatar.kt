@@ -1,9 +1,11 @@
 package io.github.amine2233.designsystem.atoms
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.core.DsComponentPreview
 import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsShapes
+import io.github.amine2233.designsystem.core.DsSpacing
 import io.github.amine2233.designsystem.core.DsTheme
 
 @Composable
@@ -22,6 +25,8 @@ fun DsAvatar(
     initials: String,
     modifier: Modifier = Modifier,
     size: Dp = 36.dp,
+    status: DsPresence? = null,
+    statusContentDescription: String? = null,
 ) {
     Box(
         modifier =
@@ -35,6 +40,18 @@ fun DsAvatar(
             style = DsTheme.typography.label.copy(fontWeight = FontWeight.SemiBold),
             color = DsTheme.colors.onPrimary,
         )
+        if (status != null) {
+            DsStatusDot(
+                presence = status,
+                modifier =
+                    Modifier
+                        .align(Alignment.BottomEnd)
+                        .border(DsSpacing.xxs, DsTheme.colors.surface, DsShapes.pill)
+                        .padding(DsSpacing.xxs),
+                size = size * 0.3f,
+                contentDescription = statusContentDescription,
+            )
+        }
     }
 }
 
@@ -45,5 +62,6 @@ private fun DsAvatarPreview() =
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             DsAvatar("AK")
             DsAvatar("ab", size = 48.dp)
+            DsAvatar("AK", status = DsPresence.Online)
         }
     }

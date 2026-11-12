@@ -72,6 +72,15 @@ DsRadioIndicator(selected, size = 20.dp)     // the dot alone, for list rows
 DsCheckBullet(size = 20.dp, filled = true)   // static check bullet, for feature lists
 ```
 
+```kotlin
+DsRating(value, onValueChange = null, max = 5, allowHalf = false, enabled = true,
+         starSize = DsTheme.spacing.lg, stateDescription = null, animate)
+```
+
+`DsRating` is read-only when `onValueChange` is null, otherwise each star is a 48dp tap cell (leading half = `.5` with
+`allowHalf`) and the row is one adjustable accessibility element. `dsRatingClamp`, `dsRatingStars` and
+`dsRatingValueForTap` are the pure rules behind it.
+
 `DsSwitch` with a label fills the width and pushes the switch to the end; without one it is just the control.
 
 ## Chips, tags, badges, avatars, tiles
@@ -80,12 +89,14 @@ DsCheckBullet(size = 20.dp, filled = true)   // static check bullet, for feature
 DsChip(label, selected = false, onClick = null, tone = DsChipTone.Neutral, shape, contentPadding)
 DsTag(text, tone = DsTagTone.Neutral)
 DsBadge(text, containerColor = DsTheme.colors.primary, contentColor = …)
-DsAvatar(initials, size = 36.dp)
+DsAvatar(initials, size = 36.dp, status = null, statusContentDescription = null)
+DsStatusDot(presence, size = 10.dp, contentDescription = null)
 DsIconTile(icon, size = 44.dp, selected = false, content = null)
 ```
 
 - `DsChipTone`: `Neutral`, `Primary`, `Warning`, `Error` — a chip is interactive (filter, toggle).
 - `DsTagTone`: `Neutral`, `Primary`, `Success`, `Warning`, `Error`, `Info` — a tag is a read-only status.
+- `DsPresence`: `Online` (`success`), `Away` (`warning`), `Busy` (`error`), `Offline` (`textTertiary`). `DsAvatar(status = …)` puts the dot on the bottom-end corner with a `surface` ring; `contentDescription = null` keeps the dot decorative.
 
 ## Surfaces, separators, feedback
 
@@ -99,12 +110,18 @@ DsDivider(thickness = 1.dp) / DsVerticalDivider(thickness = 1.dp)
 DsErrorText(message)                                  // icon + short message, error color
 DsLinearProgress(progress: Float?)                    // null = indeterminate
 DsCircularProgress(progress: Float?, size = 52.dp, strokeWidth = 4.dp)
+DsProgressRing(progress: Float, size = DsProgressRingSize.Medium, style = DsProgressRingStyle.Primary,
+               showValue = true, label: String? = null, enabled = true, animate = DsTheme.animationsEnabled)
+// DsProgressRingSize: Small (40/4 dp, caption) · Medium (64/6 dp, labelStrong) · Large (96/10 dp, title)
+// DsProgressRingStyle: Primary · Success · Warning · Danger (error) · Info
 DsSpinner(size = DsSpinnerSize.Medium, style = DsSpinnerStyle.Primary,
           contentDescription = "Chargement", animate = DsTheme.animationsEnabled)
 // DsSpinnerSize: Tiny 14 / Small 18 / Medium 22 / Large 26 / ExtraLarge 30 dp, stroke = diameter / 8
 // DsSpinnerStyle: Primary / Success / Warning / Danger (error) / Info
 DsSkeleton(shape = DsShapes.sm, animate = DsTheme.animationsEnabled)
 ```
+
+Choose `DsProgressRing` over `DsCircularProgress` when the user should read the value — a determinate ring with the percentage centred and an optional label; keep `DsCircularProgress` for indeterminate or bare indicators.
 
 `selected = true` on `DsCard` switches to the primary container + border, the system-wide selected look.
 
