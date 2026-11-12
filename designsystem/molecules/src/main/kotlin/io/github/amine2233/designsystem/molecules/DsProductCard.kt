@@ -12,6 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.disabled
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import io.github.amine2233.designsystem.atoms.DsBadge
 import io.github.amine2233.designsystem.atoms.DsCard
@@ -19,7 +21,10 @@ import io.github.amine2233.designsystem.core.DsComponentPreview
 import io.github.amine2233.designsystem.core.DsPreview
 import io.github.amine2233.designsystem.core.DsTheme
 
-/** Grid product tile; [inCartCount] > 0 shows teal border + badge. */
+/**
+ * Grid product tile; [inCartCount] > 0 shows teal border + badge. [outOfStock] mutes the tile, shows
+ * [outOfStockLabel] in place of the price, drops the cart styling and makes it not clickable, announced as disabled.
+ */
 @Composable
 fun DsProductCard(
     name: String,
@@ -29,12 +34,14 @@ fun DsProductCard(
     inCartCount: Int = 0,
     onLongClick: (() -> Unit)? = null,
     image: (@Composable () -> Unit)? = null,
+    outOfStock: Boolean = false,
+    outOfStockLabel: String = "Rupture de stock",
 ) {
     val c = DsTheme.colors
-    val selected = inCartCount > 0
+    val selected = inCartCount > 0 && !outOfStock
     DsCard(
-        modifier = modifier,
-        onClick = onClick,
+        modifier = if (outOfStock) modifier.semantics(mergeDescendants = true) { disabled() } else modifier,
+        onClick = if (outOfStock) null else onClick,
         selected = selected,
         containerColor = if (selected) c.primaryTint else c.surface,
     ) {
@@ -48,8 +55,17 @@ fun DsProductCard(
                     contentAlignment = Alignment.Center,
                 ) { image?.invoke() }
                 Column(Modifier.padding(horizontal = 10.dp, vertical = 8.dp)) {
-                    Text(name, style = DsTheme.typography.bodyStrong, color = c.textPrimary, maxLines = 1)
-                    Text(price, style = DsTheme.typography.labelStrong, color = c.primary, maxLines = 1)
+                    Text(
+                        name,
+                        style = DsTheme.typography.bodyStrong,
+                        color = if (outOfStock) c.textSecondary else c.textPrimary,
+                        maxLines = 1,
+                    )
+                    if (outOfStock) {
+                        Text(outOfStockLabel, style = DsTheme.typography.labelStrong, color = c.textSecondary, maxLines = 2)
+                    } else {
+                        Text(price, style = DsTheme.typography.labelStrong, color = c.primary, maxLines = 1)
+                    }
                 }
             }
             if (selected) {
@@ -66,5 +82,6 @@ private fun DsProductCardPreview() =
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             DsProductCard("Espresso", "150 DA", onClick = {}, modifier = Modifier.weight(1f))
             DsProductCard("Cappuccino", "200 DA", onClick = {}, inCartCount = 2, modifier = Modifier.weight(1f))
+            DsProductCard("Thé menthe", "120 DA", onClick = {}, outOfStock = true, modifier = Modifier.weight(1f))
         }
     }

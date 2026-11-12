@@ -44,6 +44,29 @@ object DsPalette {
     val Amber500 = Color(0xFFFF920A)
     val Amber50 = Color(0xFFFFFAEC)
 
+    // Primary families of the alternative DsColorTheme entries. Cobalt avoids clashing with the sky-blue Blue* used by info.
+    val Cobalt950 = Color(0xFF0B1633)
+    val Cobalt900 = Color(0xFF0F2A73)
+    val Cobalt800 = Color(0xFF1A3A99)
+    val Cobalt700 = Color(0xFF2449B8)
+    val Cobalt600 = Color(0xFF2E5CE6)
+    val Cobalt300 = Color(0xFF8FA9FF)
+    val Cobalt200 = Color(0xFFBFCEFF)
+    val Cobalt100 = Color(0xFFD6E0FF)
+    val Cobalt50 = Color(0xFFEBF0FF)
+    val Cobalt25 = Color(0xFFF5F7FF)
+
+    val Purple950 = Color(0xFF1A0F33)
+    val Purple900 = Color(0xFF32196B)
+    val Purple800 = Color(0xFF45248F)
+    val Purple700 = Color(0xFF5229A3)
+    val Purple600 = Color(0xFF6633CC)
+    val Purple300 = Color(0xFFB79CF0)
+    val Purple200 = Color(0xFFD4C2F5)
+    val Purple100 = Color(0xFFE3D6F7)
+    val Purple50 = Color(0xFFF1EBFA)
+    val Purple25 = Color(0xFFF8F5FD)
+
     /** Swatches offered by the color picker — one per hue family, dark enough for white text. */
     val swatches: List<Color> =
         listOf(Teal700, Teal400, Blue500, Green700, Amber500, Orange700, Red500, Grey700, Grey500, Grey300)
