@@ -42,6 +42,9 @@ import io.github.amine2233.designsystem.organisms.DsChipRow
 import io.github.amine2233.designsystem.organisms.DsChipRowLayout
 import io.github.amine2233.designsystem.organisms.DsCircleMenu
 import io.github.amine2233.designsystem.organisms.DsCircleMenuAction
+import io.github.amine2233.designsystem.organisms.DsModifierGroup
+import io.github.amine2233.designsystem.organisms.DsModifierGroupType
+import io.github.amine2233.designsystem.organisms.DsModifierOption
 import io.github.amine2233.designsystem.organisms.DsNavItem
 import io.github.amine2233.designsystem.organisms.DsNfcPulse
 import io.github.amine2233.designsystem.organisms.DsNumericKeypad
@@ -50,9 +53,12 @@ import io.github.amine2233.designsystem.organisms.DsPaymentOutcome
 import io.github.amine2233.designsystem.organisms.DsProcessingState
 import io.github.amine2233.designsystem.organisms.DsProductGrid
 import io.github.amine2233.designsystem.organisms.DsProductGridItem
+import io.github.amine2233.designsystem.organisms.DsProductModifier
 import io.github.amine2233.designsystem.organisms.DsPullToRefresh
 import io.github.amine2233.designsystem.organisms.DsReceipt
 import io.github.amine2233.designsystem.organisms.DsReceiptItem
+import io.github.amine2233.designsystem.organisms.DsRefundLine
+import io.github.amine2233.designsystem.organisms.DsRefundSelection
 import io.github.amine2233.designsystem.organisms.DsResultMark
 import io.github.amine2233.designsystem.organisms.DsSignaturePad
 import io.github.amine2233.designsystem.organisms.DsSignaturePoint
@@ -77,6 +83,40 @@ import kotlinx.coroutines.delay
 
 private const val REFRESH_DEMO_MS = 1500L
 private const val CASH_TENDER_DUE = 118_800L
+private const val PRODUCT_MODIFIER_BASE = 25_000L
+
+private val PRODUCT_MODIFIER_GROUPS =
+    listOf(
+        DsModifierGroup(
+            id = "size",
+            title = "Taille",
+            options =
+                listOf(
+                    DsModifierOption("size-s", "Petit"),
+                    DsModifierOption("size-m", "Moyen", 5_000L),
+                    DsModifierOption("size-l", "Grand", 10_000L),
+                ),
+        ),
+        DsModifierGroup(
+            id = "extras",
+            title = "Suppléments",
+            options =
+                listOf(
+                    DsModifierOption("extra-cheese", "Fromage", 2_500L),
+                    DsModifierOption("extra-bacon", "Bacon", 4_000L),
+                    DsModifierOption("extra-egg", "Œuf", 1_500L),
+                ),
+            type = DsModifierGroupType.Multiple,
+            minSelections = 0,
+            maxSelections = 2,
+        ),
+        DsModifierGroup(
+            id = "sauce",
+            title = "Sauce",
+            options = listOf(DsModifierOption("sauce-none", "Sans sauce"), DsModifierOption("sauce-bbq", "Barbecue", 1_000L)),
+            minSelections = 0,
+        ),
+    )
 private const val DEMO_PIN = "1234"
 
 private val SIGNATURE_SAMPLE =
@@ -178,6 +218,48 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
                 changeLabel = "Monnaie à rendre",
                 missingLabel = "Reste à payer",
                 keypadRowModifier = Modifier.height(52.dp),
+            )
+        }
+        CatalogSection("Product modifier") {
+            var selection by rememberSaveable { mutableStateOf(setOf<String>()) }
+            var notes by rememberSaveable { mutableStateOf("") }
+            var quantity by rememberSaveable { mutableIntStateOf(1) }
+            DsProductModifier(
+                groups = PRODUCT_MODIFIER_GROUPS,
+                selectedOptionIds = selection,
+                onSelectionChange = { selection = it },
+                notes = notes,
+                onNotesChange = { notes = it },
+                quantity = quantity,
+                onQuantityChange = { quantity = it },
+                basePriceMinor = PRODUCT_MODIFIER_BASE,
+                unit = "DA",
+                requiredLabel = "Obligatoire",
+                optionalLabel = "Facultatif",
+                upToLabel = { "Jusqu'à $it" },
+                rangeLabel = { min, max -> "Choisir de $min à $max" },
+                missingRequiredLabel = "Choisissez une option",
+                belowMinimumLabel = { "Choisissez au moins $it" },
+                aboveMaximumLabel = { "Choisissez au plus $it" },
+                notesLabel = "Note pour la cuisine",
+                notesPlaceholder = "Sans oignons, bien cuit…",
+                quantityLabel = "Quantité",
+                totalLabel = "Total",
+            )
+        }
+        CatalogSection("Refund selection") {
+            var refundSelection by remember { mutableStateOf(listOf(1, 0, 0)) }
+            DsRefundSelection(
+                lines = refundLines,
+                selectedQuantities = refundSelection,
+                onQuantityChange = { index, quantity ->
+                    refundSelection = refundSelection.mapIndexed { i, selected -> if (i == index) quantity else selected }
+                },
+                unit = "DA",
+                refundTotalLabel = "Total remboursé",
+                refundableLabel = { "$it remboursable(s)" },
+                fullyRefundedLabel = "Déjà remboursé",
+                emptyLabel = "Sélectionnez les articles à rembourser",
             )
         }
         CatalogSection("Staff PIN") {
@@ -439,6 +521,13 @@ private val galleryStaff =
         DsStaffMember("amina", "Amina", "AB"),
         DsStaffMember("karim", "Karim", "KD"),
         DsStaffMember("sonia", "Sonia", "SL"),
+    )
+
+private val refundLines =
+    listOf(
+        DsRefundLine("Cappuccino", unitPriceMinor = 20_000L, quantityBought = 2),
+        DsRefundLine("Croissant", unitPriceMinor = 9_000L, quantityBought = 3, quantityRefunded = 1),
+        DsRefundLine("Espresso", unitPriceMinor = 15_000L, quantityBought = 1, quantityRefunded = 1),
     )
 
 private val productCategories = listOf("Tous", "Chauds", "Froids", "Snacks")

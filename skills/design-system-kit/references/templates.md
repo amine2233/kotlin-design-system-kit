@@ -15,6 +15,8 @@ DsNavigationScaffold(topItems, selectedIndex, onSelect, bottomItems = emptyList(
                      windowSize = DsTheme.windowSize, railHeader = null) { content() }
 DsTwoPaneLayout(windowSize = DsTheme.windowSize, secondaryWidth = 320.dp,
                 primary = {}, secondary = {}, compactSecondary = {})
+DsPosRegisterLayout(cartItemCount, cartTotal, onExpandCart, onPay, windowSize = DsTheme.windowSize,
+                    topBar = {}, cartPane = {}, products = {})
 DsCenteredLayout(maxWidth = 520.dp) { content() }
 ```
 
@@ -23,6 +25,7 @@ DsCenteredLayout(maxWidth = 520.dp) { content() }
 | `DsScreenScaffold` | any ordinary screen: top bar, scrolling body, optional sticky bottom panel | — |
 | `DsNavigationScaffold` | the app shell around the whole navigation | rail at the start edge on Expanded (left LTR / right RTL), bottom tab bar on Compact |
 | `DsTwoPaneLayout` | master + detail, catalogue + cart | both panes side by side on Expanded; `compactSecondary` (a bottom bar, a sheet trigger) on Compact |
+| `DsPosRegisterLayout` | POS register / sales screen: products + cart | cart pane pinned at the end edge on Expanded; `DsBottomCartBar` on Compact |
 | `DsCenteredLayout` | onboarding, sign-in, loading, empty shells | content capped and centered, same composable on both sizes |
 
 `windowSize` defaults to `DsTheme.windowSize`; pass it explicitly only so a preview or a snapshot can force

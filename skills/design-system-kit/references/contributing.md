@@ -46,6 +46,9 @@ Two things that will bite:
 - **Animations must be freezable.** Anything animated takes `animate` or `progress`; read the default from
   `DsTheme.animationsEnabled` so `DsTheme(animationsEnabled = false)` in a snapshot renders a fixed frame.
 
+The `Snapshot` wrapper paints the dark theme background behind dark entries, so dark galleries must not paint their
+own page background; light references use the preview's default canvas.
+
 A gallery page is rendered on a tall canvas (`FORM_PAGE` in `CatalogScreenshots.kt`). Content taller than the
 canvas is silently clipped — when a page outgrows it, raise the height or split the gallery.
 
