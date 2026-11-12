@@ -122,7 +122,6 @@ private fun ReceiptItemRow(item: DsReceiptItem) {
             if (item.detail != null) Text(item.detail, style = t.caption, color = c.textSecondary)
         }
         Column(horizontalAlignment = Alignment.End) {
-            Text(item.total, style = t.bodyStrong, color = c.textPrimary)
             if (item.originalTotal != null) {
                 Text(
                     item.originalTotal,
@@ -130,6 +129,7 @@ private fun ReceiptItemRow(item: DsReceiptItem) {
                     color = c.warning,
                 )
             }
+            Text(item.total, style = t.bodyStrong, color = c.textPrimary)
         }
     }
 }
