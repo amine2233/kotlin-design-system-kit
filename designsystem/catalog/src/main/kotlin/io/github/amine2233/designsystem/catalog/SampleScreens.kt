@@ -48,7 +48,6 @@ import io.github.amine2233.designsystem.molecules.DsSearchBar
 import io.github.amine2233.designsystem.molecules.DsSectionLabel
 import io.github.amine2233.designsystem.molecules.DsStepIndicator
 import io.github.amine2233.designsystem.molecules.DsTotalsEmphasis
-import io.github.amine2233.designsystem.organisms.DsBottomCartBar
 import io.github.amine2233.designsystem.organisms.DsCartLineItem
 import io.github.amine2233.designsystem.organisms.DsChipRow
 import io.github.amine2233.designsystem.organisms.DsChipRowLayout
@@ -58,8 +57,8 @@ import io.github.amine2233.designsystem.organisms.DsTotalsBlock
 import io.github.amine2233.designsystem.organisms.DsTotalsLine
 import io.github.amine2233.designsystem.organisms.applyKey
 import io.github.amine2233.designsystem.templates.DsCenteredLayout
+import io.github.amine2233.designsystem.templates.DsPosRegisterLayout
 import io.github.amine2233.designsystem.templates.DsScreenScaffold
-import io.github.amine2233.designsystem.templates.DsTwoPaneLayout
 
 private val cartSteps = listOf("Panier", "Pourboire", "Paiement")
 
@@ -96,8 +95,13 @@ fun MainSalesScreen(
     var category by rememberSaveable { mutableIntStateOf(0) }
     var query by rememberSaveable { mutableStateOf("") }
     val expanded = windowSize.isExpanded
-    DsScreenScaffold(
+    DsPosRegisterLayout(
+        cartItemCount = 3,
+        cartTotal = "737 DA",
+        onExpandCart = {},
+        onPay = {},
         modifier = modifier,
+        windowSize = windowSize,
         topBar = {
             DsTopBar(
                 title = if (expanded) "Café Central — Caisse 1" else "Café Central",
@@ -105,30 +109,25 @@ fun MainSalesScreen(
                 actions = { DsAvatar("AK") },
             )
         },
-    ) {
-        DsTwoPaneLayout(
-            windowSize = windowSize,
-            primary = {
-                Column(Modifier.fillMaxSize()) {
-                    DsChipRow(listOf("Tous", "Boissons Chaudes", "Boissons Froides", "Nourriture", "Pâtisserie", "Extras"), category, {
-                        category =
-                            it
-                    }, Modifier.background(DsTheme.colors.surface))
-                    DsDivider()
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(if (expanded) 4 else 2),
-                        contentPadding = PaddingValues(12.dp),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        verticalArrangement = Arrangement.spacedBy(10.dp),
-                    ) {
-                        items(products) { p -> DsProductCard(p.name, p.price, onClick = {}, inCartCount = p.inCart) }
-                    }
+        cartPane = { CartPane() },
+        products = {
+            Column(Modifier.fillMaxSize()) {
+                DsChipRow(listOf("Tous", "Boissons Chaudes", "Boissons Froides", "Nourriture", "Pâtisserie", "Extras"), category, {
+                    category =
+                        it
+                }, Modifier.background(DsTheme.colors.surface))
+                DsDivider()
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(if (expanded) 4 else 2),
+                    contentPadding = PaddingValues(12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    items(products) { p -> DsProductCard(p.name, p.price, onClick = {}, inCartCount = p.inCart) }
                 }
-            },
-            secondary = { CartPane() },
-            compactSecondary = { DsBottomCartBar(itemCount = 3, total = "737 DA", onExpand = {}, onPay = {}) },
-        )
-    }
+            }
+        },
+    )
 }
 
 @Composable

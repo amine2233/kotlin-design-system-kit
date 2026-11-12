@@ -7,7 +7,7 @@ Layers: `core ← atoms ← molecules ← organisms ← templates ← catalog �
 - `designsystem/atoms` — one-thing components: `DsText`, `DsButton`/`DsIconButton`/`DsOAuthButton`, `DsTextField`/`DsTextArea`/`DsPasswordField`/`DsPhoneField`, `DsFormField`/`DsFieldBox`/`DsPickerField`, `DsSwitch`/`DsCheckbox`/`DsRadioButton`, `DsSlider`, `DsChip`, `DsTag`, `DsBadge`, `DsAvatar`/`DsStatusDot`, `DsCard`, `DsDivider`, progress, skeleton, images.
 - `designsystem/molecules` — a few atoms doing one job: `DsDropdown`/`DsMultiSelectField`/`DsSearchableDropdown`, the pickers (date, range, time, color, image, file), `DsOtpField`, `DsMenu`, `DsListItem`, `DsSettingsRow`, `DsSearchBar`, `DsQuantityStepper`, `DsSegmentedControl`, `DsDiscountEntry` (+ `dsDiscount`), `DsPromoCodeField`, `DsBarcodeScanField`, `DsDeviceStatusChip`/`DsDeviceStatusRow`, `DsTabRow`, `DsBanner`, `DsEmptyState`, `DsButtonGroup`, `DsTipSelector`.
 - `designsystem/organisms` — screen regions: `DsTopBar`, `DsBottomNavBar`/`DsNavigationRail`, `DsBottomSheet`, `DsDialog`, `DsSnackbar`, `DsToast`, `DsNumericKeypad`, `DsCashTender`, `DsStaffPinLogin` (+ `dsApplyPinKey`), `DsCartLineItem`, `DsTotalsBlock`, `DsReceipt`, `DsPaymentResult`, `DsNfcWaiting`, `DsCircleMenu`, `DsSplitBill`, `DsProductGrid`.
-- `designsystem/templates` — page skeletons: `DsScreenScaffold`, `DsNavigationScaffold`, `DsTwoPaneLayout`, `DsCenteredLayout`.
+- `designsystem/templates` — page skeletons: `DsScreenScaffold`, `DsNavigationScaffold`, `DsTwoPaneLayout`, `DsPosRegisterLayout`, `DsCenteredLayout`.
 - `designsystem/catalog` — galleries, reference screens, screenshot tests. `sample/` — the app that browses them.
 
 New component:
