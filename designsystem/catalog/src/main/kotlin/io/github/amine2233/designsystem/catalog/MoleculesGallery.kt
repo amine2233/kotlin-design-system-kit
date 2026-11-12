@@ -37,6 +37,7 @@ import io.github.amine2233.designsystem.molecules.DsDashedActionRow
 import io.github.amine2233.designsystem.molecules.DsDropdown
 import io.github.amine2233.designsystem.molecules.DsEmptyState
 import io.github.amine2233.designsystem.molecules.DsExpandableSection
+import io.github.amine2233.designsystem.molecules.DsFailureState
 import io.github.amine2233.designsystem.molecules.DsFilterGroup
 import io.github.amine2233.designsystem.molecules.DsFilterLayout
 import io.github.amine2233.designsystem.molecules.DsFilterSelection
@@ -251,6 +252,12 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
                 icon = DsIcons.Cart,
                 actionLabel = "Voir le catalogue",
                 onAction = {},
+            )
+            DsFailureState(
+                "Chargement impossible",
+                message = "Vérifiez la connexion puis réessayez.",
+                retryLabel = "Réessayer",
+                onRetry = {},
             )
             DsAllocationBar(listOf(DsAllocation("Carte 800 DA", 0.67f), DsAllocation("Espèces 388 DA", 0.33f)))
         }

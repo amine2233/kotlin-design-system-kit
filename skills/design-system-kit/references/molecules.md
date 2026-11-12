@@ -177,7 +177,13 @@ DsOverflowMenu(items, icon = DsIcons.More, contentDescription = "Plus d'actions"
 DsMenuItem(label, icon = null, enabled = true, destructive = false, onClick)
 DsBanner(message, tone = DsBannerTone.Info, title, actionLabel, onAction, onDismiss)
 DsEmptyState(title, description, icon, actionLabel, onAction)
+DsFailureState(title, message, icon = DsIcons.Error, retryLabel, onRetry)
 ```
 
 `DsOverflowMenu` owns its open state — the common case behind a "…" icon. `DsMenu` is the stateless version for a
 custom anchor. Destructive entries get the error tint and go last.
+
+`DsFailureState` is the error counterpart of `DsEmptyState` and shares its layout; only its icon tile changes, on
+`errorContainer` with an `error` tint, so it reads as an error. The retry button shows only when both `retryLabel` and
+`onRetry` are set. The title is a heading for TalkBack, in both components. Use `DsBanner(tone = Error)` for an inline
+error next to content that still works, and `DsFailureState` when the content itself failed to load.
