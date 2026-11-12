@@ -158,6 +158,23 @@ arithmetic only and treats negative inputs as 0. The kit has no money formatter,
 caller. Tapping "custom" emits `Custom(0)` (or the current amount if already custom): the screen collects the digits,
 for example with a `DsNumericKeypad`, and passes them back in `selection`.
 
+## Device status
+
+```kotlin
+DsDeviceStatusChip(icon, label, status: DsDeviceStatus, statusText, onClick = null, animate = DsTheme.animationsEnabled)
+DsDeviceStatusRow(devices: List<DsDeviceStatusEntry>, spacing = DsTheme.spacing.xs, animate = DsTheme.animationsEnabled)
+DsDeviceStatusEntry(icon, label, status, statusText, onClick = null)
+// status: DsDeviceStatus.Connected, Connecting, Offline, Attention
+dsDeviceStatusTone(status): DsTagTone   // Success, Info, Neutral, Error
+```
+
+`DsDeviceStatusChip` is a pill for one peripheral (printer, card terminal, cash drawer, network): its icon, its label,
+then a status glyph and the visible status text, in the same colours as a `DsTag` of the matching tone. Connecting
+shows a tiny spinner instead of a glyph, a fixed arc when `animate` is false. The kit ships no strings and no device
+list: icon, label and status text come from the caller, and it never detects a device itself. TalkBack reads one item,
+"label, status text"; with `onClick` the chip is a button with a 48dp touch area. The label ellipsizes first, so a chip
+never outgrows its space. `DsDeviceStatusRow` wraps its chips like a `DsTagGroup` in `Grid`, and draws nothing when empty.
+
 ## Discounts and promo codes
 
 ```kotlin
