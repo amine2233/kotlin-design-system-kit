@@ -21,9 +21,10 @@ private const val TABLET = "spec:width=960dp,height=600dp,dpi=320"
 // Galleries scroll past the phone viewport; forms are snapshotted on a tall canvas so every field is covered.
 private const val FORM_PAGE = "spec:width=375dp,height=2400dp,dpi=320"
 
-// The atoms and molecules galleries are the longest pages in the catalog; they need a taller canvas.
+// The atoms, molecules and organisms galleries are the longest pages in the catalog; they need a taller canvas.
 private const val ATOMS_PAGE = "spec:width=375dp,height=4000dp,dpi=320"
 private const val MOLECULES_PAGE = "spec:width=375dp,height=6400dp,dpi=320"
+private const val ORGANISMS_PAGE = "spec:width=375dp,height=3200dp,dpi=320"
 
 @Composable
 private fun Snapshot(
@@ -56,12 +57,12 @@ fun MoleculesGalleryPhone() = Snapshot { MoleculesGallery() }
 fun MoleculesGalleryPhoneDark() = Snapshot(dark = true) { MoleculesGallery() }
 
 @PreviewTest
-@Preview(name = "organisms", device = PHONE, showBackground = true)
+@Preview(name = "organisms", device = ORGANISMS_PAGE, showBackground = true)
 @Composable
 fun OrganismsGalleryPhone() = Snapshot { OrganismsGallery() }
 
 @PreviewTest
-@Preview(name = "organisms_dark", device = PHONE, showBackground = true)
+@Preview(name = "organisms_dark", device = ORGANISMS_PAGE, showBackground = true)
 @Composable
 fun OrganismsGalleryPhoneDark() = Snapshot(dark = true) { OrganismsGallery() }
 

@@ -31,6 +31,8 @@ import io.github.amine2233.designsystem.organisms.DsBottomNavBar
 import io.github.amine2233.designsystem.organisms.DsCartLineItem
 import io.github.amine2233.designsystem.organisms.DsChipRow
 import io.github.amine2233.designsystem.organisms.DsChipRowLayout
+import io.github.amine2233.designsystem.organisms.DsCircleMenu
+import io.github.amine2233.designsystem.organisms.DsCircleMenuAction
 import io.github.amine2233.designsystem.organisms.DsNavItem
 import io.github.amine2233.designsystem.organisms.DsNfcPulse
 import io.github.amine2233.designsystem.organisms.DsNumericKeypad
@@ -141,6 +143,20 @@ fun OrganismsGallery(modifier: Modifier = Modifier) {
         }
         CatalogSection("Bottom cart bar") {
             DsBottomCartBar(itemCount = 3, total = "737 DA", onExpand = {}, onPay = {})
+        }
+        CatalogSection("Circle menu") {
+            val actions =
+                listOf(
+                    DsCircleMenuAction(DsIcons.Edit, "Modifier", {}),
+                    DsCircleMenuAction(DsIcons.Print, "Imprimer", {}),
+                    DsCircleMenuAction(DsIcons.Delete, "Supprimer", {}),
+                )
+            Row(horizontalArrangement = Arrangement.spacedBy(24.dp), verticalAlignment = Alignment.Bottom) {
+                var orderMenuOpen by rememberSaveable { mutableStateOf(false) }
+                DsCircleMenu(orderMenuOpen, { orderMenuOpen = it }, actions, "Actions de la commande")
+                var ticketMenuOpen by rememberSaveable { mutableStateOf(true) }
+                DsCircleMenu(ticketMenuOpen, { ticketMenuOpen = it }, actions, "Actions du ticket")
+            }
         }
     }
 }
