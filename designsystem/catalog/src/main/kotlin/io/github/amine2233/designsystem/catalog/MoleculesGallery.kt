@@ -77,6 +77,8 @@ import io.github.amine2233.designsystem.molecules.DsTabRow
 import io.github.amine2233.designsystem.molecules.DsTagEntry
 import io.github.amine2233.designsystem.molecules.DsTagGroup
 import io.github.amine2233.designsystem.molecules.DsTagLayout
+import io.github.amine2233.designsystem.molecules.DsTipSelection
+import io.github.amine2233.designsystem.molecules.DsTipSelector
 import io.github.amine2233.designsystem.molecules.DsTotalsEmphasis
 import io.github.amine2233.designsystem.molecules.DsTotalsRow
 import io.github.amine2233.designsystem.molecules.DsTrendDirection
@@ -311,13 +313,37 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
                 onModeChange = { discountMode = it },
                 value = minorUnits(discountValue),
                 currencyLabel = "DA",
-                discountLabel = "Remise sur ${minorUnits(DISCOUNT_SUBTOTAL)} DA",
-                discountValue = "− ${minorUnits(discount.discount)} DA",
+                discountLabel = "Remise sur ${catalogAmount(DISCOUNT_SUBTOTAL)}",
+                discountValue = "− ${catalogAmount(discount.discount)}",
             )
             var promo by rememberSaveable { mutableStateOf("") }
             DsPromoCodeField(promo, { promo = it }, DsPromoCodeState.Idle, onApply = {}, onRemove = {})
             DsPromoCodeField("PROMO10", {}, DsPromoCodeState.Applied("PROMO10", "−10 %"), onApply = {}, onRemove = {})
             DsPromoCodeField("NOEL2019", {}, DsPromoCodeState.Invalid("Code expiré"), onApply = {}, onRemove = {})
+        }
+        CatalogSection("Tip selector") {
+            var tip by remember { mutableStateOf<DsTipSelection>(DsTipSelection.Preset(10)) }
+            DsTipSelector(
+                subtotalMinor = 108_000L,
+                selection = tip,
+                onSelectionChange = { tip = it },
+                formatAmount = ::catalogAmount,
+                noneLabel = "Aucun",
+                customLabel = "Personnalisé",
+                tipLabel = "Pourboire",
+                totalLabel = "Nouveau total",
+            )
+            DsSectionLabel("Montant personnalisé (exemple fixe)")
+            DsTipSelector(
+                subtotalMinor = 108_000L,
+                selection = DsTipSelection.Custom(25_000L),
+                onSelectionChange = {},
+                formatAmount = ::catalogAmount,
+                noneLabel = "Aucun",
+                customLabel = "Personnalisé",
+                tipLabel = "Pourboire",
+                totalLabel = "Nouveau total",
+            )
         }
         CatalogSection("Search & list items") {
             var query by rememberSaveable { mutableStateOf("") }
@@ -431,6 +457,12 @@ fun MoleculesGallery(modifier: Modifier = Modifier) {
     }
 }
 
+@Preview(name = "molecules", device = "spec:width=375dp,height=780dp,dpi=420", showBackground = true)
+@Composable
+private fun MoleculesGalleryPreview() = DsTheme { MoleculesGallery() }
+
+private fun catalogAmount(minor: Long): String = "${minorUnits(minor)} DA"
+
 private const val DISCOUNT_SUBTOTAL = 108000L
 
 private fun minorUnits(amount: Long): String {
@@ -443,7 +475,3 @@ private fun minorUnits(amount: Long): String {
             .reversed()
     return "$units,${(amount % 100).toString().padStart(2, '0')}"
 }
-
-@Preview(name = "molecules", device = "spec:width=375dp,height=780dp,dpi=420", showBackground = true)
-@Composable
-private fun MoleculesGalleryPreview() = DsTheme { MoleculesGallery() }
