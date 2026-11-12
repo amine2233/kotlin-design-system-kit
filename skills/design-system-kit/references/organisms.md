@@ -46,6 +46,22 @@ updates that toast in place. `dsToastDismissDelay` and `DsToastQueueState` hold 
 `DsDialog(destructive = true)` turns the confirm button red — use it for anything that deletes or voids.
 Overlays are popups: they never appear in screenshot tests, so snapshot the trigger and the state behind it.
 
+## Circle menu
+
+```kotlin
+DsCircleMenu(expanded, onExpandedChange, actions: List<DsCircleMenuAction>, triggerContentDescription,
+             triggerIcon = DsIcons.Add, startAngle = 90f, sweepAngle = 90f, radius = 96.dp,
+             animate = DsTheme.animationsEnabled)
+DsCircleMenuAction(icon, contentDescription, onClick, enabled = true)
+```
+
+A floating trigger that fans 2 to 8 actions out on an arc; any other count throws. Angles are degrees, 0° points
+to the end edge and positive turns upwards, so the default 90°→180° arc sits in a bottom-end corner and fans up
+and towards the start; RTL mirrors it. A sweep of 360° spreads the actions evenly around a full circle. It is
+drawn inline, not in a popup, and always measures its open footprint so toggling never moves the layout. The
+caller owns `expanded` and every dismissal — scrim, outside tap, back press — through `onExpandedChange`;
+tapping an action calls its `onClick` then `onExpandedChange(false)`.
+
 ## Cart and payment
 
 ```kotlin
