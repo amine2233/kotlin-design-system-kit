@@ -69,7 +69,7 @@ fun DsTabPager(
     if (items.isEmpty()) return
     val target = dsTabPagerPage(selectedIndex, items.size)
     val pagerState = rememberPagerState(initialPage = target) { items.size }
-    val currentSelectedIndex by rememberUpdatedState(selectedIndex)
+    val currentTarget by rememberUpdatedState(target)
     val currentOnSelect by rememberUpdatedState(onSelect)
 
     LaunchedEffect(target) {
@@ -79,7 +79,7 @@ fun DsTabPager(
     }
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.settledPage }.collect { page ->
-            dsTabPagerSettledSelection(page, currentSelectedIndex)?.let(currentOnSelect)
+            dsTabPagerSettledSelection(page, currentTarget)?.let(currentOnSelect)
         }
     }
 

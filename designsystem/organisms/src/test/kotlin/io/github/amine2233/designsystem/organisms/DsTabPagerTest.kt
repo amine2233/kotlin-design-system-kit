@@ -36,4 +36,10 @@ class DsTabPagerTest {
     fun `settling on the selected page reports nothing`() {
         assertNull(dsTabPagerSettledSelection(settledPage = 1, selectedIndex = 1))
     }
+
+    @Test
+    fun `settling on the clamped page of an out-of-range index reports nothing`() {
+        assertNull(dsTabPagerSettledSelection(settledPage = 2, selectedIndex = dsTabPagerPage(7, pageCount = 3)))
+        assertNull(dsTabPagerSettledSelection(settledPage = 0, selectedIndex = dsTabPagerPage(-1, pageCount = 3)))
+    }
 }
