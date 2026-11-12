@@ -12,8 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.isTraversalGroup
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import io.github.amine2233.designsystem.atoms.DsChip
 import io.github.amine2233.designsystem.core.DsComponentPreview
@@ -162,14 +166,16 @@ fun DsCashTender(
             Text("$due $unit", style = t.headline, color = c.textPrimary)
         }
         FlowRow(
-            modifier = Modifier.fillMaxWidth().semantics(mergeDescendants = true) {},
+            modifier = Modifier.fillMaxWidth().semantics { isTraversalGroup = true },
             horizontalArrangement = Arrangement.spacedBy(spacing.sm),
             verticalArrangement = Arrangement.spacedBy(spacing.sm),
         ) {
             dsQuickTenders(amountDue, steps).forEachIndexed { index, bill ->
                 DsChip(
                     if (index == 0) exactLabel else dsFormatMinorUnits(bill),
-                    Modifier.heightIn(min = spacing.minTouchTarget),
+                    Modifier
+                        .heightIn(min = spacing.minTouchTarget)
+                        .semantics { selected = bill == selectedQuickTender },
                     selected = bill == selectedQuickTender,
                     onClick = { onQuickTender(bill) },
                 )
@@ -201,9 +207,12 @@ private fun CashTenderStatusRow(
             DsTotalsRow(
                 changeLabel,
                 value,
-                Modifier.clearAndSetSemantics { contentDescription = "$changeLabel $value" },
+                Modifier.clearAndSetSemantics {
+                    contentDescription = "$changeLabel $value"
+                    liveRegion = LiveRegionMode.Polite
+                },
                 emphasis = DsTotalsEmphasis.Total,
-                valueColor = c.textTertiary,
+                valueColor = c.textSecondary,
             )
         }
 
@@ -212,7 +221,10 @@ private fun CashTenderStatusRow(
             DsTotalsRow(
                 changeLabel,
                 value,
-                Modifier.clearAndSetSemantics { contentDescription = "$changeLabel $value" },
+                Modifier.clearAndSetSemantics {
+                    contentDescription = "$changeLabel $value"
+                    liveRegion = LiveRegionMode.Polite
+                },
                 emphasis = DsTotalsEmphasis.Total,
             )
         }
@@ -220,7 +232,11 @@ private fun CashTenderStatusRow(
         is DsCashTenderStatus.Missing -> {
             val value = "${dsFormatMinorUnits(status.amount)} $unit"
             Row(
-                modifier = Modifier.fillMaxWidth().clearAndSetSemantics { contentDescription = "$missingLabel $value" },
+                modifier =
+                    Modifier.fillMaxWidth().clearAndSetSemantics {
+                        contentDescription = "$missingLabel $value"
+                        liveRegion = LiveRegionMode.Polite
+                    },
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.Bottom,
             ) {
