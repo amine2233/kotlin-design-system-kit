@@ -228,7 +228,15 @@ DsResultMark(outcome, size = 120.dp, progress = …, onFinished = {})
 DsPaymentOutcome.Success / .Failure
 DsPullToRefresh(isRefreshing, onRefresh, modifier, contentDescription = "Chargement",
                 animate = DsTheme.animationsEnabled) { content }
+DsLoadingHud(visible, state, message = null, contentDescription = null,
+             animate = DsTheme.animationsEnabled, progress = …)
+DsLoadingHudCard(state, message = null, contentDescription = null, animate = …, progress = …)
+DsLoadingHudState.Loading / .Success / .Failure
 ```
+
+`DsLoadingHud` blocks input: a scrim window over the whole screen that ignores back and taps outside, in every
+state. The caller owns `visible` and `state` and every delay — the HUD has no timer and never hides itself.
+The overlay is a popup and never renders in a snapshot, so snapshot `DsLoadingHudCard`, the same card drawn inline.
 
 Every animated organism takes an `animate` or `progress` override so a snapshot can freeze it: leave the default
 in the app, pass the override in tests. `DsResultMark.onFinished` fires when the draw-in completes — that is where
