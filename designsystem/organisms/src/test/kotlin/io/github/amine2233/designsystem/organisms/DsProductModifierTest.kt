@@ -73,7 +73,7 @@ class DsProductModifierTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun `total rejects a negative delta`() {
+    fun `a group with a negative delta cannot reach the total`() {
         dsModifierTotal(
             25_000L,
             listOf(DsModifierGroup("promo", "Promo", listOf(DsModifierOption("discount", "Discount", -100L)), minSelections = 0)),

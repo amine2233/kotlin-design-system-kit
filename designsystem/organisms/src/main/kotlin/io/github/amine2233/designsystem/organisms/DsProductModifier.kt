@@ -1,10 +1,12 @@
 package io.github.amine2233.designsystem.organisms
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material3.Checkbox
@@ -306,23 +308,25 @@ private fun ModifierOptionRow(
         horizontalArrangement = Arrangement.spacedBy(DsTheme.spacing.smd),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        when (type) {
-            DsModifierGroupType.Single -> {
-                DsRadioIndicator(selected)
-            }
+        Box(Modifier.size(DsTheme.spacing.lg), contentAlignment = Alignment.Center) {
+            when (type) {
+                DsModifierGroupType.Single -> {
+                    DsRadioIndicator(selected)
+                }
 
-            DsModifierGroupType.Multiple -> {
-                Checkbox(
-                    checked = selected,
-                    onCheckedChange = null,
-                    enabled = enabled,
-                    colors =
-                        CheckboxDefaults.colors(
-                            checkedColor = c.primary,
-                            uncheckedColor = c.borderStrong,
-                            checkmarkColor = c.onPrimary,
-                        ),
-                )
+                DsModifierGroupType.Multiple -> {
+                    Checkbox(
+                        checked = selected,
+                        onCheckedChange = null,
+                        enabled = enabled,
+                        colors =
+                            CheckboxDefaults.colors(
+                                checkedColor = c.primary,
+                                uncheckedColor = c.borderStrong,
+                                checkmarkColor = c.onPrimary,
+                            ),
+                    )
+                }
             }
         }
         Text(
