@@ -45,6 +45,9 @@ import io.github.amine2233.designsystem.atoms.DsLinearProgress
 import io.github.amine2233.designsystem.atoms.DsRadioButton
 import io.github.amine2233.designsystem.atoms.DsRadioIndicator
 import io.github.amine2233.designsystem.atoms.DsSkeleton
+import io.github.amine2233.designsystem.atoms.DsSpinner
+import io.github.amine2233.designsystem.atoms.DsSpinnerSize
+import io.github.amine2233.designsystem.atoms.DsSpinnerStyle
 import io.github.amine2233.designsystem.atoms.DsSwitch
 import io.github.amine2233.designsystem.atoms.DsTag
 import io.github.amine2233.designsystem.atoms.DsTagTone
@@ -185,6 +188,14 @@ fun AtomsGallery(modifier: Modifier = Modifier) {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 DsCircularProgress(0.65f)
                 DsCircularProgress(0.3f, size = 32.dp, strokeWidth = 3.dp)
+            }
+        }
+        CatalogSection("Spinner") {
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                DsSpinnerSize.entries.forEach { DsSpinner(size = it) }
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                DsSpinnerStyle.entries.forEach { DsSpinner(style = it) }
             }
         }
     }

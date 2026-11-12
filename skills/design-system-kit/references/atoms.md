@@ -99,6 +99,10 @@ DsDivider(thickness = 1.dp) / DsVerticalDivider(thickness = 1.dp)
 DsErrorText(message)                                  // icon + short message, error color
 DsLinearProgress(progress: Float?)                    // null = indeterminate
 DsCircularProgress(progress: Float?, size = 52.dp, strokeWidth = 4.dp)
+DsSpinner(size = DsSpinnerSize.Medium, style = DsSpinnerStyle.Primary,
+          contentDescription = "Chargement", animate = DsTheme.animationsEnabled)
+// DsSpinnerSize: Tiny 14 / Small 18 / Medium 22 / Large 26 / ExtraLarge 30 dp, stroke = diameter / 8
+// DsSpinnerStyle: Primary / Success / Warning / Danger (error) / Info
 DsSkeleton(shape = DsShapes.sm, animate = DsTheme.animationsEnabled)
 ```
 
