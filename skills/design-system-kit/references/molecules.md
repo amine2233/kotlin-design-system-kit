@@ -130,6 +130,22 @@ which is what most POS lists want. Give it `height = DsTheme.spacing.minTouchTar
 `DsOtpField` drives its boxes from one hidden text field, so keyboard, paste and one-time-code autofill keep
 working; non-digits are dropped and `onFilled` fires on the last digit — submit there.
 
+## Point of sale
+
+```kotlin
+DsTipSelector(subtotalMinor, selection, onSelectionChange, formatAmount, noneLabel, customLabel, tipLabel,
+              totalLabel, presets = listOf(10, 15, 20), presetLabel = { "$it %" })
+// selection: DsTipSelection.None, DsTipSelection.Preset(percent), DsTipSelection.Custom(amountMinor)
+dsTipAmount(subtotalMinor, selection): Long
+dsTipTotal(subtotalMinor, selection): Long
+```
+
+`DsTipSelector` is a single-choice chip group — "none", each preset, "custom" — above the tip and the new total.
+Amounts are minor units (`Long`); `dsTipAmount` rounds a preset half up to the nearest minor unit with integer
+arithmetic only and treats negative inputs as 0. The kit has no money formatter, so `formatAmount` comes from the
+caller. Tapping "custom" emits `Custom(0)` (or the current amount if already custom): the screen collects the digits,
+for example with a `DsNumericKeypad`, and passes them back in `selection`.
+
 ## Rows, cards, sections
 
 ```kotlin
