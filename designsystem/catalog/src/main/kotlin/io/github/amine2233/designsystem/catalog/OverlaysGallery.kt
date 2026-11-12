@@ -28,6 +28,9 @@ import io.github.amine2233.designsystem.atoms.DsButtonVariant
 import io.github.amine2233.designsystem.atoms.DsText
 import io.github.amine2233.designsystem.core.DsIcons
 import io.github.amine2233.designsystem.core.DsTheme
+import io.github.amine2233.designsystem.molecules.DsPopover
+import io.github.amine2233.designsystem.molecules.DsPopoverPlacement
+import io.github.amine2233.designsystem.molecules.DsPopoverSurface
 import io.github.amine2233.designsystem.organisms.DsBottomSheet
 import io.github.amine2233.designsystem.organisms.DsDialog
 import io.github.amine2233.designsystem.organisms.DsModal
@@ -41,9 +44,10 @@ import io.github.amine2233.designsystem.organisms.showSuccess
 import kotlinx.coroutines.launch
 
 /**
- * The components that only exist while open — dialog, bottom sheet, snackbar host — plus the
- * navigation rail on its own. Open them from the sample app: a popup renders in its own window and
- * never lands in a snapshot, so only the triggers are captured here.
+ * The components that only exist while open — dialog, bottom sheet, snackbar host, popover — plus
+ * the navigation rail on its own. Open them from the sample app: a popup renders in its own window and
+ * never lands in a snapshot, so only the triggers (and the popover's surface, shown inline) are
+ * captured here.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,6 +59,8 @@ fun OverlaysGallery(modifier: Modifier = Modifier) {
     var sheet by remember { mutableStateOf(false) }
     var halfModal by remember { mutableStateOf(false) }
     var fullModal by remember { mutableStateOf(false) }
+    var popoverBelow by remember { mutableStateOf(false) }
+    var popoverAbove by remember { mutableStateOf(false) }
 
     Box(modifier.fillMaxWidth()) {
         Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
@@ -79,6 +85,41 @@ fun OverlaysGallery(modifier: Modifier = Modifier) {
                     variant = DsButtonVariant.Outlined,
                     size = DsButtonSize.Medium,
                 )
+            }
+            CatalogSection("Popover") {
+                DsPopover(
+                    expanded = popoverBelow,
+                    onDismissRequest = { popoverBelow = false },
+                    placement = DsPopoverPlacement.Below,
+                    anchor = { DsButton("Ouvrir en dessous", onClick = { popoverBelow = true }, size = DsButtonSize.Medium) },
+                ) {
+                    Column(verticalArrangement = Arrangement.spacedBy(DsTheme.spacing.sm)) {
+                        DsText("Remise de 10 %", style = DsTheme.typography.title)
+                        DsText("Appliquée à toute la commande, hors articles déjà soldés.", color = DsTheme.colors.textSecondary)
+                        DsButton("Fermer", onClick = { popoverBelow = false }, size = DsButtonSize.Small)
+                    }
+                }
+                DsPopover(
+                    expanded = popoverAbove,
+                    onDismissRequest = { popoverAbove = false },
+                    placement = DsPopoverPlacement.Above,
+                    anchor = {
+                        DsButton(
+                            "Ouvrir au-dessus",
+                            onClick = { popoverAbove = true },
+                            variant = DsButtonVariant.Outlined,
+                            size = DsButtonSize.Medium,
+                        )
+                    },
+                ) {
+                    DsText("Le ticket sera envoyé par e-mail.")
+                }
+                DsPopoverSurface {
+                    Column(verticalArrangement = Arrangement.spacedBy(DsTheme.spacing.sm)) {
+                        DsText("Paiement fractionné", style = DsTheme.typography.title)
+                        DsText("Carte puis espèces : le ticket indique chaque moyen.", color = DsTheme.colors.textSecondary)
+                    }
+                }
             }
             CatalogSection("Snackbar host") {
                 Row(horizontalArrangement = Arrangement.spacedBy(DsTheme.spacing.sm)) {

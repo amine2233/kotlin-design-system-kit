@@ -11,7 +11,7 @@ designsystem/
               DsIcons (curated icon set), DsImages (logo, product placeholder, illustrations — vector drawables in res/)
   atoms       DsText, DsFormField (label/supporting/error frame), DsButton (loading state) / DsIconButton / DsOAuthButton, DsChip, DsTag, DsBadge, DsAvatar / DsStatusDot, DsIconTile, DsCard, DsContainer (DsContainerStyle: Neutral/Info/Success/Warning/Danger/Primary), DsDivider,
               DsTextField / DsPasswordField / DsTextArea / DsPhoneField, DsPickerField, DsErrorText, DsSwitch / DsCheckbox / DsRadioButton, DsSlider, DsRating, DsProgress / DsProgressRing, DsSpinner (DsSpinnerSize / DsSpinnerStyle), DsSkeleton, DsImage / DsImageSlot / DsIllustration / DsLogo
-  molecules   DsQuantityStepper, DsSegmentedControl, DsFilterGroup (Single / Multiple, Inline / Grid), DsTabRow (+ DsTabItem: badges, icons; Inline / Grid), DsDatePickerField / DsDateRangeField / DsInlineDatePicker / DsInlineDateRangePicker (+ DsDateBounds) / DsTimePickerField, DsColorPickerField / DsColorGrid, DsImagePickerField / DsFilePickerField (+ rememberDsImagePicker / rememberDsFilePicker), DsDropdown / DsMultiSelectField / DsSearchableDropdown, DsOtpField, DsMenu / DsOverflowMenu, DsAmountDisplay, DsTotalsRow, DsSearchBar, DsListItem, DsSettingsRow (Navigation / Toggle / Value / Destructive), DsProductCard, DsMenuCard (Tile / Row), DsTagGroup (Inline / Grid), DsAvatarGroup, DsStatisticTile, DsSelectionList (Single / Multiple, Start / End) + DsSelectionDraft, DsButtonGroup (Horizontal / Vertical),
+  molecules   DsQuantityStepper, DsSegmentedControl, DsFilterGroup (Single / Multiple, Inline / Grid), DsTabRow (+ DsTabItem: badges, icons; Inline / Grid), DsDatePickerField / DsDateRangeField / DsInlineDatePicker / DsInlineDateRangePicker (+ DsDateBounds) / DsTimePickerField, DsColorPickerField / DsColorGrid, DsImagePickerField / DsFilePickerField (+ rememberDsImagePicker / rememberDsFilePicker), DsDropdown / DsMultiSelectField / DsSearchableDropdown, DsOtpField, DsMenu / DsOverflowMenu, DsPopover / DsPopoverSurface (Above / Below), DsAmountDisplay, DsTotalsRow, DsSearchBar, DsListItem, DsSettingsRow (Navigation / Toggle / Value / Destructive), DsProductCard, DsMenuCard (Tile / Row), DsTagGroup (Inline / Grid), DsAvatarGroup, DsStatisticTile, DsSelectionList (Single / Multiple, Start / End) + DsSelectionDraft, DsButtonGroup (Horizontal / Vertical),
               DsStepIndicator, DsSectionLabel, DsCheckRow, DsKeypadKey, DsDashedActionRow, DsBanner, DsEmptyState, DsExpandableSection, DsAllocationBar
   organisms   DsTopBar, DsNumericKeypad (+ String.applyKey), DsTotalsBlock, DsCartLineItem, DsBottomCartBar, DsChipRow (Inline / Grid), DsPaymentMethodRow,
               DsBottomSheet, DsModal (Half / Full, dialog on tablet), DsDialog, DsSnackbar (+ showError/showSuccess), DsBottomNavBar, DsNavigationRail, DsProcessingState,
@@ -63,6 +63,7 @@ treatment come from one place, so a new field only has to draw its control.
 | Image | `DsImagePickerField` + `rememberDsImagePicker` (Android photo picker, no permission) |
 | Document | `DsFilePickerField` + `rememberDsFilePicker` (system document picker) |
 | Row actions | `DsMenu` / `DsOverflowMenu` |
+| Rich content next to a control | `DsPopover` |
 | Sign-in | `DsOAuthButton` — see the Login reference screen |
 
 ```kotlin
